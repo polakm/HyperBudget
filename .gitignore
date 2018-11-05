@@ -1,6 +1,7 @@
 #Gradle
 .gradle/
 build/
+out/
 
 # IntelliJ IDEA
 .idea/
