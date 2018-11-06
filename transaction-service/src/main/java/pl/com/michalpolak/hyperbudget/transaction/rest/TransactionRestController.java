@@ -21,7 +21,10 @@ public class TransactionRestController {
     }
 
     @PostMapping
-    Transaction addTranasaction(@RequestBody Transaction transaction){
+    Transaction addTranasaction(@RequestBody TransactionData transactionData){
+
+        Transaction transaction = new Transaction(transactionData);
+
         return service.addTransaction(transaction);
     }
 

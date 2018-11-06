@@ -18,9 +18,7 @@ public class InMemoryTransactionRepository implements TransactionRepository {
     @Override
     public Transaction save(Transaction transaction) {
 
-        String id = UUID.randomUUID().toString();
-        transaction.setId(id);
-        this.storage.put(id,transaction);
+        this.storage.put(transaction.getId(),transaction);
         return transaction;
 
     }

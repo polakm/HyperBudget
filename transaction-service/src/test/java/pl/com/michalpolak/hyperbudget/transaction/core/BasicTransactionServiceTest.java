@@ -1,5 +1,8 @@
 package pl.com.michalpolak.hyperbudget.transaction.core;
 
+import org.joda.money.CurrencyUnit;
+import org.joda.money.Money;
+import org.joda.time.DateTime;
 import org.junit.Test;
 import pl.com.michalpolak.hyperbudget.transaction.core.api.Transaction;
 import pl.com.michalpolak.hyperbudget.transaction.core.api.TransactionService;
@@ -21,7 +24,8 @@ public class BasicTransactionServiceTest {
 
         Transaction transaction = new Transaction();
         transaction.setTitle("Test");
-
+        transaction.setAmount(Money.parse("PLN 999.99"));
+        transaction.setExecutionDate(DateTime.now());
         //when
        Transaction resultTransaction = transactionService.addTransaction(transaction);
 
@@ -39,7 +43,8 @@ public class BasicTransactionServiceTest {
 
         Transaction transaction = new Transaction();
         transaction.setTitle("Test");
-
+        transaction.setAmount(Money.parse("PLN 999.99"));
+        transaction.setExecutionDate(DateTime.now());
 
         //when
         transactionService.addTransaction(transaction);
