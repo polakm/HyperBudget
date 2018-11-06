@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RestController;
 import pl.com.michalpolak.hyperbudget.transaction.core.api.Transaction;
 import pl.com.michalpolak.hyperbudget.transaction.core.api.TransactionService;
 
+import java.util.Set;
+
 @RestController
 public class TransactionRestController {
 
@@ -24,8 +26,9 @@ public class TransactionRestController {
     }
 
     @GetMapping
-    String test(){
-        return "It's work!";
+    Set<Transaction> transactionsList(){
+        return service.allTrascations();
     }
+
 
 }

@@ -3,9 +3,7 @@ package pl.com.michalpolak.hyperbudget.transaction.data;
         import pl.com.michalpolak.hyperbudget.transaction.core.spi.TransactionRepository;
         import pl.com.michalpolak.hyperbudget.transaction.core.api.Transaction;
 
-        import java.util.HashMap;
-        import java.util.Map;
-        import java.util.UUID;
+        import java.util.*;
 
 
 public class InMemoryTransactionRepository implements TransactionRepository {
@@ -25,5 +23,10 @@ public class InMemoryTransactionRepository implements TransactionRepository {
         this.storage.put(id,transaction);
         return transaction;
 
+    }
+
+    @Override
+    public Set<Transaction> getAll() {
+        return new HashSet(this.storage.values());
     }
 }
