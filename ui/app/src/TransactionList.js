@@ -56,7 +56,6 @@ class TransactionList extends Component {
       <div>
         <AppNavbar/>
         <Container fluid>
-       
           <h3>Transaction List</h3>
           <Table className="mt-4">
             <thead>

@@ -3,6 +3,7 @@ import './App.css';
 import Home from './Home';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import TransactionList from './TransactionList';
+import TransactionEdit from './TransactionEdit';
 
 class App extends Component {
   render() {
@@ -11,6 +12,7 @@ class App extends Component {
         <Switch>
           <Route path='/' exact={true} component={Home}/>
           <Route path='/transactions' exact={true} component={TransactionList}/>
+          <Route path='/transactions/:id' component={TransactionEdit}/>
         </Switch>
       </Router>
     )
