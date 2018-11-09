@@ -27,9 +27,18 @@ public class TransactionRestController {
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    Set<Transaction> transactionsList(){
+    Set<Transaction> transactionList(){
         return service.allTrascations();
     }
 
+    @RequestMapping(path = "/{id}", method = RequestMethod.GET)
+    Transaction getTranaction(@PathVariable("id") String id){
+       return service.getTransaction(id);
+    }
+
+    @RequestMapping(path = "/{id}", method = RequestMethod.DELETE)
+    void removeTranaction(@PathVariable("id") String id){
+        service.removeTransaction(id);
+    }
 
 }

@@ -7,5 +7,9 @@ public interface TransactionService {
 
     Transaction addTransaction( Transaction transaction);
 
+    void removeTransaction(String id);
+
+    Transaction getTransaction(String id);
+
     Set<Transaction> allTrascations();
 }

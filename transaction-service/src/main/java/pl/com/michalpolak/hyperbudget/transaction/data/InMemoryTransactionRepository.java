@@ -27,4 +27,14 @@ public class InMemoryTransactionRepository implements TransactionRepository {
     public Set<Transaction> getAll() {
         return new HashSet(this.storage.values());
     }
+
+    @Override
+    public void remove(String id) {
+        this.storage.remove(id);
+    }
+
+    @Override
+    public Transaction findById(String id) {
+        return this.storage.get(id);
+    }
 }

@@ -11,4 +11,8 @@ public interface TransactionRepository {
     Transaction save(Transaction transaction);
 
    Set<Transaction> getAll();
+
+    void remove(String id);
+
+    Transaction findById(String id);
 }

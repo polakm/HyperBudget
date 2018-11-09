@@ -21,6 +21,17 @@ class BasicTransactionService implements TransactionService {
     }
 
     @Override
+    public void removeTransaction(String id) {
+        this.transactionRepository.remove(id);
+    }
+
+    @Override
+    public Transaction getTransaction(String id) {
+        return this.transactionRepository.findById(id);
+
+    }
+
+    @Override
     public Set<Transaction> allTrascations() {
         return this.transactionRepository.getAll();
     }

@@ -11,7 +11,9 @@ import pl.com.michalpolak.hyperbudget.transaction.data.InMemoryTransactionReposi
 
 import java.util.Set;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 
 public class BasicTransactionServiceTest {
 
@@ -21,18 +23,36 @@ public class BasicTransactionServiceTest {
         //given
         TransactionRepository repository = new InMemoryTransactionRepository();
         TransactionService transactionService = new BasicTransactionService(repository);
-
         Transaction transaction = new Transaction();
-        transaction.setTitle("Test");
-        transaction.setAmount(Money.parse("PLN 999.99"));
-        transaction.setExecutionDate(DateTime.now());
+
         //when
-       Transaction resultTransaction = transactionService.addTransaction(transaction);
+        transactionService.addTransaction(transaction);
+        Transaction resultTransaction = transactionService.getTransaction(transaction.getId());
 
         //then
         assertNotNull(resultTransaction);
 
     }
+
+
+    @Test
+    public void removeTransaction() {
+
+        //given
+        TransactionRepository repository = new InMemoryTransactionRepository();
+        TransactionService transactionService = new BasicTransactionService(repository);
+        Transaction transaction = new Transaction();
+
+        //when
+        transactionService.addTransaction(transaction);
+        transactionService.removeTransaction(transaction.getId());
+        Transaction resultTransaction = transactionService.getTransaction(transaction.getId());
+
+        //then
+        assertNull(resultTransaction);
+
+    }
+
 
     @Test
     public void allTrascations() {
@@ -41,18 +61,17 @@ public class BasicTransactionServiceTest {
         TransactionRepository repository = new InMemoryTransactionRepository();
         TransactionService transactionService = new BasicTransactionService(repository);
 
-        Transaction transaction = new Transaction();
-        transaction.setTitle("Test");
-        transaction.setAmount(Money.parse("PLN 999.99"));
-        transaction.setExecutionDate(DateTime.now());
+        Transaction transaction1 = new Transaction();
+        Transaction transaction2 = new Transaction();
+        Transaction transaction3 = new Transaction();
 
         //when
-        transactionService.addTransaction(transaction);
-        Set<Transaction> transactions =transactionService.allTrascations();
-        Transaction resultTransaction = transactions.iterator().next();
+        transactionService.addTransaction(transaction1);
+        transactionService.addTransaction(transaction2);
+        transactionService.addTransaction(transaction3);
+        Set<Transaction> transactions = transactionService.allTrascations();
 
         //then
-        assertNotNull(resultTransaction);
-
+        assertEquals(3,transactions.size());
     }
 }
