@@ -8,6 +8,9 @@ class TransactionEdit extends Component {
   emptyItem = {
     title: '',
     amount: '',
+    currencyCode: 'PLN',
+    executionDate:'',
+    dateFormat: 'YYYY-MM-DD',
   };
 
   constructor(props) {
@@ -66,8 +69,13 @@ class TransactionEdit extends Component {
           </FormGroup>
           <FormGroup>
             <Label for="amount">Amount</Label>
-            <Input type="text" name="amount" id="amount" value={item.amount || ''}
+            <Input type="number"  min="0.00" step="0.01"  name="amount" id="amount" value={item.amount || ''}
                    onChange={this.handleChange} autoComplete="amount"/>
+          </FormGroup>
+          <FormGroup>
+            <Label for="executionDate">Date</Label>
+            <Input type="date" name="executionDate" id="executionDate" value={item.executionDate || ''}
+                   onChange={this.handleChange} autoComplete="executionDate"/>
           </FormGroup>
           <FormGroup>
             <Button color="primary" type="submit">Save</Button>{' '}

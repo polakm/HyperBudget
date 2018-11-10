@@ -16,7 +16,7 @@ class TransactionList extends Component {
 
     fetch('api/transactions')
       .then(response => response.json())
-      .then(data => this.setState({transactions: data, isLoading: false}));
+      .then(data => this.setState({transactions: data.transactions, isLoading: false}));
   }
 
   async remove(id) {
@@ -42,7 +42,8 @@ class TransactionList extends Component {
     const transactionList = transactions.map(transaction => {
       return <tr key={transaction.id}>
         <td style={{whiteSpace: 'nowrap'}}>{transaction.title}</td>
-        <td>{transaction.amount.amount} {transaction.amount.currencyUnit.code}</td>
+        <td>{transaction.amount}</td>
+        <td>{transaction.executionDate}</td>
         <td>
           <ButtonGroup>
             <Button size="sm" color="primary" tag={Link} to={"/transactions/" + transaction.id}>Edit</Button>
@@ -62,6 +63,7 @@ class TransactionList extends Component {
             <tr>
               <th width="20%">Title</th>
               <th width="20%">Amount</th>
+              <th width="20%">Date</th>
               <th width="10%">Actions</th>
             </tr>
             </thead>
