@@ -24,6 +24,8 @@ public class Transaction {
 
     private Money amount;
 
+    private String accountId;
+
     public String getId() {
         return id;
     }
@@ -54,5 +56,13 @@ public class Transaction {
 
     public void setAmount(Money amount) {
         this.amount = amount;
+    }
+
+    public String getAccountId() {
+        return accountId;
+    }
+
+    public void setAccountId(String accountId) {
+        this.accountId = accountId;
     }
 }

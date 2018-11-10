@@ -73,6 +73,16 @@ class TransactionEdit extends Component {
                    onChange={this.handleChange} autoComplete="amount"/>
           </FormGroup>
           <FormGroup>
+            <Label for="account">Account</Label>
+            <Input type="select" name="accountId" id="account" value={item.accountId || ''}
+                   onChange={this.handleChange} autoComplete="accountId">
+              <option value="aaaaaa">Bank</option>
+              <option value="bbbbbb">Wallet</option>
+              <option value="cccccc">Company Account</option>
+              <option value="dddddd">Piggybank</option>
+            </Input>
+          </FormGroup>
+          <FormGroup>
             <Label for="executionDate">Date</Label>
             <Input type="date" name="executionDate" id="executionDate" value={item.executionDate || ''}
                    onChange={this.handleChange} autoComplete="executionDate"/>
