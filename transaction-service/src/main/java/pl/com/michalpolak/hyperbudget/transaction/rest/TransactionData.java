@@ -1,5 +1,7 @@
 package pl.com.michalpolak.hyperbudget.transaction.rest;
 
+import pl.com.michalpolak.hyperbudget.transaction.core.api.Transaction;
+
 public class TransactionData {
 
     private String id;
@@ -15,6 +17,20 @@ public class TransactionData {
     private String currencyCode;
 
     public TransactionData() {
+    }
+
+    public TransactionData(Transaction transaction) {
+
+        setId(transaction.getId());
+        setTitle(transaction.getTitle());
+        if(transaction.getAmount()!= null) {
+            setAmount(transaction.getAmount().getAmount().toPlainString());
+            setCurrencyCode(transaction.getAmount().getCurrencyUnit().getCode());
+        }
+        if(transaction.getExecutionDate()!=null) {
+            setExecutionDate(transaction.getExecutionDate().toString("YYYY-MM-DD"));
+            setDateFormat("YYYY-MM-DD");
+        }
     }
 
     public String getTitle() {

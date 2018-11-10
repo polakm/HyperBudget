@@ -15,18 +15,7 @@ public class TransactionDataList {
         transactions = new ArrayList<>();
 
         transactionSet.forEach(t -> {
-            TransactionData data = new TransactionData();
-            data.setId(t.getId());
-            data.setTitle(t.getTitle());
-            if(t.getAmount()!= null) {
-                data.setAmount(t.getAmount().getAmount().toPlainString());
-                data.setCurrencyCode(t.getAmount().getCurrencyUnit().getCode());
-            }
-            if(t.getExecutionDate()!=null) {
-                data.setExecutionDate(t.getExecutionDate().toString("YYYY-MM-DD"));
-                data.setDateFormat("YYYY-MM-DD");
-            }
-            transactions.add(data);
+            transactions.add(new TransactionData(t));
         });
 
     }
