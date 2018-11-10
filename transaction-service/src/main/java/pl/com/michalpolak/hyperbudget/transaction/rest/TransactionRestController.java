@@ -27,8 +27,9 @@ public class TransactionRestController {
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    Set<Transaction> transactionList(){
-        return service.allTrascations();
+    TransactionDataList transactionList(){
+         Set<Transaction> transactions = service.allTrascations();
+        return new TransactionDataList(transactions);
     }
 
     @RequestMapping(path = "/{id}", method = RequestMethod.GET)
