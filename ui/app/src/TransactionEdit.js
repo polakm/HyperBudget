@@ -42,7 +42,7 @@ class TransactionEdit extends Component {
     event.preventDefault();
     const {item} = this.state;
 
-    await fetch('/api/transactions', {
+    await fetch('/api/transactions' + (item.id ? ('/'+ item.id) : ''), {
       method: (item.id) ? 'PUT' : 'POST',
       headers: {
         'Accept': 'application/json',
