@@ -1,6 +1,9 @@
 package pl.com.michalpolak.hyperbudget.transaction.rest;
 
 
+import org.joda.money.Money;
+import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import pl.com.michalpolak.hyperbudget.transaction.core.api.Transaction;
@@ -21,7 +24,10 @@ public class TransactionRestController {
     @RequestMapping(method = RequestMethod.POST)
     Transaction addTranasaction(@RequestBody TransactionData transactionData){
 
-        Transaction transaction = new Transaction(transactionData);
+        Transaction transaction = new Transaction();
+        transaction.setTitle(transactionData.getTitle());
+        transaction.setAmount(Money.parse(transactionData.getCurrencyCode() + " " + transactionData.getAmount()));
+        transaction.setExecutionDate(DateTime.parse(transactionData.getExecutionDate(), DateTimeFormat.forPattern(transactionData.getDateFormat())));
 
         return service.addTransaction(transaction);
     }

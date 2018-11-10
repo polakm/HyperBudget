@@ -2,57 +2,18 @@ package pl.com.michalpolak.hyperbudget.transaction.rest;
 
 public class TransactionData {
 
-    public class Date{
-
-        private  String format;
-
-        private  String date;
-
-        public String getFormat() {
-            return format;
-        }
-
-        public void setFormat(String format) {
-            this.format = format;
-        }
-
-        public String getDate() {
-            return date;
-        }
-
-        public void setDate(String date) {
-            this.date = date;
-        }
-    }
-
-    public class Money{
-
-        private String currency;
-
-        private  String amount;
-
-        public String getCurrency() {
-            return currency;
-        }
-
-        public void setCurrency(String currency) {
-            this.currency = currency;
-        }
-
-        public String getAmount() {
-            return amount;
-        }
-
-        public void setAmount(String amount) {
-            this.amount = amount;
-        }
-    }
-
     private String title;
 
-    private Date executionDate;
+    private String executionDate;
 
-    private Money amount;
+    private String dateFormat;
+
+    private String amount;
+
+    private String currencyCode;
+
+    public TransactionData() {
+    }
 
     public String getTitle() {
         return title;
@@ -62,20 +23,35 @@ public class TransactionData {
         this.title = title;
     }
 
-    public Date getExecutionDate() {
+    public String getExecutionDate() {
         return executionDate;
     }
 
-    public void setExecutionDate(Date executionDate) {
+    public void setExecutionDate(String executionDate) {
         this.executionDate = executionDate;
     }
 
-    public Money getAmount() {
+    public String getDateFormat() {
+        return dateFormat;
+    }
+
+    public void setDateFormat(String dateFormat) {
+        this.dateFormat = dateFormat;
+    }
+
+    public String getAmount() {
         return amount;
     }
 
-    public void setAmount(Money amount) {
+    public void setAmount(String amount) {
         this.amount = amount;
     }
 
+    public String getCurrencyCode() {
+        return currencyCode;
+    }
+
+    public void setCurrencyCode(String currencyCode) {
+        this.currencyCode = currencyCode;
+    }
 }

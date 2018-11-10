@@ -11,17 +11,7 @@ import java.util.UUID;
 
 public class Transaction {
 
-    public Transaction(TransactionData data){
-        setId(UUID.randomUUID().toString());
-        setTitle(data.getTitle());
-        if(data.getAmount() != null && data.getAmount().getAmount()!= null && data.getAmount().getCurrency()!= null) {
-            setAmount(Money.parse(data.getAmount().getCurrency() + " " + data.getAmount().getAmount()));
-        }
-        if(data.getExecutionDate() != null && data.getExecutionDate().getFormat()!= null && data.getExecutionDate().getDate()!= null) {
-            setExecutionDate(DateTime.parse(data.getExecutionDate().getDate(), DateTimeFormat.forPattern(data.getExecutionDate().getFormat())));
-        }
 
-    }
     public Transaction(){
         setId(UUID.randomUUID().toString());
     }
