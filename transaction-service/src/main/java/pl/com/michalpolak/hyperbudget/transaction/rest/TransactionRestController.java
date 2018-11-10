@@ -19,11 +19,11 @@ public class TransactionRestController {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    Transaction addTranasaction(@RequestBody TransactionData transactionData){
+    TransactionData addTranasaction(@RequestBody TransactionData transactionData){
 
         Transaction transaction = new TransactionDataAdapter(transactionData);
-
-        return service.addTransaction(transaction);
+        service.addTransaction(transaction);
+        return new TransactionData(transaction);
     }
 
     @RequestMapping(method = RequestMethod.GET)
@@ -33,8 +33,8 @@ public class TransactionRestController {
     }
 
     @RequestMapping(path = "/{id}", method = RequestMethod.GET)
-    Transaction getTranaction(@PathVariable("id") String id){
-       return service.getTransaction(id);
+    TransactionData getTranaction(@PathVariable("id") String id){
+       return new TransactionData(service.getTransaction(id));
     }
 
     @RequestMapping(path = "/{id}", method = RequestMethod.DELETE)
