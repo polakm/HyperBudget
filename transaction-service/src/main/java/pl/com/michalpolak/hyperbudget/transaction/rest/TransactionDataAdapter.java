@@ -19,11 +19,12 @@ class TransactionDataAdapter extends Transaction {
         if(transactionData.getExecutionDate()!=null && transactionData.getDateFormat() !=null) {
             this.setExecutionDate(DateTime.parse(transactionData.getExecutionDate(), DateTimeFormat.forPattern(transactionData.getDateFormat())));
         }
-    };
+    }
 
-
-
-
+    public TransactionDataAdapter(String id, TransactionData transactionData) {
+        this(transactionData);
+        setId(id);
+    }
 
 
 }

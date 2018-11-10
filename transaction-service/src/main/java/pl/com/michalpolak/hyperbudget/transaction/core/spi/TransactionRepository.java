@@ -15,4 +15,6 @@ public interface TransactionRepository {
     void remove(String id);
 
     Transaction findById(String id);
+
+    Transaction update(Transaction transaction);
 }

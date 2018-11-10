@@ -12,4 +12,6 @@ public interface TransactionService {
     Transaction getTransaction(String id);
 
     Set<Transaction> allTrascations();
+
+    Transaction updateTransaction(Transaction transaction);
 }

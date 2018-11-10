@@ -37,4 +37,10 @@ public class InMemoryTransactionRepository implements TransactionRepository {
     public Transaction findById(String id) {
         return this.storage.get(id);
     }
+
+    @Override
+    public Transaction update(Transaction transaction) {
+        this.storage.put(transaction.getId(),transaction);
+        return transaction;
+    }
 }

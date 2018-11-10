@@ -35,5 +35,11 @@ class BasicTransactionService implements TransactionService {
     public Set<Transaction> allTrascations() {
         return this.transactionRepository.getAll();
     }
+
+    @Override
+    public Transaction updateTransaction(Transaction transaction) {
+
+        return this.transactionRepository.update(transaction);
+    }
 }
 

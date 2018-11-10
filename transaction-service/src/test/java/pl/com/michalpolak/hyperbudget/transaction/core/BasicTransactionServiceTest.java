@@ -1,8 +1,5 @@
 package pl.com.michalpolak.hyperbudget.transaction.core;
 
-import org.joda.money.CurrencyUnit;
-import org.joda.money.Money;
-import org.joda.time.DateTime;
 import org.junit.Test;
 import pl.com.michalpolak.hyperbudget.transaction.core.api.Transaction;
 import pl.com.michalpolak.hyperbudget.transaction.core.api.TransactionService;
@@ -11,9 +8,7 @@ import pl.com.michalpolak.hyperbudget.transaction.data.InMemoryTransactionReposi
 
 import java.util.Set;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
+import static org.junit.Assert.*;
 
 public class BasicTransactionServiceTest {
 
@@ -31,6 +26,28 @@ public class BasicTransactionServiceTest {
 
         //then
         assertNotNull(resultTransaction);
+
+    }
+
+
+    @Test
+    public void updateTransaction() {
+
+        //given
+        TransactionRepository repository = new InMemoryTransactionRepository();
+        TransactionService transactionService = new BasicTransactionService(repository);
+        Transaction transaction = new Transaction();
+        transaction.setTitle("test");
+        Transaction updatedTransaction = new Transaction();
+        updatedTransaction.setId(transaction.getId());
+        updatedTransaction.setTitle("updated");
+
+        //when
+        transactionService.updateTransaction(updatedTransaction);
+        Transaction resultTransaction = transactionService.getTransaction(transaction.getId());
+
+        //then
+        assertEquals("updated", resultTransaction.getTitle());
 
     }
 

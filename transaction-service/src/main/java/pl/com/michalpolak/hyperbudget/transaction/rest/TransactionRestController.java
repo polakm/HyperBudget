@@ -42,4 +42,10 @@ public class TransactionRestController {
         service.removeTransaction(id);
     }
 
+    @RequestMapping(path ="/{id}", method = RequestMethod.PUT)
+    void updateTranaction(@PathVariable("id") String id, @RequestBody TransactionData transactionData){
+
+       Transaction transaction = new TransactionDataAdapter(id,transactionData);
+        service.updateTransaction(transaction);
+    }
 }
