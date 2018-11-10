@@ -2,6 +2,8 @@ package pl.com.michalpolak.hyperbudget.transaction.rest;
 
 public class TransactionData {
 
+    private String id;
+
     private String title;
 
     private String executionDate;
@@ -53,5 +55,13 @@ public class TransactionData {
 
     public void setCurrencyCode(String currencyCode) {
         this.currencyCode = currencyCode;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }
