@@ -76,6 +76,7 @@ class TransactionEdit extends Component {
             <Label for="account">Account</Label>
             <Input type="select" name="accountId" id="account" value={item.accountId || ''}
                    onChange={this.handleChange} autoComplete="accountId">
+              /* TODO push to server site */
               <option value="aaaaaa">Bank</option>
               <option value="bbbbbb">Wallet</option>
               <option value="cccccc">Company Account</option>

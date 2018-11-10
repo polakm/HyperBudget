@@ -38,12 +38,21 @@ class TransactionList extends Component {
     if (isLoading) {
       return <p>Loading...</p>;
     }
+    
+    //TODO push to server site
+    const accountsMap = {
+      "aaaaaa":"Bank",
+      "bbbbbb":"Wallet",
+      "cccccc":"Company Account",
+      "dddddd":"Piggybank",
+    }
 
     const transactionList = transactions.map(transaction => {
       return <tr key={transaction.id}>
         <td style={{whiteSpace: 'nowrap'}}>{transaction.title}</td>
         <td>{transaction.amount}</td>
         <td>{transaction.executionDate}</td>
+        <td>{accountsMap[transaction.accountId]}</td>
         <td>
           <ButtonGroup>
             <Button size="sm" color="primary" tag={Link} to={"/transactions/" + transaction.id}>Edit</Button>
@@ -64,6 +73,7 @@ class TransactionList extends Component {
               <th width="20%">Title</th>
               <th width="20%">Amount</th>
               <th width="20%">Date</th>
+              <th width="20%">Account</th>
               <th width="10%">Actions</th>
             </tr>
             </thead>
