@@ -89,6 +89,6 @@ public class BasicTransactionServiceTest {
         Set<Transaction> transactions = transactionService.allTrascations();
 
         //then
-        assertEquals(3,transactions.size());
+        assertEquals(3, transactions.size());
     }
 }

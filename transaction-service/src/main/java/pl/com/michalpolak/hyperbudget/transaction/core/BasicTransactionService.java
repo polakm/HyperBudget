@@ -16,7 +16,7 @@ class BasicTransactionService implements TransactionService {
     }
 
     @Override
-    public Transaction addTransaction(Transaction transaction){
+    public Transaction addTransaction(Transaction transaction) {
         return transactionRepository.save(transaction);
     }
 

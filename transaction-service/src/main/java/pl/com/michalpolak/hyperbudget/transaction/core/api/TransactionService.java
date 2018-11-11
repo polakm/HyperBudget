@@ -5,7 +5,7 @@ import java.util.Set;
 
 public interface TransactionService {
 
-    Transaction addTransaction( Transaction transaction);
+    Transaction addTransaction(Transaction transaction);
 
     void removeTransaction(String id);
 

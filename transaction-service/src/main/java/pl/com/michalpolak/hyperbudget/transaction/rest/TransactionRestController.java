@@ -34,7 +34,7 @@ public class TransactionRestController {
 
     @RequestMapping(path = "/{id}", method = RequestMethod.GET)
     TransactionData getTranaction(@PathVariable("id") String id){
-       return new TransactionData(service.getTransaction(id));
+        return new TransactionData(service.getTransaction(id));
     }
 
     @RequestMapping(path = "/{id}", method = RequestMethod.DELETE)

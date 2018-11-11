@@ -17,18 +17,18 @@ import pl.com.michalpolak.hyperbudget.transaction.core.spi.TransactionRepository
 @EnableWebMvc
 public class TransactionServiceApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(TransactionServiceApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(TransactionServiceApplication.class, args);
+    }
 
-	@Bean
-	TransactionRepository transactionRepositoryBean(){
-		return new InMemoryTransactionRepository();
-	}
+    @Bean
+    TransactionRepository transactionRepositoryBean() {
+        return new InMemoryTransactionRepository();
+    }
 
-	@Bean
-	TransactionService transactionServiceBean(@Autowired TransactionRepository transactionRepository){
-		return new BasicTransactionService(transactionRepository);
-	}
+    @Bean
+    TransactionService transactionServiceBean(@Autowired TransactionRepository transactionRepository) {
+        return new BasicTransactionService(transactionRepository);
+    }
 
 }

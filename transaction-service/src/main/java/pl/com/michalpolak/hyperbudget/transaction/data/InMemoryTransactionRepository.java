@@ -1,16 +1,16 @@
 package pl.com.michalpolak.hyperbudget.transaction.data;
 
-        import pl.com.michalpolak.hyperbudget.transaction.core.spi.TransactionRepository;
-        import pl.com.michalpolak.hyperbudget.transaction.core.api.Transaction;
+import pl.com.michalpolak.hyperbudget.transaction.core.spi.TransactionRepository;
+import pl.com.michalpolak.hyperbudget.transaction.core.api.Transaction;
 
-        import java.util.*;
+import java.util.*;
 
 
 public class InMemoryTransactionRepository implements TransactionRepository {
 
     private Map<String, Transaction> storage;
 
-    public InMemoryTransactionRepository(){
+    public InMemoryTransactionRepository() {
 
         this.storage = new HashMap<>();
     }
@@ -18,7 +18,7 @@ public class InMemoryTransactionRepository implements TransactionRepository {
     @Override
     public Transaction save(Transaction transaction) {
 
-        this.storage.put(transaction.getId(),transaction);
+        this.storage.put(transaction.getId(), transaction);
         return transaction;
 
     }
@@ -40,7 +40,7 @@ public class InMemoryTransactionRepository implements TransactionRepository {
 
     @Override
     public Transaction update(Transaction transaction) {
-        this.storage.put(transaction.getId(),transaction);
+        this.storage.put(transaction.getId(), transaction);
         return transaction;
     }
 }

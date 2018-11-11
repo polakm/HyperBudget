@@ -26,11 +26,11 @@ public class TransactionData {
         setId(transaction.getId());
         setTitle(transaction.getTitle());
         setAccountId(transaction.getAccountId());
-        if(transaction.getAmount()!= null) {
+        if (transaction.getAmount() != null) {
             setAmount(transaction.getAmount().getAmount().toPlainString());
             setCurrencyCode(transaction.getAmount().getCurrencyUnit().getCode());
         }
-        if(transaction.getExecutionDate()!=null) {
+        if (transaction.getExecutionDate() != null) {
             setExecutionDate(transaction.getExecutionDate().toString("YYYY-MM-DD"));
             setDateFormat("YYYY-MM-DD");
         }
