@@ -64,4 +64,9 @@ public class TransactionRestController {
     ResponseEntity handleInvalidTransactionException(InvalidTransactionException exception, WebRequest request){
         return new ResponseEntity(exception.getMessage(),HttpStatus.BAD_REQUEST);
     }
+
+    @ExceptionHandler({ Exception.class })
+    ResponseEntity handleUnknownException(Exception exception, WebRequest request){
+        return new ResponseEntity(exception.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+    }
 }
