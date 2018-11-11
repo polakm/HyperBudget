@@ -26,9 +26,13 @@ class BasicTransactionService implements TransactionService {
     }
 
     @Override
-    public Transaction getTransaction(String id) {
-        return this.transactionRepository.findById(id);
+    public Transaction getTransaction(String id) throws TransactionNotFoundException {
 
+        Transaction result = this.transactionRepository.findById(id);
+        if (result == null) {
+            throw new TransactionNotFoundException(id);
+        }
+        return result;
     }
 
     @Override

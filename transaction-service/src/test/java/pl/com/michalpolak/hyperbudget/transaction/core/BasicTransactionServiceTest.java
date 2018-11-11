@@ -13,7 +13,7 @@ import static org.junit.Assert.*;
 public class BasicTransactionServiceTest {
 
     @Test
-    public void addTransaction() {
+    public void addTransaction() throws TransactionNotFoundException {
 
         //given
         TransactionRepository repository = new InMemoryTransactionRepository();
@@ -29,9 +29,27 @@ public class BasicTransactionServiceTest {
 
     }
 
+    @Test
+    public void transactionNotFoundException() {
+
+        //given
+        TransactionRepository repository = new InMemoryTransactionRepository();
+        TransactionService transactionService = new BasicTransactionService(repository);
+
+        //when
+        try {
+            transactionService.getTransaction("non-exist-id");
+        }catch (TransactionNotFoundException e){
+            return;
+        }
+
+        //then
+        fail("Method should throw TransactionNotFoundException.");
+    }
+
 
     @Test
-    public void updateTransaction() {
+    public void updateTransaction() throws TransactionNotFoundException {
 
         //given
         TransactionRepository repository = new InMemoryTransactionRepository();
@@ -53,7 +71,7 @@ public class BasicTransactionServiceTest {
 
 
     @Test
-    public void removeTransaction() {
+    public void removeTransaction() throws TransactionNotFoundException {
 
         //given
         TransactionRepository repository = new InMemoryTransactionRepository();
@@ -63,10 +81,16 @@ public class BasicTransactionServiceTest {
         //when
         transactionService.addTransaction(transaction);
         transactionService.removeTransaction(transaction.getId());
-        Transaction resultTransaction = transactionService.getTransaction(transaction.getId());
+
+        //when
+        try {
+            transactionService.getTransaction("non-exist-id");
+        }catch (TransactionNotFoundException e){
+            return;
+        }
 
         //then
-        assertNull(resultTransaction);
+        fail("After remove transaction, method getTransaction should throw TransactionNotFoundException.");
 
     }
 

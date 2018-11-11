@@ -2,7 +2,11 @@ package pl.com.michalpolak.hyperbudget.transaction.rest;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.request.WebRequest;
+import pl.com.michalpolak.hyperbudget.transaction.core.TransactionNotFoundException;
 import pl.com.michalpolak.hyperbudget.transaction.core.api.Transaction;
 import pl.com.michalpolak.hyperbudget.transaction.core.api.TransactionService;
 
@@ -33,7 +37,7 @@ public class TransactionRestController {
     }
 
     @RequestMapping(path = "/{id}", method = RequestMethod.GET)
-    TransactionData getTranaction(@PathVariable("id") String id){
+    TransactionData getTranaction(@PathVariable("id") String id) throws TransactionNotFoundException {
         return new TransactionData(service.getTransaction(id));
     }
 
@@ -47,5 +51,10 @@ public class TransactionRestController {
 
        Transaction transaction = new TransactionDataAdapter(id,transactionData);
         service.updateTransaction(transaction);
+    }
+
+    @ExceptionHandler({ TransactionNotFoundException.class })
+    ResponseEntity handleTransactionNotExistException(TransactionNotFoundException exception, WebRequest request){
+        return new ResponseEntity(exception.getMessage(),HttpStatus.NOT_FOUND);
     }
 }
