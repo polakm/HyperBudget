@@ -10,8 +10,8 @@ class TransactionDataAdapter extends Transaction {
     TransactionDataAdapter(TransactionData transactionData) {
 
         this.setTitle(transactionData.getTitle());
-
         this.setAccountId(transactionData.getAccountId());
+        this.setCategoryId(transactionData.getCategoryId());
 
         if (transactionData.getCurrencyCode() != null && transactionData.getAmount() != null) {
             this.setAmount(Money.parse(transactionData.getCurrencyCode() + " " + transactionData.getAmount()));

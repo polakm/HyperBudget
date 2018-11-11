@@ -26,6 +26,8 @@ public class Transaction {
 
     private String accountId;
 
+    private  String categoryId;
+
     public String getId() {
         return id;
     }
@@ -64,5 +66,13 @@ public class Transaction {
 
     public void setAccountId(String accountId) {
         this.accountId = accountId;
+    }
+
+    public String getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(String categoryId) {
+        this.categoryId = categoryId;
     }
 }

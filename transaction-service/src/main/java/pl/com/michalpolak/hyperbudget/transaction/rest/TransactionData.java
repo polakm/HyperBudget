@@ -18,6 +18,8 @@ public class TransactionData {
 
     private String accountId;
 
+    private String categoryId;
+
     public TransactionData() {
     }
 
@@ -26,6 +28,8 @@ public class TransactionData {
         setId(transaction.getId());
         setTitle(transaction.getTitle());
         setAccountId(transaction.getAccountId());
+        setCategoryId(transaction.getCategoryId());
+
         if (transaction.getAmount() != null) {
             setAmount(transaction.getAmount().getAmount().toPlainString());
             setCurrencyCode(transaction.getAmount().getCurrencyUnit().getCode());
@@ -90,5 +94,13 @@ public class TransactionData {
 
     public void setAccountId(String accountId) {
         this.accountId = accountId;
+    }
+
+    public String getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(String categoryId) {
+        this.categoryId = categoryId;
     }
 }
