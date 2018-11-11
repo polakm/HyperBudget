@@ -9,7 +9,7 @@ class TransactionList extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {transactions: [], isLoading: true};
+    this.state = {transactions: [], accounts: [], isLoading: true};
     this.remove = this.remove.bind(this);
   }
 
@@ -19,6 +19,7 @@ class TransactionList extends Component {
     fetch('/api/transactions')
       .then(response => response.json())
       .then(data => this.setState({transactions: data.transactions, isLoading: false}));
+      
   }
 
   async remove(id) {
@@ -46,7 +47,7 @@ class TransactionList extends Component {
       "aaaaaa":"Bank",
       "bbbbbb":"Wallet",
       "cccccc":"Company Account",
-      "dddddd":"Piggybank",
+      "dddddd":"Piggybank"
     }
 
     //TODO push to server site
@@ -54,9 +55,9 @@ class TransactionList extends Component {
       "aaaaaa":"Other",
       "bbbbbb":"Shopping",
       "cccccc":"Car",
-     "dddddd":"Home",
-     "eeeeee":"Food",
-     "ffffff":"Education"
+      "dddddd":"Home",
+      "eeeeee":"Food",
+      "ffffff":"Education"
     }
 
     const transactionList = transactions.map(transaction => {
