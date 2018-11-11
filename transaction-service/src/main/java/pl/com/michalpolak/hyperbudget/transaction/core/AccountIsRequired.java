@@ -16,13 +16,13 @@ public class AccountIsRequired implements ValidationRule {
     @Override
     public void validate(Transaction transaction) throws InvalidTransactionException {
 
-        if(transaction.getAccountId() == null){
+        if (transaction.getAccountId() == null) {
 
             LOGGER.info("Account ID is null - Transaction ID: {} ", transaction.getId());
             throw new InvalidTransactionException(MessageFormat.format(MESSAGE_PATTERN, transaction.getId()));
         }
 
-        if(transaction.getAccountId().isEmpty()){
+        if (transaction.getAccountId().isEmpty()) {
 
             LOGGER.info("Account ID is empty - Transaction ID: {} ", transaction.getId());
             throw new InvalidTransactionException(MessageFormat.format(MESSAGE_PATTERN, transaction.getId()));

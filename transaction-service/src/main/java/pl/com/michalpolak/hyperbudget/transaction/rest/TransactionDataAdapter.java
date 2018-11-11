@@ -5,12 +5,7 @@ import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import pl.com.michalpolak.hyperbudget.transaction.core.AmountIsRequired;
 import pl.com.michalpolak.hyperbudget.transaction.core.api.Transaction;
-
-import java.util.UUID;
-
-import static com.sun.xml.internal.ws.spi.db.BindingContextFactory.LOGGER;
 
 class TransactionDataAdapter extends Transaction {
 
@@ -23,11 +18,11 @@ class TransactionDataAdapter extends Transaction {
         this.setCategoryId(transactionData.getCategoryId());
 
         if (transactionData.getCurrencyCode() != null && transactionData.getAmount() != null) {
-            LOGGER.debug("Parse currency code and decimal value to Money - Transaction ID: {} ",this.getId());
+            LOGGER.debug("Parse currency code and decimal value to Money - Transaction ID: {} ", this.getId());
             this.setAmount(Money.parse(transactionData.getCurrencyCode() + " " + transactionData.getAmount()));
         }
         if (transactionData.getExecutionDate() != null && transactionData.getDateFormat() != null) {
-            LOGGER.debug("Parse date format and string date to DateTime - Transaction ID: {} ",this.getId());
+            LOGGER.debug("Parse date format and string date to DateTime - Transaction ID: {} ", this.getId());
             this.setExecutionDate(DateTime.parse(transactionData.getExecutionDate(), DateTimeFormat.forPattern(transactionData.getDateFormat())));
         }
     }

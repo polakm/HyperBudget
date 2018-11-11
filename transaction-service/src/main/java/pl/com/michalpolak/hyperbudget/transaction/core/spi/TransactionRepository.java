@@ -10,7 +10,7 @@ public interface TransactionRepository {
 
     Transaction save(Transaction transaction);
 
-   Set<Transaction> getAll();
+    Set<Transaction> getAll();
 
     void remove(String id);
 

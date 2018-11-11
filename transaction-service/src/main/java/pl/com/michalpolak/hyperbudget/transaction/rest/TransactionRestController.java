@@ -13,7 +13,6 @@ import pl.com.michalpolak.hyperbudget.transaction.core.api.Transaction;
 import pl.com.michalpolak.hyperbudget.transaction.core.api.TransactionNotFoundException;
 import pl.com.michalpolak.hyperbudget.transaction.core.api.TransactionService;
 
-import javax.validation.Valid;
 import java.util.Set;
 
 @RestController
@@ -66,21 +65,21 @@ public class TransactionRestController {
     @ExceptionHandler({TransactionNotFoundException.class})
     ResponseEntity handleTransactionNotExistException(TransactionNotFoundException exception, WebRequest request) {
 
-        LOGGER.warn(exception.getMessage(),exception);
+        LOGGER.warn(exception.getMessage(), exception);
         return new ResponseEntity(exception.getMessage(), HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler({InvalidTransactionException.class})
     ResponseEntity handleInvalidTransactionException(InvalidTransactionException exception, WebRequest request) {
 
-        LOGGER.warn(exception.getMessage(),exception);
+        LOGGER.warn(exception.getMessage(), exception);
         return new ResponseEntity(exception.getMessage(), HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler({Exception.class})
     ResponseEntity handleUnknownException(Exception exception, WebRequest request) {
 
-        LOGGER.error(exception.getMessage(),exception);
+        LOGGER.error(exception.getMessage(), exception);
         return new ResponseEntity(exception.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }

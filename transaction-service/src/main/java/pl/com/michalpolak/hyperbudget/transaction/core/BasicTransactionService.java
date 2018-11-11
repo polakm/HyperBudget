@@ -38,7 +38,7 @@ class BasicTransactionService implements TransactionService {
 
         LOGGER.info("Remove transaction - Transaction ID: {}", id);
         this.getTransaction(id);
-         this.transactionRepository.remove(id);
+        this.transactionRepository.remove(id);
         LOGGER.info("Transaction has removed - Transaction ID: {}", id);
     }
 

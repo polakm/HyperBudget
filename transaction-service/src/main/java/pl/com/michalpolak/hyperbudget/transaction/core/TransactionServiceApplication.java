@@ -31,7 +31,8 @@ public class TransactionServiceApplication {
     }
 
     @Bean
-    public  TransactionValidator transactionValdiatorBean() {
+    public TransactionValidator transactionValdiatorBean() {
+
         List<ValidationRule> rules = new ArrayList<>();
         rules.add(new AmountIsRequired());
         rules.add(new ExecutionDateIsRequired());
@@ -42,6 +43,7 @@ public class TransactionServiceApplication {
     @Bean
     @Autowired
     public TransactionService transactionServiceBean(TransactionRepository transactionRepository, TransactionValidator transactionValidator) {
+
         return new BasicTransactionService(transactionRepository, transactionValidator);
     }
 

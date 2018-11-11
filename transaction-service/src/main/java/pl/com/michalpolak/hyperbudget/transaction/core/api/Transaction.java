@@ -12,7 +12,7 @@ import java.util.UUID;
 public class Transaction {
 
 
-    public Transaction(){
+    public Transaction() {
         setId(UUID.randomUUID().toString());
     }
 
@@ -26,7 +26,7 @@ public class Transaction {
 
     private String accountId;
 
-    private  String categoryId;
+    private String categoryId;
 
     public String getId() {
         return id;
