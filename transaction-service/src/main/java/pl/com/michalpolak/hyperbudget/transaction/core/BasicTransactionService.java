@@ -1,8 +1,10 @@
 package pl.com.michalpolak.hyperbudget.transaction.core;
 
 import pl.com.michalpolak.hyperbudget.transaction.core.api.Transaction;
+import pl.com.michalpolak.hyperbudget.transaction.core.api.TransactionNotFoundException;
 import pl.com.michalpolak.hyperbudget.transaction.core.spi.TransactionRepository;
 import pl.com.michalpolak.hyperbudget.transaction.core.api.TransactionService;
+import pl.com.michalpolak.hyperbudget.transaction.core.spi.TransactionValidator;
 
 import java.util.Set;
 
@@ -10,13 +12,17 @@ import java.util.Set;
 class BasicTransactionService implements TransactionService {
 
     private TransactionRepository transactionRepository;
+    private TransactionValidator validator;
 
-    BasicTransactionService(TransactionRepository transactionRepository) {
+    BasicTransactionService(TransactionRepository transactionRepository, TransactionValidator validator) {
         this.transactionRepository = transactionRepository;
+        this.validator = validator;
     }
 
     @Override
-    public Transaction addTransaction(Transaction transaction) {
+    public Transaction addTransaction(Transaction transaction) throws InvalidTransactionException {
+
+        validator.validate(transaction);
         return transactionRepository.save(transaction);
     }
 

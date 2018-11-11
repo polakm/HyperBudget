@@ -8,8 +8,12 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import pl.com.michalpolak.hyperbudget.transaction.core.api.TransactionService;
+import pl.com.michalpolak.hyperbudget.transaction.core.spi.TransactionValidator;
 import pl.com.michalpolak.hyperbudget.transaction.data.InMemoryTransactionRepository;
 import pl.com.michalpolak.hyperbudget.transaction.core.spi.TransactionRepository;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @SpringBootApplication
 @Configuration
@@ -22,13 +26,23 @@ public class TransactionServiceApplication {
     }
 
     @Bean
-    TransactionRepository transactionRepositoryBean() {
+    public TransactionRepository transactionRepositoryBean() {
         return new InMemoryTransactionRepository();
     }
 
     @Bean
-    TransactionService transactionServiceBean(@Autowired TransactionRepository transactionRepository) {
-        return new BasicTransactionService(transactionRepository);
+    public  TransactionValidator transactionValdiatorBean() {
+        List<ValidationRule> rules = new ArrayList<>();
+        rules.add(new AmountIsRequired());
+        rules.add(new ExecutionDateIsRequired());
+        rules.add(new AccountIsRequired());
+        return new BasicTransactionValidator(rules);
+    }
+
+    @Bean
+    @Autowired
+    public TransactionService transactionServiceBean(TransactionRepository transactionRepository, TransactionValidator transactionValidator) {
+        return new BasicTransactionService(transactionRepository, transactionValidator);
     }
 
 }

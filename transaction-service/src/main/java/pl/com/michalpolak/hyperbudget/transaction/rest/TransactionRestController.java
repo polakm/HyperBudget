@@ -6,10 +6,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.WebRequest;
-import pl.com.michalpolak.hyperbudget.transaction.core.TransactionNotFoundException;
+import pl.com.michalpolak.hyperbudget.transaction.core.InvalidTransactionException;
+import pl.com.michalpolak.hyperbudget.transaction.core.api.TransactionNotFoundException;
 import pl.com.michalpolak.hyperbudget.transaction.core.api.Transaction;
 import pl.com.michalpolak.hyperbudget.transaction.core.api.TransactionService;
 
+import javax.validation.Valid;
 import java.util.Set;
 
 @RestController
@@ -23,7 +25,7 @@ public class TransactionRestController {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    TransactionData addTranasaction(@RequestBody TransactionData transactionData){
+    TransactionData addTranasaction(@Valid @RequestBody TransactionData transactionData) throws InvalidTransactionException {
 
         Transaction transaction = new TransactionDataAdapter(transactionData);
         service.addTransaction(transaction);
@@ -56,5 +58,10 @@ public class TransactionRestController {
     @ExceptionHandler({ TransactionNotFoundException.class })
     ResponseEntity handleTransactionNotExistException(TransactionNotFoundException exception, WebRequest request){
         return new ResponseEntity(exception.getMessage(),HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler({ InvalidTransactionException.class })
+    ResponseEntity handleInvalidTransactionException(InvalidTransactionException exception, WebRequest request){
+        return new ResponseEntity(exception.getMessage(),HttpStatus.BAD_REQUEST);
     }
 }

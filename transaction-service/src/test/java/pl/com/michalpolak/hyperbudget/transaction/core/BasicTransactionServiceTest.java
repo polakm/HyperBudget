@@ -2,8 +2,10 @@ package pl.com.michalpolak.hyperbudget.transaction.core;
 
 import org.junit.Test;
 import pl.com.michalpolak.hyperbudget.transaction.core.api.Transaction;
+import pl.com.michalpolak.hyperbudget.transaction.core.api.TransactionNotFoundException;
 import pl.com.michalpolak.hyperbudget.transaction.core.api.TransactionService;
 import pl.com.michalpolak.hyperbudget.transaction.core.spi.TransactionRepository;
+import pl.com.michalpolak.hyperbudget.transaction.core.spi.TransactionValidator;
 import pl.com.michalpolak.hyperbudget.transaction.data.InMemoryTransactionRepository;
 
 import java.util.Set;
@@ -13,11 +15,12 @@ import static org.junit.Assert.*;
 public class BasicTransactionServiceTest {
 
     @Test
-    public void addTransaction() throws TransactionNotFoundException {
+    public void addTransaction() throws TransactionNotFoundException, InvalidTransactionException {
 
         //given
         TransactionRepository repository = new InMemoryTransactionRepository();
-        TransactionService transactionService = new BasicTransactionService(repository);
+        TransactionValidator validator = new BasicTransactionValidator();
+        TransactionService transactionService = new BasicTransactionService(repository, validator);
         Transaction transaction = new Transaction();
 
         //when
@@ -34,17 +37,39 @@ public class BasicTransactionServiceTest {
 
         //given
         TransactionRepository repository = new InMemoryTransactionRepository();
-        TransactionService transactionService = new BasicTransactionService(repository);
+        TransactionValidator validator = new BasicTransactionValidator();
+        TransactionService transactionService = new BasicTransactionService(repository, validator);
 
         //when
         try {
             transactionService.getTransaction("non-exist-id");
-        }catch (TransactionNotFoundException e){
+        } catch (TransactionNotFoundException e) {
             return;
         }
 
         //then
         fail("Method should throw TransactionNotFoundException.");
+    }
+
+    @Test
+    public void invalidTransactionException() {
+
+        //given
+        TransactionRepository repository = new InMemoryTransactionRepository();
+        ValidationRule rule = new AmountIsRequired();
+        TransactionValidator validator = new BasicTransactionValidator(rule);
+        TransactionService transactionService = new BasicTransactionService(repository, validator);
+        Transaction transaction = new Transaction();
+
+        //when
+        try {
+            transactionService.addTransaction(transaction);
+        } catch (InvalidTransactionException e) {
+            return;
+        }
+
+        //then
+        fail("Method should throw InvalidTransactionException.");
     }
 
 
@@ -53,7 +78,8 @@ public class BasicTransactionServiceTest {
 
         //given
         TransactionRepository repository = new InMemoryTransactionRepository();
-        TransactionService transactionService = new BasicTransactionService(repository);
+        TransactionValidator validator = new BasicTransactionValidator();
+        TransactionService transactionService = new BasicTransactionService(repository, validator);
         Transaction transaction = new Transaction();
         transaction.setTitle("test");
         Transaction updatedTransaction = new Transaction();
@@ -71,11 +97,12 @@ public class BasicTransactionServiceTest {
 
 
     @Test
-    public void removeTransaction() throws TransactionNotFoundException {
+    public void removeTransaction() throws TransactionNotFoundException, InvalidTransactionException {
 
         //given
         TransactionRepository repository = new InMemoryTransactionRepository();
-        TransactionService transactionService = new BasicTransactionService(repository);
+        TransactionValidator validator = new BasicTransactionValidator();
+        TransactionService transactionService = new BasicTransactionService(repository, validator);
         Transaction transaction = new Transaction();
 
         //when
@@ -84,8 +111,8 @@ public class BasicTransactionServiceTest {
 
         //when
         try {
-            transactionService.getTransaction("non-exist-id");
-        }catch (TransactionNotFoundException e){
+            transactionService.getTransaction(transaction.getId());
+        } catch (TransactionNotFoundException e) {
             return;
         }
 
@@ -96,11 +123,12 @@ public class BasicTransactionServiceTest {
 
 
     @Test
-    public void allTrascations() {
+    public void allTrascations() throws InvalidTransactionException {
 
         //given
         TransactionRepository repository = new InMemoryTransactionRepository();
-        TransactionService transactionService = new BasicTransactionService(repository);
+        TransactionValidator validator = new BasicTransactionValidator();
+        TransactionService transactionService = new BasicTransactionService(repository, validator);
 
         Transaction transaction1 = new Transaction();
         Transaction transaction2 = new Transaction();
