@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
-import { Button, ButtonGroup, Container, Table } from 'reactstrap';
+import { Button, ButtonGroup, Container, Table, Input   } from 'reactstrap';
 import AppNavbar from './AppNavbar';
 import { Link } from 'react-router-dom';
+
+
 
 class TransactionList extends Component {
 
@@ -47,12 +49,23 @@ class TransactionList extends Component {
       "dddddd":"Piggybank",
     }
 
+    //TODO push to server site
+    const categoriesMap = {
+      "aaaaaa":"Other",
+      "bbbbbb":"Shopping",
+      "cccccc":"Car",
+     "dddddd":"Home",
+     "eeeeee":"Food",
+     "ffffff":"Education"
+    }
+
     const transactionList = transactions.map(transaction => {
       return <tr key={transaction.id}>
         <td style={{whiteSpace: 'nowrap'}}>{transaction.title}</td>
         <td>{transaction.amount}</td>
         <td>{transaction.executionDate}</td>
         <td>{accountsMap[transaction.accountId]}</td>
+        <td>{categoriesMap[transaction.categoryId]}</td>
         <td>
           <ButtonGroup>
             <Button size="sm" color="primary" tag={Link} to={"/transactions/" + transaction.id}>Edit</Button>
@@ -67,13 +80,14 @@ class TransactionList extends Component {
         <AppNavbar/>
         <Container fluid>
           <h3>Transaction List</h3>
-          <Table className="mt-4">
+          <Table striped className="mt-4">
             <thead>
             <tr>
-              <th width="20%">Title</th>
+              <th width="30%">Title</th>
               <th width="20%">Amount</th>
-              <th width="20%">Date</th>
-              <th width="20%">Account</th>
+              <th width="10%">Date</th>
+              <th width="15%">Account</th>
+              <th width="15%">Category</th>
               <th width="10%">Actions</th>
             </tr>
             </thead>
@@ -81,6 +95,7 @@ class TransactionList extends Component {
             {transactionList}
             </tbody>
           </Table>
+
           <div className="float-right">
             <Button color="success" tag={Link} to="/transactions/new">Add Transaction</Button>
           </div>

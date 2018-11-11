@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link, withRouter } from 'react-router-dom';
-import { Button, Container, Form, FormGroup, Input, Label } from 'reactstrap';
+import { Button, Container, Form, FormGroup, Input, Label, InputGroupAddon, InputGroup} from 'reactstrap';
 import AppNavbar from './AppNavbar';
 
 class TransactionEdit extends Component {
@@ -11,6 +11,8 @@ class TransactionEdit extends Component {
     currencyCode: 'PLN',
     executionDate:'',
     dateFormat: 'YYYY-MM-DD',
+    accountId:'',
+    categoryId:''
   };
 
   constructor(props) {
@@ -69,8 +71,11 @@ class TransactionEdit extends Component {
           </FormGroup>
           <FormGroup>
             <Label for="amount">Amount</Label>
+            <InputGroup>
             <Input type="number"  min="0.00" step="0.01"  name="amount" id="amount" value={item.amount || ''}
                    onChange={this.handleChange} autoComplete="amount"/>
+                   <InputGroupAddon addonType="prepend">{item.currencyCode}</InputGroupAddon>
+                   </InputGroup>
           </FormGroup>
           <FormGroup>
             <Label for="account">Account</Label>
@@ -84,9 +89,23 @@ class TransactionEdit extends Component {
             </Input>
           </FormGroup>
           <FormGroup>
-            <Label for="executionDate">Date</Label>
+            <Label for="category">Category</Label>
+            <Input type="select" name="categoryId" id="category" value={item.categoryId || ''}
+                   onChange={this.handleChange} autoComplete="categoryId">
+              /* TODO push to server site */
+              <option value="aaaaaa">Other</option>
+              <option value="bbbbbb">Shopping</option>
+              <option value="cccccc">Car</option>
+              <option value="dddddd">Home</option>
+              <option value="eeeeee">Food</option>
+              <option value="ffffff">Education</option>
+            </Input>
+          </FormGroup>
+          <FormGroup>
+            <Label for="executionDate">Date</Label>           
             <Input type="date" name="executionDate" id="executionDate" value={item.executionDate || ''}
                    onChange={this.handleChange} autoComplete="executionDate"/>
+                    
           </FormGroup>
           <FormGroup>
             <Button color="primary" type="submit">Save</Button>{' '}
