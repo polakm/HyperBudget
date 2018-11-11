@@ -27,7 +27,9 @@ class BasicTransactionService implements TransactionService {
     }
 
     @Override
-    public void removeTransaction(String id) {
+    public void removeTransaction(String id) throws TransactionNotFoundException {
+
+        this.getTransaction(id);
         this.transactionRepository.remove(id);
     }
 
@@ -47,8 +49,9 @@ class BasicTransactionService implements TransactionService {
     }
 
     @Override
-    public Transaction updateTransaction(Transaction transaction) {
+    public Transaction updateTransaction(Transaction transaction) throws TransactionNotFoundException {
 
+        this.getTransaction(transaction.getId());
         return this.transactionRepository.update(transaction);
     }
 }

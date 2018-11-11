@@ -9,11 +9,11 @@ public interface TransactionService {
 
     Transaction addTransaction(Transaction transaction) throws InvalidTransactionException;
 
-    void removeTransaction(String id);
+    void removeTransaction(String id) throws TransactionNotFoundException;
 
     Transaction getTransaction(String id) throws TransactionNotFoundException;
 
     Set<Transaction> allTrascations();
 
-    Transaction updateTransaction(Transaction transaction);
+    Transaction updateTransaction(Transaction transaction) throws TransactionNotFoundException;
 }
