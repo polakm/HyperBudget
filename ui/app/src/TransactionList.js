@@ -16,10 +16,9 @@ class TransactionList extends Component {
   componentDidMount() {
     this.setState({isLoading: true});
 
-    fetch('/api/transactions')
+    fetch('/api/transactions/')
       .then(response => response.json())
       .then(data => this.setState({transactions: data.transactions, isLoading: false}));
-      
   }
 
   async remove(id) {
