@@ -1,5 +1,7 @@
 package pl.com.michalpolak.hyperbudget.transaction.core;
 
+import org.joda.money.Money;
+import org.joda.time.DateTime;
 import org.junit.Test;
 import pl.com.michalpolak.hyperbudget.transaction.core.api.Transaction;
 import pl.com.michalpolak.hyperbudget.transaction.core.api.TransactionNotFoundException;
@@ -9,6 +11,7 @@ import pl.com.michalpolak.hyperbudget.transaction.core.spi.TransactionValidator;
 import pl.com.michalpolak.hyperbudget.transaction.data.InMemoryTransactionRepository;
 
 import java.util.Set;
+import java.util.UUID;
 
 import static org.junit.Assert.*;
 
@@ -74,17 +77,28 @@ public class BasicTransactionServiceTest {
 
 
     @Test
-    public void updateTransaction() throws TransactionNotFoundException {
+    public void updateTransaction() throws TransactionNotFoundException, InvalidTransactionException {
 
         //given
         TransactionRepository repository = new InMemoryTransactionRepository();
         TransactionValidator validator = new BasicTransactionValidator();
         TransactionService transactionService = new BasicTransactionService(repository, validator);
+
         Transaction transaction = new Transaction();
-        transaction.setTitle("test");
+        transaction.setId(transaction.getId());
+        transaction.setTitle("title");
+        transaction.setExecutionDate(new DateTime());
+        transaction.setAccountId(UUID.randomUUID().toString());
+        transaction.setAmount(Money.parse("PLN 299.99"));
+
+        transactionService.addTransaction(transaction);
+
         Transaction updatedTransaction = new Transaction();
         updatedTransaction.setId(transaction.getId());
         updatedTransaction.setTitle("updated");
+        updatedTransaction.setExecutionDate(new DateTime());
+        updatedTransaction.setAccountId(UUID.randomUUID().toString());
+        updatedTransaction.setAmount(Money.parse("PLN 299.99"));
 
         //when
         transactionService.updateTransaction(updatedTransaction);

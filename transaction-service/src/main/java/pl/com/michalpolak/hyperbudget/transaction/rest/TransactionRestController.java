@@ -1,6 +1,8 @@
 package pl.com.michalpolak.hyperbudget.transaction.rest;
 
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +20,9 @@ import java.util.Set;
 @RequestMapping("/api/transactions")
 public class TransactionRestController {
 
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(TransactionRestController.class);
+
     private TransactionService service;
 
     public TransactionRestController(@Autowired TransactionService service) {
@@ -34,17 +39,20 @@ public class TransactionRestController {
 
     @RequestMapping(method = RequestMethod.GET)
     TransactionDataList transactionList() {
+
         Set<Transaction> transactions = service.allTrascations();
         return new TransactionDataList(transactions);
     }
 
     @RequestMapping(path = "/{id}", method = RequestMethod.GET)
     TransactionData getTranaction(@PathVariable("id") String id) throws TransactionNotFoundException {
+
         return new TransactionData(service.getTransaction(id));
     }
 
     @RequestMapping(path = "/{id}", method = RequestMethod.DELETE)
     void removeTranaction(@PathVariable("id") String id) throws TransactionNotFoundException {
+
         service.removeTransaction(id);
     }
 
@@ -57,16 +65,22 @@ public class TransactionRestController {
 
     @ExceptionHandler({TransactionNotFoundException.class})
     ResponseEntity handleTransactionNotExistException(TransactionNotFoundException exception, WebRequest request) {
+
+        LOGGER.warn(exception.getMessage(),exception);
         return new ResponseEntity(exception.getMessage(), HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler({InvalidTransactionException.class})
     ResponseEntity handleInvalidTransactionException(InvalidTransactionException exception, WebRequest request) {
+
+        LOGGER.warn(exception.getMessage(),exception);
         return new ResponseEntity(exception.getMessage(), HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler({Exception.class})
     ResponseEntity handleUnknownException(Exception exception, WebRequest request) {
+
+        LOGGER.error(exception.getMessage(),exception);
         return new ResponseEntity(exception.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }
