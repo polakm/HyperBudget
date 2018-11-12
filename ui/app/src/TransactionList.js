@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import { Button, ButtonGroup, Container, Table, Input   } from 'reactstrap';
+import { Button, ButtonGroup, Container, Table, Row, Col, ListGroup, ListGroupItem, Badge, Card, CardBody, CardTitle } from 'reactstrap';
 import AppNavbar from './AppNavbar';
 import { Link } from 'react-router-dom';
+import {PieChart} from 'react-easy-chart';
 
 
 
@@ -16,9 +17,9 @@ class TransactionList extends Component {
   componentDidMount() {
     this.setState({isLoading: true});
 
-    fetch('/api/transactions/')
+    fetch('/api/transactions')
       .then(response => response.json())
-      .then(data => this.setState({transactions: data.transactions, isLoading: false}));
+      .then(data => this.setState({transactions: data.transactions,statistics: data.statistics, isLoading: false}));
   }
 
   async remove(id) {
@@ -48,6 +49,25 @@ class TransactionList extends Component {
       "cccccc":"Company Account",
       "dddddd":"Piggybank"
     }
+
+
+    //TODO push to server site
+    const statistics ={
+      totalIncome:"0",
+      totalOutgoing:"0",
+      balance:"0"
+    }; 
+    //TODO push to server site
+    transactions.map(transaction => {
+      if (transaction.amount > 0){
+        statistics.totalIncome = Number(statistics.totalIncome) + Number(transaction.amount);
+      }
+      if (transaction.amount < 0){
+       statistics.totalOutgoing = Number(statistics.totalOutgoing) - Number(transaction.amount);
+      }
+    });
+    //TODO push to server site
+    statistics.balance =  Number(statistics.totalIncome) -  Number(statistics.totalOutgoing);
 
     //TODO push to server site
     const categoriesMap = {
@@ -80,6 +100,8 @@ class TransactionList extends Component {
         <AppNavbar/>
         <Container fluid>
           <h3>Transaction List</h3>
+          <Row>
+          <Col md={8}>
           <Table striped className="mt-4">
             <thead>
             <tr>
@@ -99,6 +121,28 @@ class TransactionList extends Component {
           <div className="float-right">
             <Button color="success" tag={Link} to="/transactions/new">Add Transaction</Button>
           </div>
+          </Col>
+        </Row>
+        <Row>
+        <Col md={3} >
+            <Card >
+              <CardBody>
+                <h5>Income: <Badge className="float-right" color="success">{statistics.totalIncome}</Badge></h5>
+                <h5>Outgoings: <Badge className="float-right" color="danger">{statistics.totalOutgoing}</Badge></h5>
+                <hr/>
+                <h5>Balance: <Badge className="float-right" color="info">{statistics.balance}</Badge></h5>
+              </CardBody>
+            </Card>
+          </Col>
+          <Col md={3} >
+          <PieChart size={160} innerHoleSize={60} data={[
+               { title: 'Outgoings', value: statistics.totalOutgoing, color: '#dc3545' },
+               { title: 'Balance', value: statistics.balance, color: '#17a2b8' },
+             { title: 'Income', value: statistics.totalIncome, color: '#28a745' },
+            ]}
+            />
+          </Col>
+        </Row>
         </Container>
       </div>
     );
