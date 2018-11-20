@@ -1,3 +1,4 @@
 rootProject.name = 'transaction-service'
 includeFlat 'transaction-aggregation-service'
+includeFlat 'service-discovery'
 
