@@ -13,6 +13,7 @@ import pl.com.michalpolak.hyperbudget.transaction.core.api.Transaction;
 import pl.com.michalpolak.hyperbudget.transaction.core.api.TransactionNotFoundException;
 import pl.com.michalpolak.hyperbudget.transaction.core.api.TransactionService;
 
+import java.util.List;
 import java.util.Set;
 
 @RestController
@@ -37,10 +38,10 @@ public class TransactionRestController {
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    TransactionDataList transactionList() {
+    List<TransactionData> transactionList() {
 
         Set<Transaction> transactions = service.allTrascations();
-        return new TransactionDataList(transactions);
+        return new TransactionDataList(transactions).asList();
     }
 
     @RequestMapping(path = "/{id}", method = RequestMethod.GET)

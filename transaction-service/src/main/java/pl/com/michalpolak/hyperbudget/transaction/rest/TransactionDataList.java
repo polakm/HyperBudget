@@ -28,4 +28,8 @@ public class TransactionDataList {
     public void setTransactions(List<TransactionData> transactions) {
         this.transactions = transactions;
     }
+
+    public List<TransactionData> asList() {
+        return transactions;
+    }
 }

@@ -1,6 +1,8 @@
 package pl.com.michalpolak.hyperbudget.transaction.client.transaction;
 
 
+import pl.com.michalpolak.hyperbudget.transaction.core.spi.Transaction;
+
 public class TransactionData {
 
     private String id;
@@ -19,7 +21,21 @@ public class TransactionData {
 
     private String categoryId;
 
-    public TransactionData() {
+    public TransactionData(Transaction transaction) {
+
+        setId(transaction.getId());
+        setTitle(transaction.getTitle());
+        setAccountId(transaction.getAccountId());
+        setCategoryId(transaction.getCategoryId());
+
+        if (transaction.getAmount() != null) {
+            setAmount(transaction.getAmount().getAmount().toPlainString());
+            setCurrencyCode(transaction.getAmount().getCurrencyUnit().getCode());
+        }
+        if (transaction.getExecutionDate() != null) {
+            setExecutionDate(transaction.getExecutionDate().toString("YYYY-MM-DD"));
+            setDateFormat("YYYY-MM-DD");
+        }
     }
 
     public String getTitle() {

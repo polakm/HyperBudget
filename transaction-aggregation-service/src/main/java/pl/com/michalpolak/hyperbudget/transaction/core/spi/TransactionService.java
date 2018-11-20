@@ -1,6 +1,5 @@
 package pl.com.michalpolak.hyperbudget.transaction.core.spi;
 
-import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -9,7 +8,7 @@ import java.util.List;
 
 public interface TransactionService {
 
-    Transaction addTranasaction(@RequestBody Transaction transactionData);
+    Transaction addTranasaction(@RequestBody Transaction transaction);
 
     List<Transaction> transactionList();
 
@@ -17,5 +16,5 @@ public interface TransactionService {
 
     void removeTranaction(@PathVariable("id") String id);
 
-    void updateTranaction(@PathVariable("id") String id, @RequestBody Transaction transactionData);
+    void updateTranaction(@PathVariable("id") String id, @RequestBody Transaction transaction);
 }
