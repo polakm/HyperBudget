@@ -1,3 +1,15 @@
+buildscript {
+    ext {
+        springBootVersion = '2.0.5.RELEASE'
+    }
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    }
+}
+
 plugins {
     id 'java'
 }
@@ -11,10 +23,17 @@ repositories {
     mavenCentral()
 }
 
+apply plugin: 'org.springframework.boot'
+
+bootJar {
+    baseName = 'transaction-aggregation-service'
+    version = '0.0.1-SNAPSHOT'
+}
+
 dependencies {
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: '2.1.0.RELEASE'
     compile group: 'org.springframework.cloud', name: 'spring-cloud-starter-netflix-eureka-client', version: '2.0.2.RELEASE'
-    compile group: 'org.springframework.cloud', name: 'spring-cloud-starter-feign', version: '1.4.6.RELEASE'
+   // compile group: 'org.springframework.cloud', name: 'spring-cloud-starter-feign', version: '1.4.6.RELEASE'
     compile group: 'org.springframework.cloud', name: 'spring-cloud-starter-openfeign', version: '2.0.2.RELEASE'
     compile group: 'org.joda', name: 'joda-money', version: '1.0.1'
     compile group: 'joda-time', name: 'joda-time', version: '2.10.1'
