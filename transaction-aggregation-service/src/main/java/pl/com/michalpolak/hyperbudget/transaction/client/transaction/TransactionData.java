@@ -21,6 +21,10 @@ public class TransactionData {
 
     private String categoryId;
 
+    public TransactionData(){
+
+    }
+
     public TransactionData(Transaction transaction) {
 
         setId(transaction.getId());

@@ -28,9 +28,14 @@ public class AggregatedTransactionData {
 
         setId(transaction.getId());
         setTitle(transaction.getTitle());
-        setAccountId(transaction.getAccount().getId());
-        setAccountName(transaction.getAccount().getName());
-        setCategoryId(transaction.getCategory().getId());
+        if(transaction.getAccount() != null) {
+            setAccountId(transaction.getAccount().getId());
+            setAccountName(transaction.getAccount().getName());
+        }
+        if(transaction.getCategory() != null) {
+            setCategoryId(transaction.getCategory().getId());
+            setCategoryName(transaction.getCategory().getName());
+        }
 
         if (transaction.getAmount() != null) {
             setAmount(transaction.getAmount().getAmount().toPlainString());

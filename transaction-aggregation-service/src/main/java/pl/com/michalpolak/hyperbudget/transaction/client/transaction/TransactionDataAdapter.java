@@ -13,6 +13,7 @@ class TransactionDataAdapter extends Transaction {
 
     TransactionDataAdapter(TransactionData transactionData) {
 
+        this.setId(transactionData.getId());
         this.setTitle(transactionData.getTitle());
         this.setAccountId(transactionData.getAccountId());
         this.setCategoryId(transactionData.getCategoryId());
