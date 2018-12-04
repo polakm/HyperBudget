@@ -1,0 +1,11 @@
+server:
+  port: 2020
+
+zuul:
+  routes:
+    transactions:
+      path: /api/transactions/**
+      serviceId: transaction-service
+
+
+
