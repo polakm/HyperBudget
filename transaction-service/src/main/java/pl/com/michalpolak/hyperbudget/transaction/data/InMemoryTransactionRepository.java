@@ -4,6 +4,7 @@ import pl.com.michalpolak.hyperbudget.transaction.core.spi.TransactionRepository
 import pl.com.michalpolak.hyperbudget.transaction.core.api.Transaction;
 
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class InMemoryTransactionRepository implements TransactionRepository {
 
@@ -11,7 +12,7 @@ public class InMemoryTransactionRepository implements TransactionRepository {
 
     public InMemoryTransactionRepository() {
 
-        this.storage = new HashMap<>();
+        this.storage = new ConcurrentHashMap<>();
     }
 
     @Override
