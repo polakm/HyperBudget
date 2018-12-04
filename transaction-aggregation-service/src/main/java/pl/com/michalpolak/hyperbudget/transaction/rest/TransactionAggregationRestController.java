@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/transactions")
+@RequestMapping("/api/transactions/full")
 public class TransactionAggregationRestController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(TransactionAggregationRestController.class);

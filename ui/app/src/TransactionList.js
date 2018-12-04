@@ -17,13 +17,13 @@ class TransactionList extends Component {
   componentDidMount() {
     this.setState({isLoading: true});
 
-    fetch('/api/transactions')
+    fetch('/api/transactions/full')
       .then(response => response.json())
-      .then(data => this.setState({transactions: data.transactions,statistics: data.statistics, isLoading: false}));
+      .then(data => this.setState({transactions: data, isLoading: false}));
   }
 
   async remove(id) {
-    await fetch(`/api/transactions/${id}`, {
+    await fetch(`/api/transactions/full/${id}`, {
       method: 'DELETE',
       headers: {
         'Accept': 'application/json',

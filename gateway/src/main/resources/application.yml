@@ -1,11 +1,44 @@
+debug: true
+
+logging:
+  level:
+    com:
+      netflix: DEBUG
+
+spring:
+  application:
+    name: api-gateway
+
+
+eureka:
+  client:
+    registerWithEureka: false
+    fetchRegistry: true
+
+
+
 server:
   port: 2020
 
+ribbon:
+  ReadTimeout: 60000
+  ConnectTimeout: 6000
+  eureka:
+    enabled: true   #important
+
 zuul:
   routes:
-    transactions:
-      path: /api/transactions/**
-      serviceId: transaction-service
 
+    transactions-query:
+      path: /api/transactions/full/**
+      serviceId: TRANSACTION-AGGREGATION-SERVICE
+      strip-prefix: false
+
+
+    transactions-command:
+      ignoredPatterns: /api/transactions/full/**
+      path: /api/transactions/**
+      serviceId: TRANSACTION-SERVICE
+      strip-prefix: false
 
 
