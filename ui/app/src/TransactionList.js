@@ -41,14 +41,7 @@ class TransactionList extends Component {
     if (isLoading) {
       return <p>Loading...</p>;
     }
-    
-    //TODO push to server site
-    const accountsMap = {
-      "aaaaaa":"Bank",
-      "bbbbbb":"Wallet",
-      "cccccc":"Company Account",
-      "dddddd":"Piggybank"
-    }
+
 
 
     //TODO push to server site
@@ -69,23 +62,14 @@ class TransactionList extends Component {
     //TODO push to server site
     statistics.balance =  Number(statistics.totalIncome) -  Number(statistics.totalOutgoing);
 
-    //TODO push to server site
-    const categoriesMap = {
-      "aaaaaa":"Other",
-      "bbbbbb":"Shopping",
-      "cccccc":"Car",
-      "dddddd":"Home",
-      "eeeeee":"Food",
-      "ffffff":"Education"
-    }
 
     const transactionList = transactions.map(transaction => {
       return <tr key={transaction.id}>
         <td style={{whiteSpace: 'nowrap'}}>{transaction.title}</td>
         <td>{transaction.amount}</td>
         <td>{transaction.executionDate}</td>
-        <td>{accountsMap[transaction.accountId]}</td>
-        <td>{categoriesMap[transaction.categoryId]}</td>
+        <td>{transaction.accountName}</td>
+        <td>{transaction.categoryName}</td>
         <td>
           <ButtonGroup>
             <Button size="sm" color="primary" tag={Link} to={"/transactions/" + transaction.id}>Edit</Button>
