@@ -11,8 +11,8 @@ class TransactionEdit extends Component {
     currencyCode: 'PLN',
     executionDate:'',
     dateFormat: 'YYYY-MM-DD',
-    accountId:'',
-    categoryId:''
+    accountId:'aaaaaa',
+    categoryId:'aaaaaa'
   };
 
   constructor(props) {
