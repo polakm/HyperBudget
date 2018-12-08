@@ -1,0 +1,1 @@
+java -jar %CD%/build/libs/tracing-service-0.0.1-SNAPSHOT.jar
