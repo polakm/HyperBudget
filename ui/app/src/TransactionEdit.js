@@ -9,7 +9,7 @@ class TransactionEdit extends Component {
     title: '',
     amount: '',
     currencyCode: 'PLN',
-    executionDate:'',
+    executionDate: new Date().toISOString().substring(0,10),
     dateFormat: 'YYYY-MM-DD',
     accountId:'aaaaaa',
     categoryId:'aaaaaa'
@@ -20,15 +20,27 @@ class TransactionEdit extends Component {
     this.state = {
       item: this.emptyItem
     };
+
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.resolveTitle = this.resolveTitle.bind(this);
+
   }
 
   async componentDidMount() {
-    if (this.props.match.params.id !== 'new') {
+    if (this.props.match.params.id !== 'income' && this.props.match.params.id !== 'expense') {
       const transaction = await (await fetch(`/api/transactions/${this.props.match.params.id}`)).json();
       this.setState({item: transaction});
+
+      //TODO "Push transaction type to server side"
+      this.state.item.type  = ( Number(this.state.item.amount) > 0) ? "income" : "expense";
+    }else{
+        this.state.item.type = this.props.match.params.id;
     }
+    if(this.state.item.type === "expense"){
+       this.state.item.amount = -this.state.item.amount;
+    }
+    this.setState({item: this.state.item});
   }
 
   handleChange(event) {
@@ -44,6 +56,10 @@ class TransactionEdit extends Component {
     event.preventDefault();
     const {item} = this.state;
 
+    //TODO Push transaction type to server side
+    if(item.type === "expense"){
+        item.amount = - item.amount;
+    }
     await fetch('/api/transactions' + (item.id ? ('/'+ item.id) : ''), {
       method: (item.id) ? 'PUT' : 'POST',
       headers: {
@@ -55,9 +71,26 @@ class TransactionEdit extends Component {
     this.props.history.push('/transactions');
   }
 
+  resolveTitle(){
+    var title;
+      if(this.state.item.id){
+       title = "Edit ";
+      }else{
+         title = "Add ";
+      }
+
+       //TODO Push transaction type to server side
+      if (this.state.item.type === 'income'){
+        title+="Income"
+     }else{
+         title+="Expense"
+     }
+     return title;
+  };
+
   render() {
     const {item} = this.state;
-    const title = <h2>{item.id ? 'Edit Transaction' : 'Add Transaction'}</h2>;
+    const title = <h2>{this.resolveTitle()}</h2>;
 
     return <div>
       <AppNavbar/>
@@ -72,7 +105,7 @@ class TransactionEdit extends Component {
           <FormGroup>
             <Label for="amount">Amount</Label>
             <InputGroup>
-            <Input type="number"  min="0.00" step="0.01"  name="amount" id="amount" value={item.amount || ''}
+            <Input type="number" min="0.01" step="0.01" name="amount" id="amount" value={item.amount || ''}
                    onChange={this.handleChange} autoComplete="amount"/>
                    <InputGroupAddon addonType="prepend">{item.currencyCode}</InputGroupAddon>
                    </InputGroup>
@@ -81,7 +114,7 @@ class TransactionEdit extends Component {
             <Label for="account">Account</Label>
             <Input type="select" name="accountId" id="account" value={item.accountId || ''}
                    onChange={this.handleChange} autoComplete="accountId">
-              /* TODO push to server site */
+              /* TODO load from server */
               <option value="aaaaaa">Bank</option>
               <option value="bbbbbb">Wallet</option>
               <option value="cccccc">Company Account</option>
@@ -92,7 +125,7 @@ class TransactionEdit extends Component {
             <Label for="category">Category</Label>
             <Input type="select" name="categoryId" id="category" value={item.categoryId || ''}
                    onChange={this.handleChange} autoComplete="categoryId">
-              /* TODO push to server site */
+             /* TODO load from server */
               <option value="aaaaaa">Other</option>
               <option value="bbbbbb">Shopping</option>
               <option value="cccccc">Car</option>

@@ -23,7 +23,7 @@ class TransactionList extends Component {
   }
 
   async remove(id) {
-    await fetch(`/api/transactions/full/${id}`, {
+    await fetch(`/api/transactions/${id}`, {
       method: 'DELETE',
       headers: {
         'Accept': 'application/json',
@@ -62,11 +62,14 @@ class TransactionList extends Component {
     //TODO push to server site
     statistics.balance =  Number(statistics.totalIncome) -  Number(statistics.totalOutgoing);
 
+    const getAmountStyle = function(transaction){
+        return Number(transaction.amount)>0 ? 'green':'red';
+     }
 
     const transactionList = transactions.map(transaction => {
-      return <tr key={transaction.id}>
+      return <tr key={transaction.id} style={{"color" : getAmountStyle(transaction)}}>
         <td style={{whiteSpace: 'nowrap'}}>{transaction.title}</td>
-        <td>{transaction.amount}</td>
+        <td>{Math.abs(transaction.amount)}</td>
         <td>{transaction.executionDate}</td>
         <td>{transaction.accountName}</td>
         <td>{transaction.categoryName}</td>
@@ -84,14 +87,22 @@ class TransactionList extends Component {
         <AppNavbar/>
         <Container fluid>
           <h3>Transaction List</h3>
+
           <Row>
           <Col md={8}>
+
+                  <div className="float-right add-buttons">
+                    <ButtonGroup>
+                        <Button color="success" tag={Link} to="/transactions/income">Add Income</Button>
+                        <Button color="danger" tag={Link} to="/transactions/expense">Add Expense</Button>
+                     </ButtonGroup>
+                  </div>
           <Table striped className="mt-4">
             <thead>
             <tr>
-              <th width="30%">Title</th>
+              <th width="20%">Title</th>
               <th width="20%">Amount</th>
-              <th width="10%">Date</th>
+              <th width="20%">Date</th>
               <th width="15%">Account</th>
               <th width="15%">Category</th>
               <th width="10%">Actions</th>
@@ -102,29 +113,28 @@ class TransactionList extends Component {
             </tbody>
           </Table>
 
-          <div className="float-right">
-            <Button color="success" tag={Link} to="/transactions/new">Add Transaction</Button>
-          </div>
+
           </Col>
-        </Row>
-        <Row>
         <Col md={3} >
-            <Card >
+            <Card>
               <CardBody>
-                <h5>Income: <Badge className="float-right" color="success">{statistics.totalIncome}</Badge></h5>
-                <h5>Outgoings: <Badge className="float-right" color="danger">{statistics.totalOutgoing}</Badge></h5>
+                <h5>Income: <Badge className="float-right" color="success">{statistics.totalIncome.toFixed(2)}</Badge></h5>
+                <h5>Outgoings: <Badge className="float-right" color="danger">{statistics.totalOutgoing.toFixed(2)}</Badge></h5>
                 <hr/>
-                <h5>Balance: <Badge className="float-right" color="info">{statistics.balance}</Badge></h5>
+                <h5>Balance: <Badge className="float-right" color="info">{statistics.balance.toFixed(2)}</Badge></h5>
               </CardBody>
             </Card>
-          </Col>
-          <Col md={3} >
-          <PieChart size={160} innerHoleSize={60} data={[
+            <Card>
+              <CardBody>
+              <div id = "chart-container" style={{"text-align":"center"}}>
+          <PieChart size={200} inner innerHoleSize={150} data={[
                { title: 'Outgoings', value: statistics.totalOutgoing, color: '#dc3545' },
                { title: 'Balance', value: statistics.balance, color: '#17a2b8' },
-             { title: 'Income', value: statistics.totalIncome, color: '#28a745' },
             ]}
-            />
+            ></PieChart>
+             </div>
+             </CardBody>
+            </Card>
           </Col>
         </Row>
         </Container>

@@ -33,4 +33,8 @@
 
 .container, .container-fluid {
   margin-top: 40px;
-}  
+}
+
+.add-buttons {
+  margin-bottom: 10px;
+}
