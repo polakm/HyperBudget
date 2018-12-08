@@ -12,7 +12,6 @@ class TransactionDataAdapter extends Transaction {
     private static final Logger LOGGER = LoggerFactory.getLogger(TransactionDataAdapter.class);
 
     TransactionDataAdapter(TransactionData transactionData) {
-
         this.setTitle(transactionData.getTitle());
         this.setAccountId(transactionData.getAccountId());
         this.setCategoryId(transactionData.getCategoryId());

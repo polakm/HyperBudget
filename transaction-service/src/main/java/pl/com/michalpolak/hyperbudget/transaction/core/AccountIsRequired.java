@@ -3,11 +3,10 @@ package pl.com.michalpolak.hyperbudget.transaction.core;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import pl.com.michalpolak.hyperbudget.transaction.core.api.Transaction;
-import pl.com.michalpolak.hyperbudget.transaction.core.spi.TransactionValidator;
 
 import java.text.MessageFormat;
 
-public class AccountIsRequired implements ValidationRule {
+class AccountIsRequired implements ValidationRule {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AccountIsRequired.class);
 

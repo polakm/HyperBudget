@@ -6,7 +6,7 @@ import pl.com.michalpolak.hyperbudget.transaction.core.api.Transaction;
 
 import java.text.MessageFormat;
 
-public class AmountIsRequired implements ValidationRule {
+class AmountIsRequired implements ValidationRule {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AmountIsRequired.class);
 
