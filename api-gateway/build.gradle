@@ -29,6 +29,8 @@ repositories {
 
 
 dependencies {
+    compile group: 'org.springframework.cloud', name: 'spring-cloud-starter-zipkin', version: '2.0.2.RELEASE'
+    compile 'org.springframework.cloud:spring-cloud-starter-sleuth'
     compile group: 'org.springframework.cloud', name: 'spring-cloud-starter-zuul', version: '1.4.6.RELEASE'
     compile group: 'org.springframework.cloud', name: 'spring-cloud-starter-netflix-eureka-client', version: '2.0.2.RELEASE'
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: '2.1.0.RELEASE'

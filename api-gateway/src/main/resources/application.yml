@@ -8,13 +8,17 @@ logging:
 spring:
   application:
     name: api-gateway
+  sleuth:
+    sampler:
+      :percentage: 1.0
+    :web:
+      :skipPattern: (^cleanup.*|.+favicon.*)
 
 
 eureka:
   client:
     registerWithEureka: false
     fetchRegistry: true
-
 
 
 server:
@@ -40,5 +44,6 @@ zuul:
       path: /api/transactions/**
       serviceId: TRANSACTION-SERVICE
       strip-prefix: false
+
 
 
