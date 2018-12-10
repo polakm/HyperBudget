@@ -6,8 +6,6 @@ import org.junit.Test;
 import pl.com.michalpolak.hyperbudget.transaction.core.api.Transaction;
 import pl.com.michalpolak.hyperbudget.transaction.core.api.TransactionNotFoundException;
 import pl.com.michalpolak.hyperbudget.transaction.core.api.TransactionService;
-import pl.com.michalpolak.hyperbudget.transaction.core.spi.TransactionRepository;
-import pl.com.michalpolak.hyperbudget.transaction.core.spi.TransactionValidator;
 import pl.com.michalpolak.hyperbudget.transaction.data.InMemoryTransactionRepository;
 
 import java.util.Set;
@@ -21,10 +19,8 @@ public class BasicTransactionServiceTest {
     public void addTransaction() throws TransactionNotFoundException, InvalidTransactionException {
 
         //given
-        TransactionRepository repository = new InMemoryTransactionRepository();
-        TransactionValidator validator = new BasicTransactionValidator();
-        TransactionService transactionService = new BasicTransactionService(repository, validator);
-        Transaction transaction = new Transaction();
+        TransactionService transactionService = TransactionServiceConfiguration.createTransactionService(new InMemoryTransactionRepository());
+        Transaction transaction = getExampleTransaction();
 
         //when
         transactionService.addTransaction(transaction);
@@ -39,13 +35,11 @@ public class BasicTransactionServiceTest {
     public void transactionNotFoundException() {
 
         //given
-        TransactionRepository repository = new InMemoryTransactionRepository();
-        TransactionValidator validator = new BasicTransactionValidator();
-        TransactionService transactionService = new BasicTransactionService(repository, validator);
+        TransactionService transactionService = TransactionServiceConfiguration.createTransactionService(new InMemoryTransactionRepository());
 
         //when
         try {
-            transactionService.getTransaction("non-exist-id");
+            transactionService.getTransaction("non-exist-transaction-id");
         } catch (TransactionNotFoundException e) {
             return;
         }
@@ -58,11 +52,9 @@ public class BasicTransactionServiceTest {
     public void invalidTransactionException() {
 
         //given
-        TransactionRepository repository = new InMemoryTransactionRepository();
-        ValidationRule rule = new AmountIsRequired();
-        TransactionValidator validator = new BasicTransactionValidator(rule);
-        TransactionService transactionService = new BasicTransactionService(repository, validator);
-        Transaction transaction = new Transaction();
+        TransactionService transactionService = TransactionServiceConfiguration.createTransactionService(new InMemoryTransactionRepository());
+        Transaction transaction = getExampleTransaction();
+        transaction.setAmount(null);
 
         //when
         try {
@@ -80,25 +72,14 @@ public class BasicTransactionServiceTest {
     public void updateTransaction() throws TransactionNotFoundException, InvalidTransactionException {
 
         //given
-        TransactionRepository repository = new InMemoryTransactionRepository();
-        TransactionValidator validator = new BasicTransactionValidator();
-        TransactionService transactionService = new BasicTransactionService(repository, validator);
+        TransactionService transactionService = TransactionServiceConfiguration.createTransactionService(new InMemoryTransactionRepository());
 
-        Transaction transaction = new Transaction();
-        transaction.setId(transaction.getId());
-        transaction.setTitle("title");
-        transaction.setExecutionDate(new DateTime());
-        transaction.setAccountId(UUID.randomUUID().toString());
-        transaction.setAmount(Money.parse("PLN 299.99"));
-
+        Transaction transaction = getExampleTransaction();
         transactionService.addTransaction(transaction);
 
-        Transaction updatedTransaction = new Transaction();
+        Transaction updatedTransaction = getExampleTransaction();
         updatedTransaction.setId(transaction.getId());
         updatedTransaction.setTitle("updated");
-        updatedTransaction.setExecutionDate(new DateTime());
-        updatedTransaction.setAccountId(UUID.randomUUID().toString());
-        updatedTransaction.setAmount(Money.parse("PLN 299.99"));
 
         //when
         transactionService.updateTransaction(updatedTransaction);
@@ -109,15 +90,12 @@ public class BasicTransactionServiceTest {
 
     }
 
-
     @Test
     public void removeTransaction() throws TransactionNotFoundException, InvalidTransactionException {
 
         //given
-        TransactionRepository repository = new InMemoryTransactionRepository();
-        TransactionValidator validator = new BasicTransactionValidator();
-        TransactionService transactionService = new BasicTransactionService(repository, validator);
-        Transaction transaction = new Transaction();
+        TransactionService transactionService = TransactionServiceConfiguration.createTransactionService(new InMemoryTransactionRepository());
+        Transaction transaction = getExampleTransaction();
 
         //when
         transactionService.addTransaction(transaction);
@@ -140,13 +118,10 @@ public class BasicTransactionServiceTest {
     public void allTrascations() throws InvalidTransactionException {
 
         //given
-        TransactionRepository repository = new InMemoryTransactionRepository();
-        TransactionValidator validator = new BasicTransactionValidator();
-        TransactionService transactionService = new BasicTransactionService(repository, validator);
-
-        Transaction transaction1 = new Transaction();
-        Transaction transaction2 = new Transaction();
-        Transaction transaction3 = new Transaction();
+        TransactionService transactionService = TransactionServiceConfiguration.createTransactionService(new InMemoryTransactionRepository());
+        Transaction transaction1 = getExampleTransaction();
+        Transaction transaction2 = getExampleTransaction();
+        Transaction transaction3 = getExampleTransaction();
 
         //when
         transactionService.addTransaction(transaction1);
@@ -157,4 +132,17 @@ public class BasicTransactionServiceTest {
         //then
         assertEquals(3, transactions.size());
     }
+
+
+
+    private Transaction getExampleTransaction() {
+        Transaction transaction = new Transaction();
+        transaction.setTitle("title");
+        transaction.setExecutionDate(new DateTime());
+        transaction.setAccountId(UUID.randomUUID().toString());
+        transaction.setAmount(Money.parse("PLN 299.99"));
+        return transaction;
+    }
+
+
 }

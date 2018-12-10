@@ -7,7 +7,6 @@ import org.springframework.context.annotation.Configuration;
 import pl.com.michalpolak.hyperbudget.transaction.core.api.TransactionService;
 import pl.com.michalpolak.hyperbudget.transaction.core.spi.TransactionRepository;
 import pl.com.michalpolak.hyperbudget.transaction.core.spi.TransactionValidator;
-import pl.com.michalpolak.hyperbudget.transaction.data.InMemoryTransactionRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,12 +16,7 @@ import java.util.List;
 class TransactionServiceConfiguration {
 
     @Bean
-    public TransactionRepository transactionRepositoryBean() {
-        return new InMemoryTransactionRepository();
-    }
-
-    @Bean
-    public TransactionValidator transactionValdiatorBean() {
+    public static TransactionValidator transactionValdiatorBean() {
         List<ValidationRule> rules = new ArrayList<>();
         rules.add(new AmountIsRequired());
         rules.add(new ExecutionDateIsRequired());
@@ -32,7 +26,12 @@ class TransactionServiceConfiguration {
 
     @Bean
     @Autowired
-    public TransactionService transactionServiceBean(TransactionRepository transactionRepository, TransactionValidator transactionValidator) {
+    public static TransactionService transactionServiceBean(TransactionRepository transactionRepository, TransactionValidator transactionValidator) {
+        return new BasicTransactionService(transactionRepository, transactionValidator);
+    }
+
+    public static TransactionService createTransactionService( TransactionRepository transactionRepository) {
+        TransactionValidator transactionValidator =  transactionValdiatorBean();
         return new BasicTransactionService(transactionRepository, transactionValidator);
     }
 

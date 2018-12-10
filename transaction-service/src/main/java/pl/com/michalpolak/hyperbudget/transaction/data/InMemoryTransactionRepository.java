@@ -1,11 +1,13 @@
 package pl.com.michalpolak.hyperbudget.transaction.data;
 
+import org.springframework.stereotype.Repository;
 import pl.com.michalpolak.hyperbudget.transaction.core.spi.TransactionRepository;
 import pl.com.michalpolak.hyperbudget.transaction.core.api.Transaction;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
+@Repository
 public class InMemoryTransactionRepository implements TransactionRepository {
 
     private Map<String, Transaction> storage;
