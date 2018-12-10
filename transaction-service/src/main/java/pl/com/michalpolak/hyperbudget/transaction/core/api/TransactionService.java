@@ -1,8 +1,6 @@
 package pl.com.michalpolak.hyperbudget.transaction.core.api;
 
 
-import pl.com.michalpolak.hyperbudget.transaction.core.InvalidTransactionException;
-
 import java.util.Set;
 
 public interface TransactionService {

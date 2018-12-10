@@ -1,4 +1,4 @@
-package pl.com.michalpolak.hyperbudget.transaction.core;
+package pl.com.michalpolak.hyperbudget.transaction.core.api;
 
 public class InvalidTransactionException extends Exception {
 

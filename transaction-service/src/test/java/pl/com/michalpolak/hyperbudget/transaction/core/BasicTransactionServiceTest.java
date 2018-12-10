@@ -3,6 +3,7 @@ package pl.com.michalpolak.hyperbudget.transaction.core;
 import org.joda.money.Money;
 import org.joda.time.DateTime;
 import org.junit.Test;
+import pl.com.michalpolak.hyperbudget.transaction.core.api.InvalidTransactionException;
 import pl.com.michalpolak.hyperbudget.transaction.core.api.Transaction;
 import pl.com.michalpolak.hyperbudget.transaction.core.api.TransactionNotFoundException;
 import pl.com.michalpolak.hyperbudget.transaction.core.api.TransactionService;

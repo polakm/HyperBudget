@@ -8,7 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.WebRequest;
-import pl.com.michalpolak.hyperbudget.transaction.core.InvalidTransactionException;
+import pl.com.michalpolak.hyperbudget.transaction.core.api.InvalidTransactionException;
 import pl.com.michalpolak.hyperbudget.transaction.core.api.Transaction;
 import pl.com.michalpolak.hyperbudget.transaction.core.api.TransactionNotFoundException;
 import pl.com.michalpolak.hyperbudget.transaction.core.api.TransactionService;

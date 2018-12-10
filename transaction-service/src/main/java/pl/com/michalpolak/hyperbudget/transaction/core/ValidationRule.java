@@ -1,5 +1,6 @@
 package pl.com.michalpolak.hyperbudget.transaction.core;
 
+import pl.com.michalpolak.hyperbudget.transaction.core.api.InvalidTransactionException;
 import pl.com.michalpolak.hyperbudget.transaction.core.api.Transaction;
 
 interface ValidationRule {
