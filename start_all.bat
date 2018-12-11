@@ -22,5 +22,9 @@ cd %CD%/tracing-service
 start start.bat
 cd ..
 
+cd %CD%/category-service
+start start.bat
+cd ..
+
 
 
