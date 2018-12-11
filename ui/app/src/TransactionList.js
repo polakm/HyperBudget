@@ -46,9 +46,9 @@ class TransactionList extends Component {
 
     //TODO push to server site
     const statistics ={
-      totalIncome:"0",
-      totalOutgoing:"0",
-      balance:"0"
+      totalIncome:0,
+      totalOutgoing:0,
+      balance:0
     }; 
     //TODO push to server site
     transactions.map(transaction => {
@@ -126,7 +126,7 @@ class TransactionList extends Component {
             </Card>
             <Card>
               <CardBody>
-              <div id = "chart-container" style={{"text-align":"center"}}>
+              <div id = "chart-container" style={{textAlign:"center"}}>
           <PieChart size={200} inner innerHoleSize={150} data={[
                { title: 'Outgoings', value: statistics.totalOutgoing, color: '#dc3545' },
                { title: 'Balance', value: statistics.balance, color: '#17a2b8' },
