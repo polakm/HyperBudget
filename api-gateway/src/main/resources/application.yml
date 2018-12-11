@@ -38,6 +38,11 @@ zuul:
       serviceId: TRANSACTION-AGGREGATION-SERVICE
       strip-prefix: false
 
+    categories-query:
+      path: /api/categories/**
+      serviceId: CATEGORY-SERVICE
+      strip-prefix: false
+
 
     transactions-command:
       ignoredPatterns: /api/transactions/full/**
