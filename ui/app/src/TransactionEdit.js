@@ -15,10 +15,12 @@ class TransactionEdit extends Component {
     categoryId:'aaaaaa'
   };
 
+
   constructor(props) {
     super(props);
     this.state = {
-      item: this.emptyItem
+      item: this.emptyItem,
+      categories:[]
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -30,6 +32,7 @@ class TransactionEdit extends Component {
   async componentDidMount() {
     if (this.props.match.params.id !== 'income' && this.props.match.params.id !== 'expense') {
       const transaction = await (await fetch(`/api/transactions/${this.props.match.params.id}`)).json();
+
       this.setState({item: transaction});
 
       //TODO "Push transaction type to server side"
@@ -40,7 +43,9 @@ class TransactionEdit extends Component {
     if(this.state.item.type === "expense"){
        this.state.item.amount = -this.state.item.amount;
     }
-    this.setState({item: this.state.item});
+    const categories = await (await fetch(`/api/categories`)).json();
+
+    this.setState({item: this.state.item, categories:categories});
   }
 
   handleChange(event) {
@@ -89,6 +94,13 @@ class TransactionEdit extends Component {
   };
 
   render() {
+
+    const categories = this.state.categories;
+
+    const categoryOptions = categories.map(category => {
+          return <option value={category.id}>{category.name}</option>
+      });
+
     const {item} = this.state;
     const title = <h2>{this.resolveTitle()}</h2>;
 
@@ -125,13 +137,7 @@ class TransactionEdit extends Component {
             <Label for="category">Category</Label>
             <Input type="select" name="categoryId" id="category" value={item.categoryId || ''}
                    onChange={this.handleChange} autoComplete="categoryId">
-             /* TODO load from server */
-              <option value="aaaaaa">Other</option>
-              <option value="bbbbbb">Shopping</option>
-              <option value="cccccc">Car</option>
-              <option value="dddddd">Home</option>
-              <option value="eeeeee">Food</option>
-              <option value="ffffff">Education</option>
+              {categoryOptions}
             </Input>
           </FormGroup>
           <FormGroup>
