@@ -1,28 +1,14 @@
 package pl.com.michalpolak.hyperbudget.transaction.client.category;
 
-import org.springframework.stereotype.Component;
-import pl.com.michalpolak.hyperbudget.transaction.core.spi.Category;
-import pl.com.michalpolak.hyperbudget.transaction.core.spi.CategoryService;
+import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
-import java.util.HashMap;
+@FeignClient("category-service")
+interface CategoryServiceClient {
 
-@Component
-class CategoryServiceClient implements CategoryService {
-
-    private HashMap<String, Category> categories;
-
-    CategoryServiceClient() {
-        this.categories = new HashMap<>();
-        categories.put("aaaaaa", new Category("aaaaaa", "Other"));
-        categories.put("bbbbbb", new Category("bbbbbb", "Shopping"));
-        categories.put("cccccc", new Category("cccccc", "Car"));
-        categories.put("dddddd", new Category("dddddd", "Home"));
-        categories.put("eeeeee", new Category("eeeeee", "Food"));
-        categories.put("ffffff", new Category("ffffff", "Education"));
-    }
-
-    public Category getCategory(String categoryId) {
-        return categories.get(categoryId);
-    }
+    @RequestMapping(path="/api/categories/{id}",method = RequestMethod.GET)
+    public CategoryData getCategory(@PathVariable("id") String categoryId);
 
 }
