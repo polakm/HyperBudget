@@ -45,19 +45,19 @@ public class TransactionRestController {
     }
 
     @RequestMapping(path = "/{id}", method = RequestMethod.GET)
-    TransactionData getTranaction(@PathVariable("id") String id) throws TransactionNotFoundException {
+    TransactionData getTransaction(@PathVariable("id") String id) throws TransactionNotFoundException {
 
         return new TransactionData(service.getTransaction(id));
     }
 
     @RequestMapping(path = "/{id}", method = RequestMethod.DELETE)
-    void removeTranaction(@PathVariable("id") String id) throws TransactionNotFoundException {
+    void removeTransaction(@PathVariable("id") String id) throws TransactionNotFoundException {
 
         service.removeTransaction(id);
     }
 
     @RequestMapping(path = "/{id}", method = RequestMethod.PUT)
-    void updateTranaction(@PathVariable("id") String id, @RequestBody TransactionData transactionData) throws TransactionNotFoundException {
+    void updateTransaction(@PathVariable("id") String id, @RequestBody TransactionData transactionData) throws TransactionNotFoundException {
 
         Transaction transaction = new TransactionDataAdapter(id, transactionData);
         service.updateTransaction(transaction);
