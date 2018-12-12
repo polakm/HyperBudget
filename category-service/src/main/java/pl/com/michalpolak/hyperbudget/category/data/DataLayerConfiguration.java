@@ -1,13 +1,14 @@
 package pl.com.michalpolak.hyperbudget.category.data;
 
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import pl.com.michalpolak.hyperbudget.category.core.api.Category;
 import pl.com.michalpolak.hyperbudget.category.core.spi.CategoryRepository;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
-
+@Configuration
 public class DataLayerConfiguration {
 
    @Bean
