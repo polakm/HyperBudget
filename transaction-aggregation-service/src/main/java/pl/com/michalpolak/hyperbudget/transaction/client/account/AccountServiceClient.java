@@ -1,28 +1,14 @@
 package pl.com.michalpolak.hyperbudget.transaction.client.account;
 
-import org.springframework.stereotype.Component;
-import pl.com.michalpolak.hyperbudget.transaction.core.spi.Account;
-import pl.com.michalpolak.hyperbudget.transaction.core.spi.AccountService;
+import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
-import java.util.HashMap;
+@FeignClient("account-service")
+interface AccountServiceClient {
 
-@Component
-class AccountServiceClient implements AccountService {
+    @RequestMapping(path="/api/accounts/{id}",method = RequestMethod.GET)
+    public AccountData getAccount(@PathVariable("id") String accountId);
 
-
-  private  HashMap<String, Account> categories;
-
-    AccountServiceClient(){
-        this.categories = new HashMap<>();
-        categories.put( "aaaaaa", new Account( "aaaaaa", "Bank"));
-        categories.put( "bbbbbb", new Account( "bbbbbb", "Wallet"));
-        categories.put( "cccccc", new Account( "cccccc", "Company Account\""));
-        categories.put( "dddddd", new Account( "dddddd", "Piggybank"));
-
-
-    }
-
-    public Account getAccount(String id) {
-         return  this.categories.get(id);
-    }
 }
