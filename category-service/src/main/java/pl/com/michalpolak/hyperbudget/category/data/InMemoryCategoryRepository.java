@@ -1,31 +1,23 @@
 package pl.com.michalpolak.hyperbudget.category.data;
 
-import org.springframework.stereotype.Repository;
 import pl.com.michalpolak.hyperbudget.category.core.api.Category;
 import pl.com.michalpolak.hyperbudget.category.core.spi.CategoryRepository;
 
-import java.util.*;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
-@Repository
 public class InMemoryCategoryRepository implements CategoryRepository {
 
     private Map<String, Category> storage;
 
     public InMemoryCategoryRepository() {
         this.storage = new ConcurrentHashMap<>();
-        initDefaults();
     }
 
-
-    private void initDefaults() {
-        String id;
-        this.storage.put(id = UUID.randomUUID().toString(),new Category(id,"Other"));
-        this.storage.put(id = UUID.randomUUID().toString(),new Category(id,"Shopping"));
-        this.storage.put(id = UUID.randomUUID().toString(),new Category(id, "Car"));
-        this.storage.put(id = UUID.randomUUID().toString(),new Category(id,"Home"));
-        this.storage.put(id = UUID.randomUUID().toString(),new Category(id,"Food"));
-        this.storage.put(id = UUID.randomUUID().toString(),new Category(id,"Education"));
+    public InMemoryCategoryRepository(Map<String,Category> initialData) {
+        this.storage = new ConcurrentHashMap<>(initialData);
     }
 
     @Override
