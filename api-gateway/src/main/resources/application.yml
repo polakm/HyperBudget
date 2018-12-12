@@ -43,6 +43,10 @@ zuul:
       serviceId: CATEGORY-SERVICE
       strip-prefix: false
 
+    accounts-query:
+      path: /api/accounts/**
+      serviceId: ACCOUNT-SERVICE
+      strip-prefix: false
 
     transactions-command:
       ignoredPatterns: /api/transactions/full/**

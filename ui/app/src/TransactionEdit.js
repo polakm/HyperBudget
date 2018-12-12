@@ -11,8 +11,8 @@ class TransactionEdit extends Component {
     currencyCode: 'PLN',
     executionDate: new Date().toISOString().substring(0,10),
     dateFormat: 'YYYY-MM-DD',
-    accountId:'aaaaaa',
-    categoryId:'aaaaaa'
+    accountId:'',
+    categoryId:''
   };
 
 
@@ -20,7 +20,8 @@ class TransactionEdit extends Component {
     super(props);
     this.state = {
       item: this.emptyItem,
-      categories:[]
+      categories:[],
+      accounts:[]
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -44,8 +45,10 @@ class TransactionEdit extends Component {
        this.state.item.amount = -this.state.item.amount;
     }
     const categories = await (await fetch(`/api/categories`)).json();
-
-    this.setState({item: this.state.item, categories:categories});
+    const accounts = await (await fetch(`/api/accounts`)).json();
+    this.setState({ item: this.state.item,
+                    categories: categories,
+                    accounts: accounts});
   }
 
   handleChange(event) {
@@ -95,8 +98,13 @@ class TransactionEdit extends Component {
 
   render() {
 
-    const categories = this.state.categories;
 
+    const accounts = this.state.accounts;
+    const accountOptions = accounts.map(account => {
+              return <option value={account.id}>{account.name}</option>
+      });
+
+    const categories = this.state.categories;
     const categoryOptions = categories.map(category => {
           return <option value={category.id}>{category.name}</option>
       });
@@ -126,11 +134,7 @@ class TransactionEdit extends Component {
             <Label for="account">Account</Label>
             <Input type="select" name="accountId" id="account" value={item.accountId || ''}
                    onChange={this.handleChange} autoComplete="accountId">
-              /* TODO load from server */
-              <option value="aaaaaa">Bank</option>
-              <option value="bbbbbb">Wallet</option>
-              <option value="cccccc">Company Account</option>
-              <option value="dddddd">Piggybank</option>
+                 {accountOptions}
             </Input>
           </FormGroup>
           <FormGroup>
