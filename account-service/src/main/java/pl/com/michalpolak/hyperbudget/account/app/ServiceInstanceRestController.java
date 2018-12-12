@@ -1,4 +1,4 @@
-package pl.com.michalpolak.hyperbudget.category.app;
+package pl.com.michalpolak.hyperbudget.account.app;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.ServiceInstance;

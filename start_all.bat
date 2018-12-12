@@ -26,5 +26,9 @@ cd %CD%/category-service
 start start.bat
 cd ..
 
+cd %CD%/account-service
+start start.bat
+cd ..
+
 
 
