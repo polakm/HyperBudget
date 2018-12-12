@@ -11,7 +11,7 @@ class NameIsRequired implements ValidationRule {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(NameIsRequired.class);
 
-    private static final String MESSAGE_PATTERN = "Account ID in category with id \"{0}\" is null or empty. The account id is required value.";
+    private static final String MESSAGE_PATTERN = "Name in category with id \"{0}\" is null or empty. The category name is required value.";
 
     @Override
     public void validate(Category category) throws InvalidCategoryException {

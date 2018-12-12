@@ -17,6 +17,7 @@ class CategoryServiceConfiguration {
     @Bean
     public static CategoryValidator categoryValdiatorBean() {
         List<ValidationRule> rules = new ArrayList<>();
+        rules.add(new NameIsRequired());
         return new BasicCategoryValidator(rules);
     }
 
