@@ -2,12 +2,7 @@ package pl.com.michalpolak.hyperbudget.transaction.core;
 
 import pl.com.michalpolak.hyperbudget.transaction.core.api.AggregatedTransaction;
 import pl.com.michalpolak.hyperbudget.transaction.core.api.TransactionAggregationService;
-import pl.com.michalpolak.hyperbudget.transaction.core.spi.AccountService;
-import pl.com.michalpolak.hyperbudget.transaction.core.spi.CategoryService;
-import pl.com.michalpolak.hyperbudget.transaction.core.spi.Transaction;
-import pl.com.michalpolak.hyperbudget.transaction.core.spi.TransactionService;
-import pl.com.michalpolak.hyperbudget.transaction.core.spi.Category;
-import pl.com.michalpolak.hyperbudget.transaction.core.spi.Account;
+import pl.com.michalpolak.hyperbudget.transaction.core.spi.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,7 +44,38 @@ class BasicTransactionAggregationService implements TransactionAggregationServic
             aggregatedTransactions.add(new AggregatedTransaction(t,category,account));
         });
 
+
         return aggregatedTransactions;
 
     }
+
+    @Override
+    public TransactionSummary getTransactionsSummary() {
+
+        List<AggregatedTransaction> aggregatedTransactions = new ArrayList<>();
+
+        List<Transaction> transactions =  transactionService.transactionList();
+
+        transactions.forEach(t->{
+
+            Category category =categoryService.getCategory(t.getCategoryId());
+            Account account = accountService.getAccount(t.getAccountId());
+            aggregatedTransactions.add(new AggregatedTransaction(t,category,account));
+        });
+
+        TransactionStatistics statistics = new TransactionStatistics(transactions);
+        return new TransactionSummary(aggregatedTransactions, statistics);
+
+    }
+
+    @Override
+    public TransactionStatistics calculateTransactionStatistics() {
+        List<Transaction> transactions =  transactionService.transactionList();
+        
+        return new TransactionStatistics(transactions);
+    }
+
+
+
+
 }

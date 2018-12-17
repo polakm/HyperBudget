@@ -4,8 +4,11 @@ package pl.com.michalpolak.hyperbudget.transaction.core.spi;
 import org.joda.money.Money;
 import org.joda.time.DateTime;
 
+import java.util.Optional;
+
 public class Transaction {
 
+    public Optional<Object> getAmoun;
     private String id;
 
     private String title;

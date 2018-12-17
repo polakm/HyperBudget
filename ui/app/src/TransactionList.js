@@ -8,18 +8,24 @@ import {PieChart} from 'react-easy-chart';
 
 class TransactionList extends Component {
 
+    emptyStatistics: {
+      sumOfIncomes:0,
+      sumOfExpenses:0,
+      totalSum:0
+    };
+
   constructor(props) {
     super(props);
-    this.state = {transactions: [], accounts: [], isLoading: true};
+    this.state = {transactions: [], accounts: [], statistics: this.emptyStatistics, isLoading: true};
     this.remove = this.remove.bind(this);
   }
 
   componentDidMount() {
     this.setState({isLoading: true});
 
-    fetch('/api/transactions/full')
+    fetch('/api/transactions/summary')
       .then(response => response.json())
-      .then(data => this.setState({transactions: data, isLoading: false}));
+      .then(data => this.setState({transactions: data.transactions,  statistics : data.statistics, isLoading: false}));
   }
 
   async remove(id) {
@@ -31,7 +37,7 @@ class TransactionList extends Component {
       }
     }).then(() => {
       let updatedTransactions = [...this.state.transactions].filter(i => i.id !== id);
-      this.setState({transactions: updatedTransactions});
+      this.setState({transactions: updatedTransactions,statistics: this.state.statistics});
     });
   }
 
@@ -41,26 +47,6 @@ class TransactionList extends Component {
     if (isLoading) {
       return <p>Loading...</p>;
     }
-
-
-
-    //TODO push to server site
-    const statistics ={
-      totalIncome:0,
-      totalOutgoing:0,
-      balance:0
-    }; 
-    //TODO push to server site
-    transactions.map(transaction => {
-      if (transaction.amount > 0){
-        statistics.totalIncome = Number(statistics.totalIncome) + Number(transaction.amount);
-      }
-      if (transaction.amount < 0){
-       statistics.totalOutgoing = Number(statistics.totalOutgoing) - Number(transaction.amount);
-      }
-    });
-    //TODO push to server site
-    statistics.balance =  Number(statistics.totalIncome) -  Number(statistics.totalOutgoing);
 
     const getAmountStyle = function(transaction){
         return Number(transaction.amount)>0 ? 'green':'red';
@@ -118,18 +104,18 @@ class TransactionList extends Component {
         <Col md={3} >
             <Card>
               <CardBody>
-                <h5>Income: <Badge className="float-right" color="success">{statistics.totalIncome.toFixed(2)}</Badge></h5>
-                <h5>Outgoings: <Badge className="float-right" color="danger">{statistics.totalOutgoing.toFixed(2)}</Badge></h5>
+                <h5>Income: <Badge className="float-right" color="success">{Number(this.state.statistics.sumOfIncomes).toFixed(2)}</Badge></h5>
+                <h5>Outgoings: <Badge className="float-right" color="danger">{Number(this.state.statistics.sumOfExpenses).toFixed(2)}</Badge></h5>
                 <hr/>
-                <h5>Balance: <Badge className="float-right" color="info">{statistics.balance.toFixed(2)}</Badge></h5>
+                <h5>Balance: <Badge className="float-right" color="info">{Number(this.state.statistics.totalSum).toFixed(2)}</Badge></h5>
               </CardBody>
             </Card>
             <Card>
               <CardBody>
               <div id = "chart-container" style={{textAlign:"center"}}>
           <PieChart size={200} inner innerHoleSize={150} data={[
-               { title: 'Outgoings', value: statistics.totalOutgoing, color: '#dc3545' },
-               { title: 'Balance', value: statistics.balance, color: '#17a2b8' },
+               { title: 'Expenses', value: Math.abs(Number(this.state.statistics.sumOfExpenses)), color: '#dc3545' },
+               { title: 'Balance', value: Math.abs(Number(this.state.statistics.sum)), color: '#17a2b8' },
             ]}
             ></PieChart>
              </div>
