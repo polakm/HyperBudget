@@ -17,8 +17,10 @@ spring:
 
 eureka:
   client:
-    registerWithEureka: false
+    registerWithEureka: true
     fetchRegistry: true
+    serviceUrl:
+      defaultZone: http://service-discovery:8761/eureka
 
 
 server:
@@ -34,7 +36,7 @@ zuul:
   routes:
 
     transactions-query:
-      path: /api/transactions/full/**
+      path: /api/transactions/summary/**
       serviceId: TRANSACTION-AGGREGATION-SERVICE
       strip-prefix: false
 
@@ -49,7 +51,7 @@ zuul:
       strip-prefix: false
 
     transactions-command:
-      ignoredPatterns: /api/transactions/full/**
+      ignoredPatterns: /api/transactions/summary/**
       path: /api/transactions/**
       serviceId: TRANSACTION-SERVICE
       strip-prefix: false
