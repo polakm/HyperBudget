@@ -1,15 +1,15 @@
 package pl.com.michalpolak.hyperbudget.transaction.core;
 
-import pl.com.michalpolak.hyperbudget.transaction.core.spi.Transaction;
+import pl.com.michalpolak.hyperbudget.transaction.core.api.AggregatedTransaction;
 
 import java.math.BigDecimal;
 import java.util.List;
 
 public class TransactionStatistics {
 
-     private List<Transaction> transactions;
+     private List<AggregatedTransaction> transactions;
 
-    public TransactionStatistics(List<Transaction> transactions) {
+    public TransactionStatistics(List<AggregatedTransaction> transactions) {
         this.transactions = transactions;
     }
 

@@ -64,16 +64,15 @@ class BasicTransactionAggregationService implements TransactionAggregationServic
             aggregatedTransactions.add(new AggregatedTransaction(t,category,account));
         });
 
-        TransactionStatistics statistics = new TransactionStatistics(transactions);
+        TransactionStatistics statistics = new TransactionStatistics(aggregatedTransactions);
         return new TransactionSummary(aggregatedTransactions, statistics);
 
     }
 
     @Override
     public TransactionStatistics calculateTransactionStatistics() {
-        List<Transaction> transactions =  transactionService.transactionList();
-        
-        return new TransactionStatistics(transactions);
+
+        return new TransactionStatistics(getAggregatedTransactionsList());
     }
 
     @Override
@@ -88,7 +87,7 @@ class BasicTransactionAggregationService implements TransactionAggregationServic
             aggregatedTransactions.add(new AggregatedTransaction(t,category,account));
         });
 
-        TransactionStatistics statistics = new TransactionStatistics(transactions);
+        TransactionStatistics statistics = new TransactionStatistics(aggregatedTransactions);
         return new TransactionSummary(aggregatedTransactions, statistics);
     }
 
