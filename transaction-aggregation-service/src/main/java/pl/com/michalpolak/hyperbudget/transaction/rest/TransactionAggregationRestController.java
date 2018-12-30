@@ -1,9 +1,11 @@
 package pl.com.michalpolak.hyperbudget.transaction.rest;
 
 
+import org.joda.time.YearMonth;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -35,6 +37,18 @@ public class TransactionAggregationRestController {
 
         return  new TransactionSummaryData(summary);
     }
+
+
+
+    @RequestMapping(path="/summary/{year}/{month}", method = RequestMethod.GET)
+    public TransactionSummaryData transactionsSummaryPerMonth(@PathVariable("year") int year ,@PathVariable("month") int month){
+
+        List<AggregatedTransactionData> result = new ArrayList<>();
+
+        TransactionSummary summary = service.getTransactionsSummaryPeMonth(new YearMonth(year,month));
+        return  new TransactionSummaryData(summary);
+    }
+
 
 
 }

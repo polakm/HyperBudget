@@ -30,7 +30,7 @@ public class TransactionAggregationServiceApplication {
 
     @Bean
     @Autowired
-    public TransactionAggregationService transactionAggregationServicBean(TransactionService transactionService,
+    public static TransactionAggregationService transactionAggregationServicBean(TransactionService transactionService,
                                                                           CategoryService categoryService,
                                                                           AccountService accountService
                                                                          ){

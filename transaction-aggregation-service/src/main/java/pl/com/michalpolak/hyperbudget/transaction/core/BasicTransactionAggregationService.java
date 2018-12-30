@@ -1,5 +1,6 @@
 package pl.com.michalpolak.hyperbudget.transaction.core;
 
+import org.joda.time.YearMonth;
 import pl.com.michalpolak.hyperbudget.transaction.core.api.AggregatedTransaction;
 import pl.com.michalpolak.hyperbudget.transaction.core.api.TransactionAggregationService;
 import pl.com.michalpolak.hyperbudget.transaction.core.spi.*;
@@ -75,7 +76,21 @@ class BasicTransactionAggregationService implements TransactionAggregationServic
         return new TransactionStatistics(transactions);
     }
 
+    @Override
+    public TransactionSummary getTransactionsSummaryPeMonth(YearMonth month) {
+        List<AggregatedTransaction> aggregatedTransactions = new ArrayList<>();
 
+        List<Transaction> transactions =  transactionService.transactionList();
+        transactions.stream().filter(t-> t.getExecutionDate().getMonthOfYear() == month.getMonthOfYear() && t.getExecutionDate().getYear() == month.getYear() ).forEach(t->{
+
+            Category category =categoryService.getCategory(t.getCategoryId());
+            Account account = accountService.getAccount(t.getAccountId());
+            aggregatedTransactions.add(new AggregatedTransaction(t,category,account));
+        });
+
+        TransactionStatistics statistics = new TransactionStatistics(transactions);
+        return new TransactionSummary(aggregatedTransactions, statistics);
+    }
 
 
 }

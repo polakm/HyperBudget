@@ -1,5 +1,6 @@
 package pl.com.michalpolak.hyperbudget.transaction.core.api;
 
+import org.joda.time.YearMonth;
 import pl.com.michalpolak.hyperbudget.transaction.core.TransactionStatistics;
 import pl.com.michalpolak.hyperbudget.transaction.core.TransactionSummary;
 
@@ -13,4 +14,6 @@ public interface TransactionAggregationService {
     TransactionSummary getTransactionsSummary();
 
     TransactionStatistics calculateTransactionStatistics();
+
+    TransactionSummary getTransactionsSummaryPeMonth(YearMonth month);
 }
