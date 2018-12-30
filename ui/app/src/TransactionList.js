@@ -115,7 +115,7 @@ class TransactionList extends Component {
               <div id = "chart-container" style={{textAlign:"center"}}>
           <PieChart size={200} inner innerHoleSize={150} data={[
                { title: 'Expenses', value: Math.abs(Number(this.state.statistics.sumOfExpenses)), color: '#dc3545' },
-               { title: 'Balance', value: Math.abs(Number(this.state.statistics.sum)), color: '#17a2b8' },
+               { title: 'Balance', value: Math.abs(Number(this.state.statistics.totalSum)), color: '#17a2b8' },
             ]}
             ></PieChart>
              </div>
