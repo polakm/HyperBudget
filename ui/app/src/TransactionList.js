@@ -16,14 +16,17 @@ class TransactionList extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {transactions: [], accounts: [], statistics: this.emptyStatistics, isLoading: true};
+    this.state = {transactions: [], accounts: [], statistics: this.emptyStatistics, month: 12, year: 2018, isLoading: true};
     this.remove = this.remove.bind(this);
+    this.previousMonth = this.previousMonth.bind(this);
+    this.nextMonth = this.nextMonth.bind(this);
   }
 
   componentDidMount() {
     this.setState({isLoading: true});
 
-    fetch('/api/transactions/summary')
+
+    fetch('/api/transactions/summary/' + this.state.year + '/' + this.state.month)
       .then(response => response.json())
       .then(data => this.setState({transactions: data.transactions,  statistics : data.statistics, isLoading: false}));
   }
@@ -41,6 +44,27 @@ class TransactionList extends Component {
     });
   }
 
+  async previousMonth() {
+   // this.setState({isLoading: true});
+
+      (this.state.month-1)>0 ? (this.state.month--) : ((this.state.month = 12) && this.state.year--);
+
+    fetch('/api/transactions/summary/'+ this.state.year + '/' + this.state.month)
+      .then(response => response.json())
+      .then(data => this.setState({transactions: data.transactions,  statistics : data.statistics, isLoading: false}));
+  }
+
+   async nextMonth() {
+     // this.setState({isLoading: true});
+
+     (this.state.month+1)<=12 ? (this.state.month++) : ((this.state.month = 1) && this.state.year++);
+
+      fetch('/api/transactions/summary/'+ this.state.year + '/' + this.state.month)
+        .then(response => response.json())
+        .then(data => this.setState({transactions: data.transactions,  statistics : data.statistics, isLoading: false}));
+   }
+
+
   render() {
     const {transactions, isLoading} = this.state;
 
@@ -51,6 +75,14 @@ class TransactionList extends Component {
     const getAmountStyle = function(transaction){
         return Number(transaction.amount)>0 ? 'green':'red';
      }
+
+      const getMonthName = function(monthNumber){
+
+      var months = [ "January", "February", "March", "April", "May", "June",
+                 "July", "August", "September", "October", "November", "December" ];
+
+             return months[monthNumber-1];
+        }
 
     const transactionList = transactions.map(transaction => {
       return <tr key={transaction.id} style={{"color" : getAmountStyle(transaction)}}>
@@ -76,13 +108,22 @@ class TransactionList extends Component {
 
           <Row>
           <Col md={8}>
+          <Row>
+          <Col className="md-6 offset-3">
+           <h5>{getMonthName(this.state.month)} {this.state.year}</h5>
+                 <ButtonGroup>
+                        <Button color="info" outline onClick={this.previousMonth}> &lt;&lt; Previous Month</Button>
+                        <Button color="info" outline onClick={this.nextMonth}>Next Month &gt;&gt;</Button>
+               </ButtonGroup>
+           </Col>
+           <Col className="md-6 offset-3" >
 
-                  <div className="float-right add-buttons">
                     <ButtonGroup>
-                        <Button color="success" tag={Link} to="/transactions/income">Add Income</Button>
-                        <Button color="danger" tag={Link} to="/transactions/expense">Add Expense</Button>
+                        <Button color="success" outline tag={Link} to="/transactions/income">Add Income</Button>
+                        <Button color="danger" outline tag={Link} to="/transactions/expense">Add Expense</Button>
                      </ButtonGroup>
-                  </div>
+             </Col>
+          </Row>
           <Table striped className="mt-4">
             <thead>
             <tr>
