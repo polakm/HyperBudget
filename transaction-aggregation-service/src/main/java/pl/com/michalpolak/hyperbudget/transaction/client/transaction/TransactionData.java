@@ -11,8 +11,6 @@ public class TransactionData {
 
     private String executionDate;
 
-    private String dateFormat;
-
     private String amount;
 
     private String currencyCode;
@@ -37,8 +35,7 @@ public class TransactionData {
             setCurrencyCode(transaction.getAmount().getCurrencyUnit().getCode());
         }
         if (transaction.getExecutionDate() != null) {
-            setExecutionDate(transaction.getExecutionDate().toString("YYYY-MM-DD"));
-            setDateFormat("YYYY-MM-DD");
+            setExecutionDate(transaction.getExecutionDate().toString());
         }
     }
 
@@ -56,14 +53,6 @@ public class TransactionData {
 
     public void setExecutionDate(String executionDate) {
         this.executionDate = executionDate;
-    }
-
-    public String getDateFormat() {
-        return dateFormat;
-    }
-
-    public void setDateFormat(String dateFormat) {
-        this.dateFormat = dateFormat;
     }
 
     public String getAmount() {

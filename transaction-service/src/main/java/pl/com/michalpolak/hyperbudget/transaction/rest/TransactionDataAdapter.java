@@ -2,7 +2,6 @@ package pl.com.michalpolak.hyperbudget.transaction.rest;
 
 import org.joda.money.Money;
 import org.joda.time.DateTime;
-import org.joda.time.format.DateTimeFormat;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import pl.com.michalpolak.hyperbudget.transaction.core.api.Transaction;
@@ -20,9 +19,9 @@ class TransactionDataAdapter extends Transaction {
             LOGGER.debug("Parse currency code and decimal value to Money - Transaction ID: {} ", this.getId());
             this.setAmount(Money.parse(transactionData.getCurrencyCode() + " " + transactionData.getAmount()));
         }
-        if (transactionData.getExecutionDate() != null && transactionData.getDateFormat() != null) {
+        if (transactionData.getExecutionDate() != null && !transactionData.getExecutionDate().isEmpty()) {
             LOGGER.debug("Parse date format and string date to DateTime - Transaction ID: {} ", this.getId());
-            this.setExecutionDate(DateTime.parse(transactionData.getExecutionDate(), DateTimeFormat.forPattern(transactionData.getDateFormat())));
+             this.setExecutionDate(DateTime.parse(transactionData.getExecutionDate()));
         }
     }
 

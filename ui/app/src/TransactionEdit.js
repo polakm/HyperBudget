@@ -9,8 +9,7 @@ class TransactionEdit extends Component {
     title: '',
     amount: '',
     currencyCode: 'PLN',
-    executionDate: new Date().toISOString().substring(0,10),
-    dateFormat: 'YYYY-MM-DD',
+    executionDate: new Date().toJSON(),
     accountId:'',
     categoryId:''
   };
@@ -25,6 +24,7 @@ class TransactionEdit extends Component {
     };
 
     this.handleChange = this.handleChange.bind(this);
+    this.handleChangeDate = this.handleChangeDate.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.resolveTitle = this.resolveTitle.bind(this);
 
@@ -57,6 +57,15 @@ class TransactionEdit extends Component {
     const name = target.name;
     let item = {...this.state.item};
     item[name] = value;
+    this.setState({item});
+  }
+
+  handleChangeDate(event) {
+    const target = event.target;
+    const value = target.value;
+    const name = target.name;
+    let item = {...this.state.item};
+    item[name] = new Date(value).toJSON();
     this.setState({item});
   }
 
@@ -109,7 +118,12 @@ class TransactionEdit extends Component {
           return <option value={category.id}>{category.name}</option>
       });
 
+
     const {item} = this.state;
+
+    item.accountId  || (item.accountId = accounts.length>0 ? accounts[0].id : '');
+    item.categoryId || (item.categoryId = categories.length>0 ? categories[0].id : '');
+
     const title = <h2>{this.resolveTitle()}</h2>;
 
     return <div>
@@ -132,22 +146,22 @@ class TransactionEdit extends Component {
           </FormGroup>
           <FormGroup>
             <Label for="account">Account</Label>
-            <Input type="select" name="accountId" id="account" value={item.accountId || ''}
+            <Input type="select" name="accountId" id="account" value={item.accountId}
                    onChange={this.handleChange} autoComplete="accountId">
                  {accountOptions}
             </Input>
           </FormGroup>
           <FormGroup>
             <Label for="category">Category</Label>
-            <Input type="select" name="categoryId" id="category" value={item.categoryId || ''}
+            <Input type="select" name="categoryId" id="category" value={item.categoryId}
                    onChange={this.handleChange} autoComplete="categoryId">
               {categoryOptions}
             </Input>
           </FormGroup>
           <FormGroup>
             <Label for="executionDate">Date</Label>           
-            <Input type="date" name="executionDate" id="executionDate" value={item.executionDate || ''}
-                   onChange={this.handleChange} autoComplete="executionDate"/>
+            <Input type="date" name="executionDate" id="executionDate" value={item.executionDate.substring(0,10)}
+                   onChange={this.handleChangeDate} autoComplete="executionDate"/>
                     
           </FormGroup>
           <FormGroup>

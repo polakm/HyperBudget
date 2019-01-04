@@ -16,7 +16,13 @@ class TransactionList extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {transactions: [], accounts: [], statistics: this.emptyStatistics, month: 12, year: 2018, isLoading: true};
+    this.state = {
+        transactions: [],
+        accounts: [],
+        statistics: this.emptyStatistics,
+        month: new Date().getMonth()+1,
+        year: new Date().getFullYear(),
+        isLoading: true};
     this.remove = this.remove.bind(this);
     this.previousMonth = this.previousMonth.bind(this);
     this.nextMonth = this.nextMonth.bind(this);
@@ -88,7 +94,7 @@ class TransactionList extends Component {
       return <tr key={transaction.id} style={{"color" : getAmountStyle(transaction)}}>
         <td style={{whiteSpace: 'nowrap'}}>{transaction.title}</td>
         <td>{Math.abs(transaction.amount)}</td>
-        <td>{transaction.executionDate}</td>
+        <td>{transaction.executionDate.substring(0,10)}</td>
         <td>{transaction.accountName}</td>
         <td>{transaction.categoryName}</td>
         <td>
