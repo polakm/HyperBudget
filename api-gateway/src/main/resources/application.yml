@@ -37,7 +37,7 @@ zuul:
 
     transactions-query:
       path: /api/transactions/summary/**
-      serviceId: TRANSACTION-AGGREGATION-SERVICE
+      serviceId: TRANSACTION-SUMMARY-SERVICE
       strip-prefix: false
 
     categories-query:
