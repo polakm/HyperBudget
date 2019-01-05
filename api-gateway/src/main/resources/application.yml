@@ -10,9 +10,9 @@ spring:
     name: api-gateway
   sleuth:
     sampler:
-      :percentage: 1.0
-    :web:
-      :skipPattern: (^cleanup.*|.+favicon.*)
+      percentage: 1.0
+    web:
+      skipPattern: (^cleanup.*|.+favicon.*)
 
 
 eureka:
