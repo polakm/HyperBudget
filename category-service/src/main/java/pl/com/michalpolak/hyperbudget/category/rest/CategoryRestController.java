@@ -10,9 +10,10 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.WebRequest;
 import pl.com.michalpolak.hyperbudget.category.core.api.Category;
 import pl.com.michalpolak.hyperbudget.category.core.api.CategoryNotFoundException;
-import pl.com.michalpolak.hyperbudget.category.core.api.InvalidCategoryException;
 import pl.com.michalpolak.hyperbudget.category.core.api.CategoryService;
+import pl.com.michalpolak.hyperbudget.category.core.api.InvalidCategoryException;
 
+import javax.ws.rs.QueryParam;
 import java.util.List;
 import java.util.Set;
 
@@ -41,6 +42,13 @@ public class CategoryRestController {
     List<CategoryData> categoryList() {
 
         Set<Category> categories = service.allCategories();
+        return new CategoryDataList(categories).asList();
+    }
+
+    @RequestMapping(method = RequestMethod.GET, params = "type")
+    List<CategoryData> categoriesByType(@QueryParam("type") String type) {
+
+        Set<Category> categories = service.getCategoriesByType(type);
         return new CategoryDataList(categories).asList();
     }
 

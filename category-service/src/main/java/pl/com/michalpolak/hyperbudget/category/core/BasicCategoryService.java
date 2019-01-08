@@ -9,6 +9,7 @@ import pl.com.michalpolak.hyperbudget.category.core.spi.CategoryRepository;
 import pl.com.michalpolak.hyperbudget.category.core.api.CategoryService;
 
 import java.util.Set;
+import java.util.stream.Collectors;
 
 
 class BasicCategoryService implements CategoryService {
@@ -65,6 +66,12 @@ class BasicCategoryService implements CategoryService {
         Category result = this.categoryRepository.update(category);
         LOGGER.info("Category has updated - Category ID: {}", category.getId());
         return result;
+    }
+
+    @Override
+    public Set<Category> getCategoriesByType(String type) {
+
+        return this.categoryRepository.getAll().stream().filter(c-> c.getType().equals(type)).collect(Collectors.toSet());
     }
 }
 

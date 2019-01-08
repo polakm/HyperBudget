@@ -44,8 +44,8 @@ class TransactionEdit extends Component {
     if(this.state.item.type === "expense"){
        this.state.item.amount = -this.state.item.amount;
     }
-    const categories = await (await fetch(`/api/categories`)).json();
-    const accounts = await (await fetch(`/api/accounts`)).json();
+    const categories = await (await fetch('/api/categories?type=' + this.state.item.type)).json();
+    const accounts = await (await fetch('/api/accounts')).json();
     this.setState({ item: this.state.item,
                     categories: categories,
                     accounts: accounts});

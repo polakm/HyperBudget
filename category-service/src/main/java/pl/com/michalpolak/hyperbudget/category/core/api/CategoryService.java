@@ -14,4 +14,6 @@ public interface CategoryService {
     Set<Category> allCategories();
 
     Category updateCategory(Category category) throws CategoryNotFoundException;
+
+    Set<Category> getCategoriesByType(String type);
 }

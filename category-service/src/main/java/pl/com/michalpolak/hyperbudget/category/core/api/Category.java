@@ -6,14 +6,16 @@ public class Category {
 
     private String id;
     private String name;
+    private String type;
 
     public Category(){
         setId(UUID.randomUUID().toString());
     }
 
-    public Category(String id, String name){
-        this.id =id;
-        this.name=name;
+    public Category(String id, String name, String type){
+        this.id = id;
+        this.name = name;
+        this.type = type;
     }
 
 
@@ -31,5 +33,13 @@ public class Category {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 }
