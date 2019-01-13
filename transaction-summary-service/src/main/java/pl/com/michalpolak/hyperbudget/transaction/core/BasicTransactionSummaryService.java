@@ -22,6 +22,7 @@ class BasicTransactionSummaryService implements TransactionSummaryService {
         this.accountService = accountService;
     }
 
+    // TODO: Remove useless functions
     @Override
     public TransactionInfo getTransactionInfo(String id){
 
@@ -35,6 +36,7 @@ class BasicTransactionSummaryService implements TransactionSummaryService {
     public List<TransactionInfo> getTransactionInfosList() {
 
         List<TransactionInfo> transactionInfos = new ArrayList<>();
+
 
         List<Transaction> transactions =  transactionService.transactionList();
 
@@ -55,10 +57,11 @@ class BasicTransactionSummaryService implements TransactionSummaryService {
 
         List<TransactionInfo> transactionInfos = new ArrayList<>();
 
+        // FIXME: Move prepare transaction data to repository
         List<Transaction> transactions =  transactionService.transactionList();
-
         transactions.forEach(t->{
 
+            // TODO: Use ListenableFuture for parallel data collection
             Category category =categoryService.getCategory(t.getCategoryId());
             Account account = accountService.getAccount(t.getAccountId());
             transactionInfos.add(new TransactionInfo(t,category,account));
