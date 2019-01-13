@@ -35,25 +35,14 @@ public class TransactionSummaryRestController {
     }
 
 
-    @RequestMapping(path="/summary", method = RequestMethod.GET)
-    public Resource<TransactionSummaryData> transactionsSummary(){
-
-        List<TransactionInfoData> result = new ArrayList<>();
-        TransactionSummary summary = service.getTransactionsSummary();
-        TransactionSummaryData summaryData = new TransactionSummaryData(summary);
-        Link link = linkTo(methodOn(TransactionSummaryRestController.class).transactionsSummary()).withSelfRel();
-        Resource<TransactionSummaryData> resource = new Resource<>(summaryData, link);
-        return resource;
-    }
-
-
-
     @RequestMapping(path="/summary/{year}/{month}", method = RequestMethod.GET)
     public Resource<TransactionSummaryData> transactionsSummaryPerMonth(@PathVariable("year") int year , @PathVariable("month") int month){
 
         List<TransactionInfoData> result = new ArrayList<>();
-        TransactionSummary summary = service.getTransactionsSummaryPeMonth(new YearMonth(year,month));
-        TransactionSummaryData summaryData = new TransactionSummaryData(summary);
+        YearMonth yearMonth = new YearMonth(year,month);
+        TransactionSummary summary = service.getTransactionsSummaryPeMonth(yearMonth);
+        RangeData range = new RangeData(yearMonth);
+        TransactionSummaryData summaryData = new TransactionSummaryData(summary,range);
         Iterable<Link> links = this.buildLinks(year, month);
         Resource<TransactionSummaryData> resource = new Resource<>(summaryData,links);
         return resource;

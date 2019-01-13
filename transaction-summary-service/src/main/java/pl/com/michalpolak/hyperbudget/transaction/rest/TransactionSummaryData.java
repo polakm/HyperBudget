@@ -9,14 +9,16 @@ import java.util.List;
 public class TransactionSummaryData extends ResourceSupport {
 
     private List<TransactionInfoData> transactions;
+    private RangeData range;
     private StatisticsData statistics;
 
 
 
-    public TransactionSummaryData(TransactionSummary summary) {
+    public TransactionSummaryData(TransactionSummary summary, RangeData range) {
         this.transactions = new ArrayList<>();
         summary.getTransactionInfos().forEach(t -> this.transactions.add(new TransactionInfoData(t)));
-        statistics = new StatisticsData(summary.getStatistics());
+        this.statistics = new StatisticsData(summary.getStatistics());
+        this.range = range;
     }
     public List<TransactionInfoData> getTransactions() {
         return transactions;
@@ -35,4 +37,11 @@ public class TransactionSummaryData extends ResourceSupport {
     }
 
 
+    public RangeData getRange() {
+        return range;
+    }
+
+    public void setRange(RangeData range) {
+        this.range = range;
+    }
 }
