@@ -73,7 +73,7 @@ public class BasicTransactionSummaryServiceTest {
         CategoryService categoryService = mock(CategoryService.class);
         AccountService accountService = mock(AccountService.class);
 
-        return TransactionSummaryServiceApplication.transactionSummaryServicBean(transactionService,categoryService, accountService);
+        return TransactionSummaryConfiguration.transactionSummaryServiceBean(transactionService,categoryService, accountService);
     }
 
     private List<Transaction> getTransactionsForDates(String[] dates) {
