@@ -3,7 +3,7 @@ package pl.com.michalpolak.hyperbudget.transaction.client.account;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import pl.com.michalpolak.hyperbudget.transaction.core.spi.Account;
-import pl.com.michalpolak.hyperbudget.transaction.core.spi.AccountService;
+import pl.com.michalpolak.hyperbudget.transaction.data.spi.AccountService;
 
 @Component
 public class AccountAdapter implements AccountService {

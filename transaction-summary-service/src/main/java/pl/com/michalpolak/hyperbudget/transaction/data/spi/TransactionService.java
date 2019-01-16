@@ -1,7 +1,8 @@
-package pl.com.michalpolak.hyperbudget.transaction.core.spi;
+package pl.com.michalpolak.hyperbudget.transaction.data.spi;
 
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
+import pl.com.michalpolak.hyperbudget.transaction.core.spi.Transaction;
 
 import java.util.List;
 
