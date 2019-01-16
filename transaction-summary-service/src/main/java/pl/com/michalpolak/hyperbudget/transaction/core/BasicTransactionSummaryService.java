@@ -22,62 +22,6 @@ class BasicTransactionSummaryService implements TransactionSummaryService {
         this.accountService = accountService;
     }
 
-    // TODO: Remove useless functions
-    @Override
-    public TransactionInfo getTransactionInfo(String id){
-
-        Transaction transaction = transactionService.getTranaction(id);
-        Category category =categoryService.getCategory(transaction.getCategoryId());
-        Account account = accountService.getAccount(transaction.getAccountId());
-        return new TransactionInfo(transaction,category,account);
-    }
-
-    @Override
-    public List<TransactionInfo> getTransactionInfosList() {
-
-        List<TransactionInfo> transactionInfos = new ArrayList<>();
-
-
-        List<Transaction> transactions =  transactionService.transactionList();
-
-        transactions.forEach(t->{
-
-            Category category =categoryService.getCategory(t.getCategoryId());
-            Account account = accountService.getAccount(t.getAccountId());
-            transactionInfos.add(new TransactionInfo(t,category,account));
-        });
-
-
-        return transactionInfos;
-
-    }
-
-    @Override
-    public TransactionSummary getTransactionsSummary() {
-
-        List<TransactionInfo> transactionInfos = new ArrayList<>();
-
-        // FIXME: Move prepare transaction data to repository
-        List<Transaction> transactions =  transactionService.transactionList();
-        transactions.forEach(t->{
-
-            // TODO: Use ListenableFuture for parallel data collection
-            Category category =categoryService.getCategory(t.getCategoryId());
-            Account account = accountService.getAccount(t.getAccountId());
-            transactionInfos.add(new TransactionInfo(t,category,account));
-        });
-
-        TransactionStatistics statistics = new TransactionStatistics(transactionInfos);
-        return new TransactionSummary(transactionInfos, statistics);
-
-    }
-
-    @Override
-    public TransactionStatistics calculateTransactionStatistics() {
-
-        return new TransactionStatistics(getTransactionInfosList());
-    }
-
     @Override
     public TransactionSummary getTransactionsSummaryPeMonth(YearMonth month) {
         List<TransactionInfo> transactionInfos = new ArrayList<>();
@@ -89,7 +33,6 @@ class BasicTransactionSummaryService implements TransactionSummaryService {
             Account account = accountService.getAccount(t.getAccountId());
             transactionInfos.add(new TransactionInfo(t,category,account));
         });
-
         TransactionStatistics statistics = new TransactionStatistics(transactionInfos);
         return new TransactionSummary(transactionInfos, statistics);
     }
