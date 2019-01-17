@@ -7,10 +7,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.Resource;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.request.WebRequest;
 import pl.com.michalpolak.hyperbudget.transaction.core.TransactionSummary;
 import pl.com.michalpolak.hyperbudget.transaction.core.api.TransactionSummaryService;
 
@@ -74,5 +74,11 @@ public class TransactionSummaryRestController {
         return linkTo(methodOn(TransactionSummaryRestController.class).transactionsSummaryPerMonth(previousMonth.getYear(),previousMonth.getMonthOfYear())).withRel("previousMonth");
     }
 
+    @ExceptionHandler({Exception.class})
+    ResponseEntity handleUnknownException(Exception exception, WebRequest request) {
+        LOGGER.error(exception.getMessage(), exception);
+        ErrorData errorData =  new ErrorData("f2f0f0","Unknown Error", exception.getMessage());
+        return new ResponseEntity(errorData, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
 
 }
