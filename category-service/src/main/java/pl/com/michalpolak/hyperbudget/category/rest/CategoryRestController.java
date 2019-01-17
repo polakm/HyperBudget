@@ -74,20 +74,23 @@ public class CategoryRestController {
     ResponseEntity handleCategoryNotExistException(CategoryNotFoundException exception, WebRequest request) {
 
         LOGGER.warn(exception.getMessage(), exception);
-        return new ResponseEntity(exception.getMessage(), HttpStatus.NOT_FOUND);
+        ErrorData errorData =  new ErrorData("b4e618","Category not found", exception.getMessage());
+        return new ResponseEntity(errorData, HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler({InvalidCategoryException.class})
     ResponseEntity handleInvalidCategoryException(InvalidCategoryException exception, WebRequest request) {
 
         LOGGER.warn(exception.getMessage(), exception);
-        return new ResponseEntity(exception.getMessage(), HttpStatus.BAD_REQUEST);
+        ErrorData errorData =  new ErrorData("c38984","Invalid category", exception.getMessage());
+        return new ResponseEntity(errorData, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler({Exception.class})
     ResponseEntity handleUnknownException(Exception exception, WebRequest request) {
 
         LOGGER.error(exception.getMessage(), exception);
-        return new ResponseEntity(exception.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        ErrorData errorData =  new ErrorData("43514a","Unknown Error", exception.getMessage());
+        return new ResponseEntity(errorData, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }
