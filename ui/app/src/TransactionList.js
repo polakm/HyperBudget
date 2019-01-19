@@ -37,7 +37,7 @@ class TransactionList extends Component {
     this.setState({isLoading: true});
 
 
-    fetch('/api/summaries/' + this.state.range.year + '/' + this.state.range.month)
+    fetch('/api/summaries/' + this.state.range.year + '/' + this.state.range.month,{headers:{"X-API-Version":"1"}})
       .then(response => response.json())
       .then(data => this.setState({
       transactions: data.transactions,
@@ -63,7 +63,7 @@ class TransactionList extends Component {
 
   async previousMonth() {
 
-    fetch(this.state.links.previousMonth.href)
+    fetch(this.state.links.previousMonth.href,{headers:{"X-API-Version":"1"}})
       .then(response => response.json())
       .then(data => this.setState({
       transactions: data.transactions,
@@ -76,7 +76,7 @@ class TransactionList extends Component {
 
    async nextMonth() {
 
-      fetch(this.state.links.nextMonth.href)
+      fetch(this.state.links.nextMonth.href,{headers:{"X-API-Version":"1"}})
         .then(response => response.json())
         .then(data => this.setState({
             transactions: data.transactions,

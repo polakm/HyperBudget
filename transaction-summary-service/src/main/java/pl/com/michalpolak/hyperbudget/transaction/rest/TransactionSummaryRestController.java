@@ -6,7 +6,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.Link;
-import org.springframework.hateoas.Resource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,13 +15,12 @@ import pl.com.michalpolak.hyperbudget.transaction.core.api.TransactionSummarySer
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
 @RestController
-@RequestMapping("/api/summaries")
+@RequestMapping(path="/api/summaries")
 public class TransactionSummaryRestController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(TransactionSummaryRestController.class);
@@ -34,18 +32,16 @@ public class TransactionSummaryRestController {
         this.service = service;
     }
 
+    @RequestMapping(path="/{year}/{month}", method = RequestMethod.GET, headers = {"X-API-Version=1"})
+    public TransactionSummaryData transactionsSummaryPerMonth(@PathVariable("year") int year , @PathVariable("month") int month){
 
-    @RequestMapping(path="/{year}/{month}", method = RequestMethod.GET)
-    public Resource<TransactionSummaryData> transactionsSummaryPerMonth(@PathVariable("year") int year , @PathVariable("month") int month){
-
-        List<TransactionInfoData> result = new ArrayList<>();
         YearMonth yearMonth = new YearMonth(year,month);
         TransactionSummary summary = service.getTransactionsSummaryPeMonth(yearMonth);
         RangeData range = new RangeData(yearMonth);
         TransactionSummaryData summaryData = new TransactionSummaryData(summary,range);
         Iterable<Link> links = this.buildLinks(year, month);
-        Resource<TransactionSummaryData> resource = new Resource<>(summaryData,links);
-        return resource;
+        summaryData.add(links);
+        return summaryData;
     }
 
     private Collection<Link> buildLinks(int year, int month){
