@@ -36,7 +36,7 @@ zuul:
   routes:
 
     transactions-query:
-      path: /api/transactions/summary/**
+      path: /api/summaries/**
       serviceId: TRANSACTION-SUMMARY-SERVICE
       strip-prefix: false
 
@@ -51,7 +51,6 @@ zuul:
       strip-prefix: false
 
     transactions-command:
-      ignoredPatterns: /api/transactions/summary/**
       path: /api/transactions/**
       serviceId: TRANSACTION-SERVICE
       strip-prefix: false

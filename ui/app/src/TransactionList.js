@@ -37,7 +37,7 @@ class TransactionList extends Component {
     this.setState({isLoading: true});
 
 
-    fetch('/api/transactions/summary/' + this.state.range.year + '/' + this.state.range.month)
+    fetch('/api/summaries/' + this.state.range.year + '/' + this.state.range.month)
       .then(response => response.json())
       .then(data => this.setState({
       transactions: data.transactions,

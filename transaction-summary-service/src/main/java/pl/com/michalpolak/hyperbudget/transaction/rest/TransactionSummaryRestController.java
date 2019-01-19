@@ -22,7 +22,7 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
 @RestController
-@RequestMapping("/api/transactions")
+@RequestMapping("/api/summaries")
 public class TransactionSummaryRestController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(TransactionSummaryRestController.class);
@@ -35,7 +35,7 @@ public class TransactionSummaryRestController {
     }
 
 
-    @RequestMapping(path="/summary/{year}/{month}", method = RequestMethod.GET)
+    @RequestMapping(path="/{year}/{month}", method = RequestMethod.GET)
     public Resource<TransactionSummaryData> transactionsSummaryPerMonth(@PathVariable("year") int year , @PathVariable("month") int month){
 
         List<TransactionInfoData> result = new ArrayList<>();
