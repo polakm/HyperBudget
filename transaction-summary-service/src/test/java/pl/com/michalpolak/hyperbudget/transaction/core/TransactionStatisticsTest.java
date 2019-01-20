@@ -20,7 +20,7 @@ public class TransactionStatisticsTest {
         for (long amount : amounts) {
            BigDecimal decimalAmount = new BigDecimal(amount);
             TransactionInfo transaction = new TransactionInfo();
-            transaction.setAmount(Money.of(CurrencyUnit.of("PLN"),amount));
+            transaction.setAmount(Money.of(CurrencyUnit.USD,amount));
             transactions.add(transaction);
         }
        return new TransactionStatistics(transactions);

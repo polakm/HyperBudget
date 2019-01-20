@@ -1,5 +1,6 @@
 package pl.com.michalpolak.hyperbudget.transaction.core;
 
+import org.joda.money.CurrencyUnit;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -19,6 +20,7 @@ class TransactionServiceConfiguration {
     public static TransactionValidator transactionValdiatorBean() {
         List<ValidationRule> rules = new ArrayList<>();
         rules.add(new AmountIsRequired());
+        rules.add(new CurrencyIsAccepted(CurrencyUnit.USD));
         rules.add(new ExecutionDateIsRequired());
         rules.add(new AccountIsRequired());
         return new BasicTransactionValidator(rules);

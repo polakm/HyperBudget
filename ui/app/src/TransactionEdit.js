@@ -8,7 +8,7 @@ class TransactionEdit extends Component {
   emptyItem = {
     title: '',
     amount: '',
-    currencyCode: 'PLN',
+    currencyCode: 'USD',
     executionDate: new Date().toJSON(),
     accountId:'',
     categoryId:''
