@@ -1,37 +1,43 @@
 package pl.com.michalpolak.hyperbudget.category.data;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import pl.com.michalpolak.hyperbudget.category.core.api.Category;
 import pl.com.michalpolak.hyperbudget.category.core.spi.CategoryRepository;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.UUID;
+
 @Configuration
 public class DataLayerConfiguration {
 
-    public static final String EXPENSE = "expense";
-    public static final String INCOME = "income";
+    private static final Logger LOGGER = LoggerFactory.getLogger(DataLayerConfiguration.class);
 
     @Bean
-   public static  CategoryRepository  categoryRepositoryBean(){
+    public static CategoryRepository categoryRepositoryBean() {
 
-        String id;
-        Map<String,Category> initialData = new HashMap<>();
-       initialData.put(id = UUID.randomUUID().toString(),new Category(id,"Other", EXPENSE));
-       initialData.put(id = UUID.randomUUID().toString(),new Category(id, "Car", EXPENSE));
-       initialData.put(id = UUID.randomUUID().toString(),new Category(id,"Home", EXPENSE));
-       initialData.put(id = UUID.randomUUID().toString(),new Category(id,"Food", EXPENSE));
-       initialData.put(id = UUID.randomUUID().toString(),new Category(id,"Education", EXPENSE));
-       initialData.put(id = UUID.randomUUID().toString(),new Category(id,"Shopping", EXPENSE));
+        Map<String, Category> initialData = loadInitialData();
+        return new InMemoryCategoryRepository(initialData);
+    }
 
-       initialData.put(id = UUID.randomUUID().toString(),new Category(id,"Other", INCOME));
-       initialData.put(id = UUID.randomUUID().toString(),new Category(id,"Donation", INCOME));
-       initialData.put(id = UUID.randomUUID().toString(),new Category(id,"Trade", INCOME));
-       initialData.put(id = UUID.randomUUID().toString(),new Category(id,"Salary", INCOME));
+    private static Map<String, Category> loadInitialData() {
 
-       return new InMemoryCategoryRepository(initialData);
+        Map<String, Category> initialData = null;
+        try {
+            InitialDataLoader initialDataLoader = initialDataLoader();
+            return  initialDataLoader.loadAsMap();
+        } catch (IOException e) {
+            LOGGER.error("Error during load initial data.", e);
+        }
+        return new HashMap<>();
+    }
+
+    private static InitialDataLoader initialDataLoader() throws IOException {
+
+        return new CategoryJsonFileLoader("classpath:initial.data.json");
     }
 
 }
