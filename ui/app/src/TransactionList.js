@@ -95,12 +95,8 @@ class TransactionList extends Component {
       return <p>Loading...</p>;
     }
 
-    const getAmountStyle = function(transaction){
-        return Number(transaction.amount)>0 ? 'green':'red';
-     }
-
     const transactionList = transactions.map(transaction => {
-      return <tr key={transaction.id} style={{"color" : getAmountStyle(transaction)}}>
+      return <tr key={transaction.id} class={transaction.type}>
         <td style={{whiteSpace: 'nowrap'}}>{transaction.title}</td>
         <td>{Math.abs(transaction.amount)}</td>
         <td>{transaction.executionDate.substring(0,10)}</td>
