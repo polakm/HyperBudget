@@ -57,7 +57,16 @@ class TransactionList extends Component {
       }
     }).then(() => {
       let updatedTransactions = [...this.state.transactions].filter(i => i.id !== id);
-      this.setState({transactions: updatedTransactions,statistics: this.state.statistics});
+
+      fetch('/api/summaries/' + this.state.range.year + '/' + this.state.range.month,{headers:{"X-API-Version":"1"}})
+            .then(response => response.json())
+            .then(data => this.setState({
+            transactions: data.transactions,
+            statistics: data.statistics,
+            range: data.range,
+            links: data._links,
+            isLoading: false
+           }));
     });
   }
 
