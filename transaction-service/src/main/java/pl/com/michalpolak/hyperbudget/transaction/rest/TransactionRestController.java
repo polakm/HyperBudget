@@ -29,12 +29,12 @@ public class TransactionRestController {
         this.service = service;
     }
 
+    @ResponseStatus(value = HttpStatus.NO_CONTENT)
     @RequestMapping(method = RequestMethod.POST)
-    TransactionData addTranasaction(@RequestBody TransactionData transactionData) throws InvalidTransactionException {
+    void addTranasaction(@RequestBody TransactionData transactionData) throws InvalidTransactionException {
 
         Transaction transaction = new TransactionDataAdapter(transactionData);
         service.addTransaction(transaction);
-        return new TransactionData(transaction);
     }
 
     @RequestMapping(method = RequestMethod.GET)
@@ -50,12 +50,14 @@ public class TransactionRestController {
         return new TransactionData(service.getTransaction(id));
     }
 
+    @ResponseStatus(value = HttpStatus.NO_CONTENT)
     @RequestMapping(path = "/{id}", method = RequestMethod.DELETE)
     void removeTransaction(@PathVariable("id") String id) throws TransactionNotFoundException {
 
         service.removeTransaction(id);
     }
 
+    @ResponseStatus(value = HttpStatus.NO_CONTENT)
     @RequestMapping(path = "/{id}", method = RequestMethod.PUT)
     void updateTransaction(@PathVariable("id") String id, @RequestBody TransactionData transactionData) throws TransactionNotFoundException {
 
