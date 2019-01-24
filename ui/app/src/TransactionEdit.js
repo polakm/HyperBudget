@@ -20,7 +20,8 @@ class TransactionEdit extends Component {
     this.state = {
       item: this.emptyItem,
       categories:[],
-      accounts:[]
+      accounts:[],
+      isLoading: true
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -31,24 +32,18 @@ class TransactionEdit extends Component {
   }
 
   async componentDidMount() {
+    
     if (this.props.match.params.id !== 'income' && this.props.match.params.id !== 'expense') {
       const transaction = await (await fetch(`/api/transactions/${this.props.match.params.id}`)).json();
-
       this.setState({item: transaction});
-
-      //TODO "Push transaction type to server side"
-      this.state.item.type  = ( Number(this.state.item.amount) > 0) ? "income" : "expense";
     }else{
         this.state.item.type = this.props.match.params.id;
     }
-    if(this.state.item.type === "expense"){
-       this.state.item.amount = -this.state.item.amount;
-    }
+
     const categories = await (await fetch('/api/categories?type=' + this.state.item.type)).json();
     const accounts = await (await fetch('/api/accounts')).json();
-    this.setState({ item: this.state.item,
-                    categories: categories,
-                    accounts: accounts});
+    
+    this.setState({ item: this.state.item, categories: categories, accounts: accounts, isLoading: false});
   }
 
   handleChange(event) {
@@ -73,10 +68,6 @@ class TransactionEdit extends Component {
     event.preventDefault();
     const {item} = this.state;
 
-    //TODO Push transaction type to server side
-    if(item.type === "expense"){
-        item.amount = - item.amount;
-    }
     await fetch('/api/transactions' + (item.id ? ('/'+ item.id) : ''), {
       method: (item.id) ? 'PUT' : 'POST',
       headers: {
@@ -95,18 +86,16 @@ class TransactionEdit extends Component {
       }else{
          title = "Add ";
       }
+        title += this.state.item.type.charAt(0).toUpperCase() + this.state.item.type.slice(1);
 
-       //TODO Push transaction type to server side
-      if (this.state.item.type === 'income'){
-        title+="Income"
-     }else{
-         title+="Expense"
-     }
      return title;
   };
 
   render() {
 
+    if (this.state.isLoading) {
+      return <p>Loading...</p>;
+    }
 
     const accounts = this.state.accounts;
     const accountOptions = accounts.map(account => {
@@ -139,7 +128,7 @@ class TransactionEdit extends Component {
           <FormGroup>
             <Label for="amount">Amount</Label>
             <InputGroup>
-            <Input type="number" min="0.01" step="0.01" name="amount" id="amount" value={item.amount || ''}
+            <Input type="number" min="0.01" step="0.01" name="amount" id="amount" value={Math.abs(item.amount) || ''}
                    onChange={this.handleChange} autoComplete="amount"/>
                    <InputGroupAddon addonType="prepend">{item.currencyCode}</InputGroupAddon>
                    </InputGroup>
