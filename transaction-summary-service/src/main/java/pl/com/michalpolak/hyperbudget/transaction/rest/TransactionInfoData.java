@@ -1,6 +1,7 @@
 package pl.com.michalpolak.hyperbudget.transaction.rest;
 
 import pl.com.michalpolak.hyperbudget.transaction.core.api.TransactionInfo;
+import pl.com.michalpolak.hyperbudget.transaction.core.api.TransactionTypes;
 
 public class TransactionInfoData {
 
@@ -43,11 +44,11 @@ public class TransactionInfoData {
         }
 
         if(transaction.getAmount() != null && transaction.getAmount().isPositive()) {
-            setType("income");
+            setType(TransactionTypes.INCOME);
         }
 
         if(transaction.getAmount() != null && transaction.getAmount().isNegative()){
-            setType("expense");
+            setType(TransactionTypes.EXPENSE);
         }
 
         if (transaction.getExecutionDate() != null) {
