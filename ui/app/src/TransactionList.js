@@ -166,18 +166,18 @@ class TransactionList extends Component {
             <Card>
               <CardBody>
 
-                <h5>Income: <Badge className="float-right" color="success">{Number(this.state.statistics.sumOfIncomes).toFixed(2)}</Badge></h5>
-                <h5>Outgoings: <Badge className="float-right" color="danger">{Number(this.state.statistics.sumOfExpenses).toFixed(2)}</Badge></h5>
+                <h5>Income: <Badge className="float-right" color="success">{Number(this.state.statistics.income).toFixed(2)}</Badge></h5>
+                <h5>Outgoings: <Badge className="float-right" color="danger">{Number(this.state.statistics.expense).toFixed(2)}</Badge></h5>
                 <hr/>
-                <h5>Balance: <Badge className="float-right" color="info">{Number(this.state.statistics.totalSum).toFixed(2)}</Badge></h5>
+                <h5>Balance: <Badge className="float-right" color="info">{Number(this.state.statistics.balance).toFixed(2)}</Badge></h5>
               </CardBody>
             </Card>
             <Card>
               <CardBody>
               <div id = "chart-container" style={{textAlign:"center"}}>
           <PieChart size={200} inner innerHoleSize={150} data={[
-               { title: 'Expenses', value: Number(this.state.statistics.absSumOfExpenses), color: '#dc3545' },
-               { title: 'Balance', value: Number(this.state.statistics.totalSum), color: '#17a2b8' },
+               { title: 'Expenses', value: Number(this.state.statistics.expenseAbs), color: '#dc3545' },
+               { title: 'Balance', value: Number(this.state.statistics.balance), color: '#17a2b8' },
             ]}
             ></PieChart>
              </div>
