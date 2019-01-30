@@ -6,20 +6,20 @@ import pl.com.michalpolak.hyperbudget.transaction.core.TransactionSummary;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TransactionSummaryData extends ResourceSupport {
+class TransactionSummaryData extends ResourceSupport {
 
     private List<TransactionInfoData> transactions;
     private RangeData range;
     private StatisticsData statistics;
 
 
-
-    public TransactionSummaryData(TransactionSummary summary, RangeData range) {
+    TransactionSummaryData(TransactionSummary summary, RangeData range) {
         this.transactions = new ArrayList<>();
         summary.getTransactionInfos().forEach(t -> this.transactions.add(new TransactionInfoData(t)));
         this.statistics = new StatisticsData(summary.getStatistics());
         this.range = range;
     }
+
     public List<TransactionInfoData> getTransactions() {
         return transactions;
     }
@@ -35,7 +35,6 @@ public class TransactionSummaryData extends ResourceSupport {
     public void setStatistics(StatisticsData statistics) {
         this.statistics = statistics;
     }
-
 
     public RangeData getRange() {
         return range;

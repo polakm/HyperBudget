@@ -3,7 +3,7 @@ package pl.com.michalpolak.hyperbudget.transaction.rest;
 import java.util.Date;
 import java.util.UUID;
 
-public class ErrorData {
+class ErrorData {
 
     private String id = UUID.randomUUID().toString();
     private Date timestamp = new Date();
@@ -11,7 +11,7 @@ public class ErrorData {
     private String title;
     private String message;
 
-    public ErrorData(String code, String title, String message) {
+    ErrorData(String code, String title, String message) {
 
         this.code = code;
         this.title = title;
@@ -33,7 +33,6 @@ public class ErrorData {
     public void setTimestamp(Date timestamp) {
         this.timestamp = timestamp;
     }
-
 
     public String getCode() {
         return code;

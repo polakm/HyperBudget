@@ -2,8 +2,8 @@ package pl.com.michalpolak.hyperbudget.transaction.rest;
 
 import pl.com.michalpolak.hyperbudget.transaction.core.TransactionStatistics;
 
-// TODO: Change access to package
-public class StatisticsData {
+
+class StatisticsData {
 
     private String totalSum;
     private String sumOfIncomes;
@@ -12,8 +12,7 @@ public class StatisticsData {
     private String absSumOfIncomes;
     private String absSumOfExpenses;
 
-    //FIXME: Refactor property names
-    public StatisticsData(TransactionStatistics statistics) {
+    StatisticsData(TransactionStatistics statistics) {
 
         this.totalSum = statistics.totalSum().toString();
         this.sumOfIncomes = statistics.sumOfIncomes().toString();

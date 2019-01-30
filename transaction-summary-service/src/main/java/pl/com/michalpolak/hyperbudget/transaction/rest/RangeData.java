@@ -2,14 +2,14 @@ package pl.com.michalpolak.hyperbudget.transaction.rest;
 
 import org.joda.time.YearMonth;
 
-public class RangeData {
+class RangeData {
 
     private int year;
     private int month;
     private String monthName;
 
 
-    public RangeData(YearMonth yearMonth) {
+    RangeData(YearMonth yearMonth) {
 
         this.year = yearMonth.getYear();
         this.month = yearMonth.getMonthOfYear();

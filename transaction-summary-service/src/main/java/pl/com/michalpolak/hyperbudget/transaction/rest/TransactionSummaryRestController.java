@@ -21,14 +21,14 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
 @RestController
 @RequestMapping(path="/api/summaries")
-public class TransactionSummaryRestController {
+class TransactionSummaryRestController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(TransactionSummaryRestController.class);
 
     private TransactionSummaryService service;
 
     @Autowired
-    public TransactionSummaryRestController( TransactionSummaryService service) {
+    TransactionSummaryRestController( TransactionSummaryService service) {
         this.service = service;
     }
 
@@ -71,7 +71,7 @@ public class TransactionSummaryRestController {
     }
 
     @ExceptionHandler({Exception.class})
-    ResponseEntity handleUnknownException(Exception exception, WebRequest request) {
+    public ResponseEntity handleUnknownException(Exception exception, WebRequest request) {
         LOGGER.error(exception.getMessage(), exception);
         ErrorData errorData =  new ErrorData("f2f0f0","Unknown Error", exception.getMessage());
         return new ResponseEntity(errorData, HttpStatus.INTERNAL_SERVER_ERROR);
