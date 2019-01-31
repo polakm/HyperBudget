@@ -105,7 +105,7 @@ class TransactionList extends Component {
     }
 
     const transactionList = transactions.map(transaction => {
-      return <tr key={transaction.id} class={transaction.type}>
+      return <tr key={transaction.id} className={transaction.type}>
         <td style={{whiteSpace: 'nowrap'}}>{transaction.title}</td>
         <td>{Math.abs(transaction.amount)}</td>
         <td>{transaction.executionDate.substring(0,10)}</td>
