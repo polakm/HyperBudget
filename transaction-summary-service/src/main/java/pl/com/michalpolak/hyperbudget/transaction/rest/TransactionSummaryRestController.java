@@ -10,7 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.WebRequest;
-import pl.com.michalpolak.hyperbudget.transaction.core.TransactionSummary;
+import pl.com.michalpolak.hyperbudget.transaction.core.api.TransactionSummary;
 import pl.com.michalpolak.hyperbudget.transaction.core.api.TransactionSummaryService;
 
 import java.util.ArrayList;

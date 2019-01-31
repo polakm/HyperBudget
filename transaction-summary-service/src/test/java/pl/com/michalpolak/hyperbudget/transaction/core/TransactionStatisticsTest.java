@@ -4,6 +4,7 @@ import org.joda.money.CurrencyUnit;
 import org.joda.money.Money;
 import org.junit.Test;
 import pl.com.michalpolak.hyperbudget.transaction.core.api.TransactionInfo;
+import pl.com.michalpolak.hyperbudget.transaction.core.api.TransactionStatistics;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;

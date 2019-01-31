@@ -1,6 +1,4 @@
-package pl.com.michalpolak.hyperbudget.transaction.core;
-
-import pl.com.michalpolak.hyperbudget.transaction.core.api.TransactionInfo;
+package pl.com.michalpolak.hyperbudget.transaction.core.api;
 
 import java.util.List;
 

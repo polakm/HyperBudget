@@ -1,7 +1,7 @@
 package pl.com.michalpolak.hyperbudget.transaction.rest;
 
 import org.springframework.hateoas.ResourceSupport;
-import pl.com.michalpolak.hyperbudget.transaction.core.TransactionSummary;
+import pl.com.michalpolak.hyperbudget.transaction.core.api.TransactionSummary;
 
 import java.util.ArrayList;
 import java.util.List;

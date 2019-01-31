@@ -1,6 +1,6 @@
 package pl.com.michalpolak.hyperbudget.transaction.rest;
 
-import pl.com.michalpolak.hyperbudget.transaction.core.TransactionStatistics;
+import pl.com.michalpolak.hyperbudget.transaction.core.api.TransactionStatistics;
 
 
 class StatisticsData {
