@@ -1,0 +1,13 @@
+[
+  {"id":"a1c8d439-a886-4fed-b9d9-1e491875deea","name":"Salary","type":"income"},
+  {"id":"46a7f12d-32e2-457f-a183-872044ec263c","name":"Donation","type":"income"},
+  {"id":"b1d8c18a-d40b-44d0-bbed-5cdbf48388f7","name":"Other","type":"income"},
+  {"id":"8b08eb0f-3be9-4d7b-8fcf-89ac143be908","name":"Trade","type":"income"},
+
+  {"id":"bb6b9aae-89a3-4970-8853-87fa3e3c57ac","name":"Other","type":"expense"},
+  {"id":"ecd79702-4111-4c53-9b70-66c0f6db3e0b","name":"Education","type":"expense"},
+  {"id":"1b47c054-dafc-447a-8464-fe58c9609e2a","name":"Food","type":"expense"},
+  {"id":"ddf3941b-ee3f-4d77-9fbf-c91c5bafc5c5","name":"Car","type":"expense"},
+  {"id":"10da26cc-6d76-4ea5-9c1e-e82a69eb2da3","name":"Home","type":"expense"},
+  {"id":"3c02a7cc-6584-4416-8b6b-5e125c5ea1b7","name":"Shopping","type":"expense"}
+]

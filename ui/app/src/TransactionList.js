@@ -12,7 +12,7 @@ class TransactionList extends Component {
       sumOfIncomes:0,
       sumOfExpenses:0,
       totalSum:0
-    };
+    }
 
   constructor(props) {
     super(props);
@@ -20,9 +20,14 @@ class TransactionList extends Component {
         transactions: [],
         accounts: [],
         statistics: this.emptyStatistics,
-        month: new Date().getMonth()+1,
-        year: new Date().getFullYear(),
-        isLoading: true};
+        range: {
+             month: new Date().getMonth()+1,
+             year: new Date().getFullYear(),
+             monthName: ''
+        },
+        isLoading: true
+       };
+
     this.remove = this.remove.bind(this);
     this.previousMonth = this.previousMonth.bind(this);
     this.nextMonth = this.nextMonth.bind(this);
@@ -32,9 +37,15 @@ class TransactionList extends Component {
     this.setState({isLoading: true});
 
 
-    fetch('/api/transactions/summary/' + this.state.year + '/' + this.state.month)
+    fetch('/api/summaries/' + this.state.range.year + '/' + this.state.range.month,{headers:{"X-API-Version":"1"}})
       .then(response => response.json())
-      .then(data => this.setState({transactions: data.transactions,  statistics : data.statistics, isLoading: false}));
+      .then(data => this.setState({
+      transactions: data.transactions,
+      statistics: data.statistics,
+      range: data.range,
+      links: data._links,
+      isLoading: false
+     }));
   }
 
   async remove(id) {
@@ -42,32 +53,48 @@ class TransactionList extends Component {
       method: 'DELETE',
       headers: {
         'Accept': 'application/json',
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'X-API-Version':'1'
       }
     }).then(() => {
       let updatedTransactions = [...this.state.transactions].filter(i => i.id !== id);
-      this.setState({transactions: updatedTransactions,statistics: this.state.statistics});
+
+      fetch('/api/summaries/' + this.state.range.year + '/' + this.state.range.month,{headers:{"X-API-Version":"1"}})
+            .then(response => response.json())
+            .then(data => this.setState({
+            transactions: data.transactions,
+            statistics: data.statistics,
+            range: data.range,
+            links: data._links,
+            isLoading: false
+           }));
     });
   }
 
   async previousMonth() {
-   // this.setState({isLoading: true});
 
-      (this.state.month-1)>0 ? (this.state.month--) : ((this.state.month = 12) && this.state.year--);
-
-    fetch('/api/transactions/summary/'+ this.state.year + '/' + this.state.month)
+    fetch(this.state.links.previousMonth.href,{headers:{"X-API-Version":"1"}})
       .then(response => response.json())
-      .then(data => this.setState({transactions: data.transactions,  statistics : data.statistics, isLoading: false}));
+      .then(data => this.setState({
+      transactions: data.transactions,
+       range: data.range,
+      statistics : data.statistics,
+      links: data._links,
+      isLoading: false
+    }));
   }
 
    async nextMonth() {
-     // this.setState({isLoading: true});
 
-     (this.state.month+1)<=12 ? (this.state.month++) : ((this.state.month = 1) && this.state.year++);
-
-      fetch('/api/transactions/summary/'+ this.state.year + '/' + this.state.month)
+      fetch(this.state.links.nextMonth.href,{headers:{"X-API-Version":"1"}})
         .then(response => response.json())
-        .then(data => this.setState({transactions: data.transactions,  statistics : data.statistics, isLoading: false}));
+        .then(data => this.setState({
+            transactions: data.transactions,
+            range: data.range,
+            statistics : data.statistics,
+            links: data._links,
+            isLoading: false
+        }));
    }
 
 
@@ -78,20 +105,8 @@ class TransactionList extends Component {
       return <p>Loading...</p>;
     }
 
-    const getAmountStyle = function(transaction){
-        return Number(transaction.amount)>0 ? 'green':'red';
-     }
-
-      const getMonthName = function(monthNumber){
-
-      var months = [ "January", "February", "March", "April", "May", "June",
-                 "July", "August", "September", "October", "November", "December" ];
-
-             return months[monthNumber-1];
-        }
-
     const transactionList = transactions.map(transaction => {
-      return <tr key={transaction.id} style={{"color" : getAmountStyle(transaction)}}>
+      return <tr key={transaction.id} className={transaction.type}>
         <td style={{whiteSpace: 'nowrap'}}>{transaction.title}</td>
         <td>{Math.abs(transaction.amount)}</td>
         <td>{transaction.executionDate.substring(0,10)}</td>
@@ -105,7 +120,7 @@ class TransactionList extends Component {
         </td>
       </tr>
     });
-
+    // TODO: Get rounded value from service
     return (
       <div>
         <AppNavbar/>
@@ -116,7 +131,7 @@ class TransactionList extends Component {
           <Col md={8}>
           <Row>
           <Col className="md-6 offset-3">
-           <h5>{getMonthName(this.state.month)} {this.state.year}</h5>
+           <h5>{this.state.range.monthName} {this.state.range.year}</h5>
                  <ButtonGroup>
                         <Button color="info" outline onClick={this.previousMonth}> &lt;&lt; Previous Month</Button>
                         <Button color="info" outline onClick={this.nextMonth}>Next Month &gt;&gt;</Button>
@@ -151,18 +166,19 @@ class TransactionList extends Component {
         <Col md={3} >
             <Card>
               <CardBody>
-                <h5>Income: <Badge className="float-right" color="success">{Number(this.state.statistics.sumOfIncomes).toFixed(2)}</Badge></h5>
-                <h5>Outgoings: <Badge className="float-right" color="danger">{Number(this.state.statistics.sumOfExpenses).toFixed(2)}</Badge></h5>
+
+                <h5>Income: <Badge className="float-right" color="success">{Number(this.state.statistics.income).toFixed(2)}</Badge></h5>
+                <h5>Outgoings: <Badge className="float-right" color="danger">{Number(this.state.statistics.expense).toFixed(2)}</Badge></h5>
                 <hr/>
-                <h5>Balance: <Badge className="float-right" color="info">{Number(this.state.statistics.totalSum).toFixed(2)}</Badge></h5>
+                <h5>Balance: <Badge className="float-right" color="info">{Number(this.state.statistics.balance).toFixed(2)}</Badge></h5>
               </CardBody>
             </Card>
             <Card>
               <CardBody>
               <div id = "chart-container" style={{textAlign:"center"}}>
           <PieChart size={200} inner innerHoleSize={150} data={[
-               { title: 'Expenses', value: Math.abs(Number(this.state.statistics.sumOfExpenses)), color: '#dc3545' },
-               { title: 'Balance', value: Math.abs(Number(this.state.statistics.totalSum)), color: '#17a2b8' },
+               { title: 'Expenses', value: Number(this.state.statistics.expenseAbs), color: '#dc3545' },
+               { title: 'Balance', value: Number(this.state.statistics.balance), color: '#17a2b8' },
             ]}
             ></PieChart>
              </div>

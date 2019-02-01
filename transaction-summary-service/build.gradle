@@ -37,6 +37,7 @@ dependencyManagement {
 }
 
 dependencies {
+    compile group: 'com.google.guava', name: 'guava', version: '27.0.1-jre'
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-hateoas', version: '1.2.2.RELEASE'
     compile group: 'io.springfox', name: 'springfox-swagger2', version: '2.9.2'
     compile group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.9.2'

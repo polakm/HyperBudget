@@ -1,42 +1,73 @@
 package pl.com.michalpolak.hyperbudget.transaction.rest;
 
-import pl.com.michalpolak.hyperbudget.transaction.core.TransactionStatistics;
-
-public class StatisticsData {
-
-    private String totalSum;
-    private String sumOfIncomes;
-    private String sumOfExpenses;
+import pl.com.michalpolak.hyperbudget.transaction.core.api.TransactionStatistics;
 
 
-    public StatisticsData(TransactionStatistics statistics) {
+class StatisticsData {
 
-        this.totalSum = statistics.totalSum().toString();
-        this.sumOfIncomes = statistics.sumOfIncomes().toString();
-        this.sumOfExpenses = statistics.sumOfExpenses().toString();
+    private String balance;
+    private String income;
+    private String expense;
+    private String balanceAbs;
+    private String incomeAbs;
+    private String expenseAbs;
+
+    StatisticsData(TransactionStatistics statistics) {
+
+        this.balance = statistics.totalSum().toString();
+        this.income = statistics.sumOfIncomes().toString();
+        this.expense = statistics.sumOfExpenses().toString();
+
+        this.balanceAbs = statistics.totalSum().abs().toString();
+        this.incomeAbs = statistics.sumOfIncomes().abs().toString();
+        this.expenseAbs = statistics.sumOfExpenses().abs().toString();
     }
 
-    public String getTotalSum() {
-        return totalSum;
+    public String getBalance() {
+        return balance;
     }
 
-    public void setTotalSum(String totalSum) {
-        this.totalSum = totalSum;
+    public void setBalance(String balance) {
+        this.balance = balance;
     }
 
-    public String getSumOfIncomes() {
-        return sumOfIncomes;
+    public String getIncome() {
+        return income;
     }
 
-    public void setSumOfIncomes(String sumOfIncomes) {
-        this.sumOfIncomes = sumOfIncomes;
+    public void setIncome(String income) {
+        this.income = income;
     }
 
-    public String getSumOfExpenses() {
-        return sumOfExpenses;
+    public String getExpense() {
+        return expense;
     }
 
-    public void setSumOfExpenses(String sumOfExpenses) {
-        this.sumOfExpenses = sumOfExpenses;
+    public void setExpense(String expense) {
+        this.expense = expense;
+    }
+
+    public String getBalanceAbs() {
+        return balanceAbs;
+    }
+
+    public void setBalanceAbs(String balanceAbs) {
+        this.balanceAbs = balanceAbs;
+    }
+
+    public String getIncomeAbs() {
+        return incomeAbs;
+    }
+
+    public void setIncomeAbs(String incomeAbs) {
+        this.incomeAbs = incomeAbs;
+    }
+
+    public String getExpenseAbs() {
+        return expenseAbs;
+    }
+
+    public void setExpenseAbs(String expenseAbs) {
+        this.expenseAbs = expenseAbs;
     }
 }

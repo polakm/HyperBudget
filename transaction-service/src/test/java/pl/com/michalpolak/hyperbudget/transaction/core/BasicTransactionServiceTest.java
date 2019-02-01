@@ -141,7 +141,7 @@ public class BasicTransactionServiceTest {
         transaction.setTitle("title");
         transaction.setExecutionDate(new DateTime());
         transaction.setAccountId(UUID.randomUUID().toString());
-        transaction.setAmount(Money.parse("PLN 299.99"));
+        transaction.setAmount(Money.parse("USD 299.99"));
         return transaction;
     }
 

@@ -3,7 +3,7 @@ package pl.com.michalpolak.hyperbudget.transaction.client.transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import pl.com.michalpolak.hyperbudget.transaction.core.spi.Transaction;
-import pl.com.michalpolak.hyperbudget.transaction.core.spi.TransactionService;
+import pl.com.michalpolak.hyperbudget.transaction.data.spi.TransactionService;
 
 import java.util.List;
 

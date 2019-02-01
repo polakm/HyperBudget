@@ -4,6 +4,7 @@ import org.joda.money.CurrencyUnit;
 import org.joda.money.Money;
 import org.junit.Test;
 import pl.com.michalpolak.hyperbudget.transaction.core.api.TransactionInfo;
+import pl.com.michalpolak.hyperbudget.transaction.core.api.TransactionStatistics;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -20,7 +21,7 @@ public class TransactionStatisticsTest {
         for (long amount : amounts) {
            BigDecimal decimalAmount = new BigDecimal(amount);
             TransactionInfo transaction = new TransactionInfo();
-            transaction.setAmount(Money.of(CurrencyUnit.of("PLN"),amount));
+            transaction.setAmount(Money.of(CurrencyUnit.USD,amount));
             transactions.add(transaction);
         }
        return new TransactionStatistics(transactions);

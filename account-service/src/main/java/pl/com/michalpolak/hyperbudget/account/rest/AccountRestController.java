@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Set;
 
 @RestController
-@RequestMapping("/api/accounts")
+@RequestMapping(path = "/api/accounts", headers ={"X-API-Version=1"} )
 public class AccountRestController {
 
 
@@ -66,20 +66,24 @@ public class AccountRestController {
     ResponseEntity handleAccountNotExistException(AccountNotFoundException exception, WebRequest request) {
 
         LOGGER.warn(exception.getMessage(), exception);
-        return new ResponseEntity(exception.getMessage(), HttpStatus.NOT_FOUND);
+        ErrorData errorData =  new ErrorData("e2fe0a","Account not found", exception.getMessage());
+        return new ResponseEntity(errorData, HttpStatus.NOT_FOUND);
     }
-
     @ExceptionHandler({InvalidAccountException.class})
+
+
     ResponseEntity handleInvalidAccountException(InvalidAccountException exception, WebRequest request) {
 
         LOGGER.warn(exception.getMessage(), exception);
-        return new ResponseEntity(exception.getMessage(), HttpStatus.BAD_REQUEST);
+        ErrorData errorData =  new ErrorData("f059ab","Invalid account", exception.getMessage());
+        return new ResponseEntity(errorData, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler({Exception.class})
     ResponseEntity handleUnknownException(Exception exception, WebRequest request) {
 
         LOGGER.error(exception.getMessage(), exception);
-        return new ResponseEntity(exception.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        ErrorData errorData =  new ErrorData("3e1b0b","Unknown Error", exception.getMessage());
+        return new ResponseEntity(errorData, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }

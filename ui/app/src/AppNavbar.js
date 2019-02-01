@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { Collapse, Nav, Navbar, NavbarBrand, NavbarToggler, NavItem, NavLink } from 'reactstrap';
+import { Collapse, Nav, Navbar, NavbarBrand, NavItem, NavLink, Badge } from 'reactstrap';
 import { Link } from 'react-router-dom';
+import AppInfo from './application.json';
 
 export default class AppNavbar extends Component {
   constructor(props) {
@@ -17,8 +18,14 @@ export default class AppNavbar extends Component {
 
   render() {
     return <Navbar color="dark" dark expand="md">
-      <NavbarBrand tag={Link} to="/">HyperBudget</NavbarBrand>
-      <NavbarToggler onClick={this.toggle}/>
+     <Nav>
+      <NavbarBrand tag={Link} to="/">{AppInfo.name}</NavbarBrand>
+       </Nav>
+       <Nav className="ml-auto" navbar>
+        <NavItem>
+            <h5> <Badge pill color="light">{AppInfo.version}</Badge></h5>
+        </NavItem>
+       </Nav>
     </Navbar>;
   }
 }

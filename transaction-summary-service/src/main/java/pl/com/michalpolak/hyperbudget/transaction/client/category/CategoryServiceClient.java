@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @FeignClient("category-service")
 interface CategoryServiceClient {
 
-    @RequestMapping(path="/api/categories/{id}",method = RequestMethod.GET)
+    @RequestMapping(path="/api/categories/{id}",method = RequestMethod.GET, headers = {"X-API-Version=1"})
     public CategoryData getCategory(@PathVariable("id") String categoryId);
 
 }

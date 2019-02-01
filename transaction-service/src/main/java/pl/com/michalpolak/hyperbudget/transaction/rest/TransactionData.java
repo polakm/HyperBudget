@@ -18,6 +18,7 @@ public class TransactionData {
 
     private String categoryId;
 
+    private String type;
 
 
     public TransactionData() {
@@ -33,7 +34,17 @@ public class TransactionData {
         if (transaction.getAmount() != null) {
             setAmount(transaction.getAmount().getAmount().toPlainString());
             setCurrencyCode(transaction.getAmount().getCurrencyUnit().getCode());
+
         }
+
+        if(transaction.getAmount() != null && transaction.getAmount().isPositive()) {
+            setType("income");
+        }
+
+        if(transaction.getAmount() != null && transaction.getAmount().isNegative()){
+            setType("expense");
+        }
+
         if (transaction.getExecutionDate() != null) {
             setExecutionDate(transaction.getExecutionDate().toString());
         }
@@ -95,4 +106,11 @@ public class TransactionData {
         this.categoryId = categoryId;
     }
 
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
 }

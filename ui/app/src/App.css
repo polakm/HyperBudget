@@ -38,3 +38,11 @@
 .add-buttons {
   margin-bottom: 10px;
 }
+
+.expense {
+  color: red;
+}
+
+.income {
+  color: green;
+}
