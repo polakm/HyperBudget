@@ -121,6 +121,8 @@ class TransactionEdit extends Component {
     item.accountId  || (item.accountId = accounts.length>0 ? accounts[0].id : '');
     item.categoryId || (item.categoryId = categories.length>0 ? categories[0].id : '');
 
+    item.executionDate = item.executionDate && item.executionDate.substring(0,10);
+
     const title = <h2>{this.resolveTitle()}</h2>;
 
     return <div>
@@ -157,7 +159,7 @@ class TransactionEdit extends Component {
           </FormGroup>
           <FormGroup>
             <Label for="executionDate">Date</Label>           
-            <Input type="date" name="executionDate" id="executionDate" value={item.executionDate.substring(0,10)}
+            <Input type="date" name="executionDate" id="executionDate" value={item.executionDate}
                    onChange={this.handleChangeDate} autoComplete="executionDate"/>
                     
           </FormGroup>
