@@ -1,0 +1,1 @@
+java -jar %CD%/build/libs/transaction-service-0.0.1-SNAPSHOT.jar

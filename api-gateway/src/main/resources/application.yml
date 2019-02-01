@@ -1,0 +1,59 @@
+debug: true
+
+logging:
+  level:
+    com:
+      netflix: DEBUG
+
+spring:
+  application:
+    name: api-gateway
+  sleuth:
+    sampler:
+      percentage: 1.0
+    web:
+      skipPattern: (^cleanup.*|.+favicon.*)
+
+
+eureka:
+  client:
+    registerWithEureka: true
+    fetchRegistry: true
+    serviceUrl:
+      defaultZone: http://service-discovery:8761/eureka
+
+
+server:
+  port: 2020
+
+ribbon:
+  ReadTimeout: 60000
+  ConnectTimeout: 6000
+  eureka:
+    enabled: true   #important
+
+zuul:
+  routes:
+
+    transactions-query:
+      path: /api/summaries/**
+      serviceId: TRANSACTION-SUMMARY-SERVICE
+      strip-prefix: false
+
+    categories-query:
+      path: /api/categories/**
+      serviceId: CATEGORY-SERVICE
+      strip-prefix: false
+
+    accounts-query:
+      path: /api/accounts/**
+      serviceId: ACCOUNT-SERVICE
+      strip-prefix: false
+
+    transactions-command:
+      path: /api/transactions/**
+      serviceId: TRANSACTION-SERVICE
+      strip-prefix: false
+
+
+
