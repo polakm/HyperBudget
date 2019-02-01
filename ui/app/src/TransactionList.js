@@ -53,7 +53,8 @@ class TransactionList extends Component {
       method: 'DELETE',
       headers: {
         'Accept': 'application/json',
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'X-API-Version':'1'
       }
     }).then(() => {
       let updatedTransactions = [...this.state.transactions].filter(i => i.id !== id);

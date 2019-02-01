@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Set;
 
 @RestController
-@RequestMapping("/api/transactions")
+@RequestMapping(path="/api/transactions",  headers = {"X-API-Version=1"})
 public class TransactionRestController {
 
 

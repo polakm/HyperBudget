@@ -34,14 +34,21 @@ class TransactionEdit extends Component {
   async componentDidMount() {
     
     if (this.props.match.params.id !== 'income' && this.props.match.params.id !== 'expense') {
-      const transaction = await (await fetch(`/api/transactions/${this.props.match.params.id}`)).json();
-      this.setState({item: transaction});
+        const transaction = await (await fetch(`/api/transactions/${this.props.match.params.id}`, {
+            headers:{"X-API-Version":"1"}
+        })).json();
+       this.setState({item: transaction});
     }else{
         this.state.item.type = this.props.match.params.id;
     }
 
-    const categories = await (await fetch('/api/categories?type=' + this.state.item.type)).json();
-    const accounts = await (await fetch('/api/accounts')).json();
+    const categories = await (await fetch('/api/categories?type=' + this.state.item.type, {
+        headers:{"X-API-Version":"1"}
+    })).json();
+
+    const accounts = await (await fetch('/api/accounts',{
+        headers:{"X-API-Version":"1"}
+    })).json();
     
     this.setState({ item: this.state.item, categories: categories, accounts: accounts, isLoading: false});
   }
@@ -72,7 +79,8 @@ class TransactionEdit extends Component {
       method: (item.id) ? 'PUT' : 'POST',
       headers: {
         'Accept': 'application/json',
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'X-API-Version':'1'
       },
       body: JSON.stringify(item),
     });

@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Set;
 
 @RestController
-@RequestMapping("/api/accounts")
+@RequestMapping(path = "/api/accounts", headers ={"X-API-Version=1"} )
 public class AccountRestController {
 
 
