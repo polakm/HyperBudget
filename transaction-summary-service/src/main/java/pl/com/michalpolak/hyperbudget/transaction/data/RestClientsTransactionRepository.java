@@ -58,7 +58,7 @@ class RestClientsTransactionRepository implements TransactionRepository {
         try {
             return accountFuture.get();
         } catch (InterruptedException | ExecutionException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException("Problem during account loading.",e);
         }
 
     }
@@ -68,7 +68,7 @@ class RestClientsTransactionRepository implements TransactionRepository {
         try {
             return categoryFuture.get();
         } catch (InterruptedException | ExecutionException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException("Problem during category loading.",e);
         }
     }
 }
