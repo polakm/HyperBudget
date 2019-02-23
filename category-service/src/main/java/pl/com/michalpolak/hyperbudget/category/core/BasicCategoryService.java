@@ -25,7 +25,7 @@ class BasicCategoryService implements CategoryService {
     }
 
     @Override
-    public Category addCategory(Category category) throws InvalidCategoryException {
+    public Category addCategory(Category category) throws t {
 
         LOGGER.info("Add new category - Category ID: {}", category.getId());
         validator.validate(category);

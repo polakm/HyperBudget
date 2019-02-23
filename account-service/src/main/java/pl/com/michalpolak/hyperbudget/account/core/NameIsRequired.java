@@ -17,14 +17,10 @@ class NameIsRequired implements ValidationRule {
     public void validate(Account account) throws InvalidAccountException {
 
         if (account.getName() == null) {
-
-            LOGGER.info("Name is null - Account ID: {} ", account.getId());
             throw new InvalidAccountException(MessageFormat.format(MESSAGE_PATTERN, account.getId()));
         }
 
         if (account.getName().isEmpty()) {
-
-            LOGGER.info("Name is empty - Account ID: {} ", account.getId());
             throw new InvalidAccountException(MessageFormat.format(MESSAGE_PATTERN, account.getId()));
         }
 
