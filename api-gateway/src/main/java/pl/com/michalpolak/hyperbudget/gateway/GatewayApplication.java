@@ -1,4 +1,4 @@
-package pl.com.michalpolak.hyperbudget;
+package pl.com.michalpolak.hyperbudget.gateway;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
