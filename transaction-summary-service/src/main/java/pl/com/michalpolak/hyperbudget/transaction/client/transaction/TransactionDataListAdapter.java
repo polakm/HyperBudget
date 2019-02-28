@@ -6,7 +6,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TransactionDataListAdapter {
-   private  List<Transaction> transactions;
+
+    private  List<Transaction> transactions;
+
     public TransactionDataListAdapter(List<TransactionData> dataList) {
 
         transactions = new ArrayList<>();
