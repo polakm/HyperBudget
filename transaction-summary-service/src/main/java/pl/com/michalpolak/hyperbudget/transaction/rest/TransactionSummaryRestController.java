@@ -1,7 +1,10 @@
 package pl.com.michalpolak.hyperbudget.transaction.rest;
 
 
+import org.joda.time.Chronology;
+import org.joda.time.DateTimeZone;
 import org.joda.time.YearMonth;
+import org.joda.time.chrono.ISOChronology;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +16,7 @@ import org.springframework.web.context.request.WebRequest;
 import pl.com.michalpolak.hyperbudget.transaction.core.api.TransactionSummary;
 import pl.com.michalpolak.hyperbudget.transaction.core.api.TransactionSummaryService;
 
+import javax.ws.rs.HeaderParam;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -34,7 +38,6 @@ class TransactionSummaryRestController {
 
     @RequestMapping(path="/{year}/{month}", method = RequestMethod.GET, headers = {"X-API-Version=1"})
     public TransactionSummaryData transactionsSummaryPerMonth(@PathVariable("year") int year , @PathVariable("month") int month){
-
         YearMonth yearMonth = new YearMonth(year,month);
         TransactionSummary summary = service.getTransactionsSummaryPeMonth(yearMonth);
         RangeData range = new RangeData(yearMonth);
@@ -43,6 +46,22 @@ class TransactionSummaryRestController {
         summaryData.add(links);
         return summaryData;
     }
+
+
+
+    @RequestMapping(path="/{year}/{month}", method = RequestMethod.GET, headers = {"X-API-Version=1.1"})
+    public TransactionSummaryData transactionsSummaryPerMonthWithTimeZone(@PathVariable("year") int year , @PathVariable("month") int month, @HeaderParam("X-Time-Zone") String timeZone){
+
+        Chronology chronology = ISOChronology.getInstance(DateTimeZone.forID(timeZone));
+        YearMonth yearMonth = new YearMonth(year,month,chronology);
+        TransactionSummary summary = service.getTransactionsSummaryPeMonth(yearMonth);
+        RangeData range = new RangeData(yearMonth);
+        TransactionSummaryData summaryData = new TransactionSummaryData(summary,range);
+        Iterable<Link> links = this.buildLinks(year, month);
+        summaryData.add(links);
+        return summaryData;
+    }
+
 
     private Collection<Link> buildLinks(int year, int month){
 
