@@ -18,6 +18,12 @@ public class Category {
         this.type = type;
     }
 
+    public Category(String name, String type){
+        this();
+        this.name = name;
+        this.type = type;
+    }
+
 
     public String getName() {
         return name;
