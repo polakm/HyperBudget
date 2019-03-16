@@ -30,18 +30,19 @@ class TransactionSummaryRestController {
     private static final Logger LOGGER = LoggerFactory.getLogger(TransactionSummaryRestController.class);
 
     private TransactionSummaryService service;
+    private TransactionSummaryDataMapper mapper;
 
     @Autowired
-    TransactionSummaryRestController( TransactionSummaryService service) {
+    TransactionSummaryRestController( TransactionSummaryService service, TransactionSummaryDataMapper mapper) {
         this.service = service;
+        this.mapper = mapper;
     }
 
     @RequestMapping(path="/{year}/{month}", method = RequestMethod.GET, headers = {"X-API-Version=1"})
     public TransactionSummaryData transactionsSummaryPerMonth(@PathVariable("year") int year , @PathVariable("month") int month){
         YearMonth yearMonth = new YearMonth(year,month);
         TransactionSummary summary = service.getTransactionsSummaryPeMonth(yearMonth);
-        RangeData range = new RangeData(yearMonth);
-        TransactionSummaryData summaryData = new TransactionSummaryData(summary,range);
+        TransactionSummaryData summaryData = mapper.mapToData(summary,yearMonth);
         Iterable<Link> links = this.buildLinks(year, month);
         summaryData.add(links);
         return summaryData;
@@ -55,8 +56,7 @@ class TransactionSummaryRestController {
         Chronology chronology = ISOChronology.getInstance(DateTimeZone.forID(timeZone));
         YearMonth yearMonth = new YearMonth(year,month,chronology);
         TransactionSummary summary = service.getTransactionsSummaryPeMonth(yearMonth);
-        RangeData range = new RangeData(yearMonth);
-        TransactionSummaryData summaryData = new TransactionSummaryData(summary,range);
+        TransactionSummaryData summaryData = mapper.mapToData(summary,yearMonth);
         Iterable<Link> links = this.buildLinks(year, month);
         summaryData.add(links);
         return summaryData;
