@@ -1,5 +1,8 @@
 package pl.com.michalpolak.hyperbudget.transaction.rest;
 
+import org.joda.money.Money;
+import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
 import org.joda.time.YearMonth;
 import org.springframework.stereotype.Component;
 import pl.com.michalpolak.hyperbudget.transaction.core.api.TransactionInfo;
@@ -9,6 +12,7 @@ import pl.com.michalpolak.hyperbudget.transaction.core.api.TransactionTypes;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Component
@@ -33,31 +37,35 @@ class TransactionSummaryDataMapper {
         TransactionInfoData transactionInfoData = new TransactionInfoData();
         transactionInfoData.setId(transactionInfo.getId());
         transactionInfoData.setTitle(transactionInfo.getTitle());
-        if (transactionInfo.getAccount() != null) {
-            transactionInfoData.setAccountId(transactionInfo.getAccount().getId());
-            transactionInfoData.setAccountName(transactionInfo.getAccount().getName());
-        }
-        if (transactionInfo.getCategory() != null) {
+
+        Optional.ofNullable(transactionInfo.getAccount()).filter(account -> !account.getId().isEmpty()).ifPresent(account->{
+            transactionInfoData.setAccountId(account.getId());
+            transactionInfoData.setAccountName(account.getName());
+        });
+
+        Optional.ofNullable(transactionInfo.getCategory()).filter(category -> !category.getId().isEmpty()).ifPresent(category->{
             transactionInfoData.setCategoryId(transactionInfo.getCategory().getId());
             transactionInfoData.setCategoryName(transactionInfo.getCategory().getName());
-        }
+        });
 
-        if (transactionInfo.getAmount() != null) {
-            transactionInfoData.setAmount(transactionInfo.getAmount().getAmount().toPlainString());
-            transactionInfoData.setCurrencyCode(transactionInfo.getAmount().getCurrencyUnit().getCode());
-        }
+        Optional.ofNullable(transactionInfo.getAmount()).ifPresent(ammount->{
+            transactionInfoData.setAmount(ammount.getAmount().toPlainString());
+            transactionInfoData.setCurrencyCode(ammount.getCurrencyUnit().getCode());
+        });
 
-        if (transactionInfo.getAmount() != null && transactionInfo.getAmount().isPositive()) {
+        Optional.ofNullable(transactionInfo.getAmount()).filter(Money::isPositive).ifPresent(ammount->{
             transactionInfoData.setType(TransactionTypes.INCOME);
-        }
+        });
 
-        if (transactionInfo.getAmount() != null && transactionInfo.getAmount().isNegative()) {
+        Optional.ofNullable(transactionInfo.getAmount()).filter(Money::isNegative).ifPresent(ammount->{
             transactionInfoData.setType(TransactionTypes.EXPENSE);
-        }
+        });
 
-        if (transactionInfo.getExecutionDate() != null) {
-            transactionInfoData.setExecutionDate(transactionInfo.getExecutionDate().toString());
-        }
+        Optional.ofNullable(transactionInfo.getExecutionDate()).
+                map(d->d.toDateTime(DateTimeZone.UTC)).
+                map(DateTime::toString).
+                ifPresent(transactionInfoData::setExecutionDate);
+
         return transactionInfoData;
     }
 
