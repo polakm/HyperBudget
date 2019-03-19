@@ -44,8 +44,8 @@ class TransactionSummaryDataMapper {
         });
 
         Optional.ofNullable(transactionInfo.getCategory()).filter(category -> !category.getId().isEmpty()).ifPresent(category->{
-            transactionInfoData.setCategoryId(transactionInfo.getCategory().getId());
-            transactionInfoData.setCategoryName(transactionInfo.getCategory().getName());
+            transactionInfoData.setCategoryId(category.getId());
+            transactionInfoData.setCategoryName(category.getName());
         });
 
         Optional.ofNullable(transactionInfo.getAmount()).ifPresent(ammount->{
