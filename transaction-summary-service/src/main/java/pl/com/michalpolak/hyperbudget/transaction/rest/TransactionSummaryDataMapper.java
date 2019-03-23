@@ -21,8 +21,7 @@ class TransactionSummaryDataMapper {
     public TransactionSummaryData mapToData(TransactionSummary summary, YearMonth yearMonth) {
 
         TransactionSummaryData transactionSummaryData = new TransactionSummaryData();
-        List<TransactionInfoData> transactions = new ArrayList<>();
-        summary.getTransactionInfos().stream().map(t -> mapToTransactionInfoData(t)).collect(Collectors.toList());
+        List<TransactionInfoData> transactions = summary.getTransactionInfos().stream().map(this::mapToTransactionInfoData).collect(Collectors.toList());
         StatisticsData statistics = mapStatisticsData(summary.getStatistics());
         RangeData range = mapToRangeData(yearMonth);
         transactionSummaryData.setTransactions(transactions);
