@@ -5,11 +5,11 @@ import pl.com.michalpolak.hyperbudget.account.core.api.InvalidAccountException;
 
 import java.util.List;
 
-public class BasicAccountValidator implements AccountValidator {
+class BasicAccountValidator implements AccountValidator {
 
     private List<ValidationRule>  rules;
 
-    public BasicAccountValidator(List<ValidationRule> rules) {
+    BasicAccountValidator(List<ValidationRule> rules) {
         this.rules = rules;
     }
 

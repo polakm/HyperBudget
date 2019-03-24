@@ -8,16 +8,19 @@ public class CategoryData {
 
     private String name;
 
+    private String type;
+
     public CategoryData() {
     }
 
-    public CategoryData(String id, String name) {
+    public CategoryData(String id, String name, String type) {
         this.id = id;
         this.name = name;
-    }
+        this.type = type;
+}
 
     public CategoryData(Category category) {
-    this(category.getId(),category.getName());
+    this(category.getId(),category.getName(), category.getType());
     }
 
     public String getName() {
@@ -34,5 +37,13 @@ public class CategoryData {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 }

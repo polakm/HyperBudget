@@ -28,7 +28,6 @@ class CurrencyIsAccepted implements ValidationRule {
         CurrencyUnit currency = transaction.getAmount().getCurrencyUnit();
 
         if (!this.acceptableCurrencies.contains(currency)) {
-            LOGGER.info("Transaction currency {} is not acceptable - Transaction ID: {} ", currency.getCode(),transaction.getId());
             throw new InvalidTransactionException(MessageFormat.format(MESSAGE_PATTERN, currency.getCode(), acceptableCurrencies));
         }
     }

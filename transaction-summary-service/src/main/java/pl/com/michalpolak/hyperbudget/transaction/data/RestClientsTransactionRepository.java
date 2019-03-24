@@ -33,7 +33,7 @@ class RestClientsTransactionRepository implements TransactionRepository {
     @Override
     public List<TransactionInfo> getTransactionInfosByMonth(YearMonth month) {
 
-        List<TransactionInfo> transactionInfos = new ArrayList<TransactionInfo>();
+        List<TransactionInfo> transactionInfos = new ArrayList<>();
         ListeningExecutorService service = MoreExecutors.listeningDecorator(Executors.newFixedThreadPool(10));
         List<Transaction> transactions = transactionService.transactionList();
         transactions.stream().filter(t -> t.getExecutionDate().getMonthOfYear() == month.getMonthOfYear() && t.getExecutionDate().getYear() == month.getYear()).forEach(t -> {
@@ -46,11 +46,11 @@ class RestClientsTransactionRepository implements TransactionRepository {
         return transactionInfos;
     }
 
-    private TransactionInfo collectData(Transaction t, ListenableFuture<Category> categoryFuture, ListenableFuture<Account> accountFuture) {
+    private TransactionInfo collectData(Transaction transaction, ListenableFuture<Category> categoryFuture, ListenableFuture<Account> accountFuture) {
 
         Category category = readCategoryFromFuture(categoryFuture);
         Account account = readAccountFromFuture(accountFuture);
-        return new TransactionInfo(t, category, account);
+        return new TransactionInfo(transaction, category, account);
     }
 
     private Account readAccountFromFuture(ListenableFuture<Account> accountFuture) {
@@ -58,7 +58,7 @@ class RestClientsTransactionRepository implements TransactionRepository {
         try {
             return accountFuture.get();
         } catch (InterruptedException | ExecutionException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException("Problem during account loading.",e);
         }
 
     }
@@ -68,7 +68,7 @@ class RestClientsTransactionRepository implements TransactionRepository {
         try {
             return categoryFuture.get();
         } catch (InterruptedException | ExecutionException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException("Problem during category loading.",e);
         }
     }
 }

@@ -1,8 +1,5 @@
 package pl.com.michalpolak.hyperbudget.transaction.rest;
 
-import pl.com.michalpolak.hyperbudget.transaction.core.api.TransactionInfo;
-import pl.com.michalpolak.hyperbudget.transaction.core.api.TransactionTypes;
-
 class TransactionInfoData {
 
     private String id;
@@ -24,37 +21,6 @@ class TransactionInfoData {
     private String categoryName;
 
     private String type;
-
-    TransactionInfoData(TransactionInfo transaction) {
-
-        setId(transaction.getId());
-        setTitle(transaction.getTitle());
-        if (transaction.getAccount() != null) {
-            setAccountId(transaction.getAccount().getId());
-            setAccountName(transaction.getAccount().getName());
-        }
-        if (transaction.getCategory() != null) {
-            setCategoryId(transaction.getCategory().getId());
-            setCategoryName(transaction.getCategory().getName());
-        }
-
-        if (transaction.getAmount() != null) {
-            setAmount(transaction.getAmount().getAmount().toPlainString());
-            setCurrencyCode(transaction.getAmount().getCurrencyUnit().getCode());
-        }
-
-        if (transaction.getAmount() != null && transaction.getAmount().isPositive()) {
-            setType(TransactionTypes.INCOME);
-        }
-
-        if (transaction.getAmount() != null && transaction.getAmount().isNegative()) {
-            setType(TransactionTypes.EXPENSE);
-        }
-
-        if (transaction.getExecutionDate() != null) {
-            setExecutionDate(transaction.getExecutionDate().toString());
-        }
-    }
 
     public String getTitle() {
         return title;

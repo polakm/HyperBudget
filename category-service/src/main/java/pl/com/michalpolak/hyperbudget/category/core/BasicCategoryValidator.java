@@ -5,7 +5,7 @@ import pl.com.michalpolak.hyperbudget.category.core.api.InvalidCategoryException
 
 import java.util.List;
 
-public class BasicCategoryValidator implements CategoryValidator {
+class BasicCategoryValidator implements CategoryValidator {
 
     private List<ValidationRule>  rules;
 

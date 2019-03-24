@@ -24,32 +24,6 @@ public class TransactionData {
     public TransactionData() {
     }
 
-    public TransactionData(Transaction transaction) {
-
-        setId(transaction.getId());
-        setTitle(transaction.getTitle());
-        setAccountId(transaction.getAccountId());
-        setCategoryId(transaction.getCategoryId());
-
-        if (transaction.getAmount() != null) {
-            setAmount(transaction.getAmount().getAmount().toPlainString());
-            setCurrencyCode(transaction.getAmount().getCurrencyUnit().getCode());
-
-        }
-
-        if(transaction.getAmount() != null && transaction.getAmount().isPositive()) {
-            setType("income");
-        }
-
-        if(transaction.getAmount() != null && transaction.getAmount().isNegative()){
-            setType("expense");
-        }
-
-        if (transaction.getExecutionDate() != null) {
-            setExecutionDate(transaction.getExecutionDate().toString());
-        }
-    }
-
     public String getTitle() {
         return title;
     }

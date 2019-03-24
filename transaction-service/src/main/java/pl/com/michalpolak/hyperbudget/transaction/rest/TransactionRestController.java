@@ -24,16 +24,19 @@ public class TransactionRestController {
     private static final Logger LOGGER = LoggerFactory.getLogger(TransactionRestController.class);
 
     private TransactionService service;
+    private TransactionDataMapper mapper;
 
-    public TransactionRestController(@Autowired TransactionService service) {
+    @Autowired
+    public TransactionRestController( TransactionService service, TransactionDataMapper mapper) {
         this.service = service;
+        this.mapper = mapper;
     }
 
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
     @RequestMapping(method = RequestMethod.POST)
     void addTranasaction(@RequestBody TransactionData transactionData) throws InvalidTransactionException {
 
-        Transaction transaction = new TransactionDataAdapter(transactionData);
+        Transaction transaction = mapper.mapToEntity(transactionData);
         service.addTransaction(transaction);
     }
 
@@ -41,13 +44,13 @@ public class TransactionRestController {
     List<TransactionData> transactionList() {
 
         Set<Transaction> transactions = service.allTrascations();
-        return new TransactionDataList(transactions).asList();
+        return mapper.mapToDataList(transactions);
     }
 
     @RequestMapping(path = "/{id}", method = RequestMethod.GET)
     TransactionData getTransaction(@PathVariable("id") String id) throws TransactionNotFoundException {
 
-        return new TransactionData(service.getTransaction(id));
+        return mapper.mapToData(service.getTransaction(id));
     }
 
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
@@ -61,7 +64,7 @@ public class TransactionRestController {
     @RequestMapping(path = "/{id}", method = RequestMethod.PUT)
     void updateTransaction(@PathVariable("id") String id, @RequestBody TransactionData transactionData) throws TransactionNotFoundException {
 
-        Transaction transaction = new TransactionDataAdapter(id, transactionData);
+        Transaction transaction =  mapper.mapToEntity(id, transactionData);
         service.updateTransaction(transaction);
     }
 

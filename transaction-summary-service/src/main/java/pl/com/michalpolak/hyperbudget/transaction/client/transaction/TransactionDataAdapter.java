@@ -27,10 +27,4 @@ class TransactionDataAdapter extends Transaction {
         }
     }
 
-    public TransactionDataAdapter(String id, TransactionData transactionData) {
-        this(transactionData);
-        setId(id);
-    }
-
-
 }

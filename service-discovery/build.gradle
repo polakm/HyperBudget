@@ -28,7 +28,7 @@ apply plugin: 'io.spring.dependency-management'
 apply plugin: "com.palantir.docker"
 
 bootJar {
-    baseName = 'eureka-service'
+    baseName = 'service-discovery'
     version = '0.0.1-SNAPSHOT'
 }
 sourceCompatibility = 1.8

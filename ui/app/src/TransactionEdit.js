@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import { Button, Container, Form, FormGroup, Input, Label, InputGroupAddon, InputGroup} from 'reactstrap';
 import AppNavbar from './AppNavbar';
+import moment from 'moment';
+import tz from 'moment-timezone';
 
 class TransactionEdit extends Component {
 
@@ -9,12 +11,11 @@ class TransactionEdit extends Component {
     title: '',
     amount: '',
     currencyCode: 'USD',
-    executionDate: new Date().toJSON(),
+    executionDate: moment.utc().format(),
     accountId:'',
     categoryId:''
   };
-
-
+ 
   constructor(props) {
     super(props);
     this.state = {
@@ -67,7 +68,7 @@ class TransactionEdit extends Component {
     const value = target.value;
     const name = target.name;
     let item = {...this.state.item};
-    item[name] = new Date(value).toJSON();
+    item[name] = moment.utc(value).format();
     this.setState({item});
   }
 
@@ -121,7 +122,7 @@ class TransactionEdit extends Component {
     item.accountId  || (item.accountId = accounts.length>0 ? accounts[0].id : '');
     item.categoryId || (item.categoryId = categories.length>0 ? categories[0].id : '');
 
-    item.executionDate = item.executionDate && item.executionDate.substring(0,10);
+    var formattedExecutionDate = item.executionDate && moment.utc(item.executionDate).tz(moment.tz.guess()).format("YYYY-MM-DD");
 
     const title = <h2>{this.resolveTitle()}</h2>;
 
@@ -159,7 +160,7 @@ class TransactionEdit extends Component {
           </FormGroup>
           <FormGroup>
             <Label for="executionDate">Date</Label>           
-            <Input type="date" name="executionDate" id="executionDate" value={item.executionDate}
+            <Input type="date" name="executionDate" id="executionDate" value={formattedExecutionDate}
                    onChange={this.handleChangeDate} autoComplete="executionDate"/>
                     
           </FormGroup>

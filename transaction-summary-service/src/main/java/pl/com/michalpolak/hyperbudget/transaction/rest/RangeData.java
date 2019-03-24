@@ -1,19 +1,19 @@
 package pl.com.michalpolak.hyperbudget.transaction.rest;
 
-import org.joda.time.YearMonth;
-
 class RangeData {
 
     private int year;
     private int month;
     private String monthName;
 
+    public RangeData() {
 
-    RangeData(YearMonth yearMonth) {
+    }
 
-        this.year = yearMonth.getYear();
-        this.month = yearMonth.getMonthOfYear();
-        this.monthName = yearMonth.monthOfYear().getAsText();
+    public RangeData(int year, int month, String monthName) {
+        this.year = year;
+        this.month = month;
+        this.monthName = monthName;
     }
 
     public int getYear() {
