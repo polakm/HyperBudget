@@ -188,7 +188,7 @@ class TransactionList extends Component {
                 <CardBody>
 
                   <h5>Income: <Badge className="float-right" color="success">{Number(this.state.statistics.income).toFixed(2)}</Badge></h5>
-                  <h5>Outgoings: <Badge className="float-right" color="danger">{Number(this.state.statistics.expense).toFixed(2)}</Badge></h5>
+                  <h5>Expenses: <Badge className="float-right" color="danger">{Number(this.state.statistics.expense).toFixed(2)}</Badge></h5>
                   <hr />
                   <h5>Balance: <Badge className="float-right" color="info">{Number(this.state.statistics.balance).toFixed(2)}</Badge></h5>
                 </CardBody>
