@@ -25,14 +25,13 @@ public class DataLayerConfiguration {
 
     private static Map<String, Account> loadInitialData() {
 
-        Map<String, Account> initialData = null;
         try {
             InitialDataLoader initialDataLoader = initialDataLoader();
             return   initialDataLoader.loadAsMap();
         } catch (IOException e) {
             LOGGER.error("Error during load initial data.", e);
+            return new HashMap<>();
         }
-        return new HashMap<>();
     }
 
     private static InitialDataLoader initialDataLoader() throws IOException {

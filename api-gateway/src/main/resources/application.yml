@@ -16,11 +16,14 @@ spring:
 
 
 eureka:
+  instance:
+    instanceId: api-gateway
   client:
     registerWithEureka: true
     fetchRegistry: true
     serviceUrl:
       defaultZone: http://service-discovery:8761/eureka
+
 
 
 server:

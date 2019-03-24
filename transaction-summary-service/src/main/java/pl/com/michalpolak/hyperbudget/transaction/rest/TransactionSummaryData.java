@@ -1,9 +1,6 @@
 package pl.com.michalpolak.hyperbudget.transaction.rest;
 
 import org.springframework.hateoas.ResourceSupport;
-import pl.com.michalpolak.hyperbudget.transaction.core.api.TransactionSummary;
-
-import java.util.ArrayList;
 import java.util.List;
 
 class TransactionSummaryData extends ResourceSupport {
@@ -12,12 +9,14 @@ class TransactionSummaryData extends ResourceSupport {
     private RangeData range;
     private StatisticsData statistics;
 
+    public TransactionSummaryData(){
 
-    TransactionSummaryData(TransactionSummary summary, RangeData range) {
-        this.transactions = new ArrayList<>();
-        summary.getTransactionInfos().forEach(t -> this.transactions.add(new TransactionInfoData(t)));
-        this.statistics = new StatisticsData(summary.getStatistics());
+    };
+
+    public TransactionSummaryData(List<TransactionInfoData> transactions, RangeData range, StatisticsData statistics) {
+        this.transactions = transactions;
         this.range = range;
+        this.statistics = statistics;
     }
 
     public List<TransactionInfoData> getTransactions() {

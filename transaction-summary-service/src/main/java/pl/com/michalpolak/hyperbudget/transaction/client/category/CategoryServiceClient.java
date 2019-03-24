@@ -9,6 +9,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 interface CategoryServiceClient {
 
     @RequestMapping(path="/api/categories/{id}",method = RequestMethod.GET, headers = {"X-API-Version=1"})
-    public CategoryData getCategory(@PathVariable("id") String categoryId);
+    CategoryData getCategory(@PathVariable("id") String categoryId);
 
 }

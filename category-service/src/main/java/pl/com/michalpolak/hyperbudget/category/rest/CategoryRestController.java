@@ -25,36 +25,40 @@ public class CategoryRestController {
     private static final Logger LOGGER = LoggerFactory.getLogger(CategoryRestController.class);
 
     private CategoryService service;
-
-    public CategoryRestController(@Autowired CategoryService service) {
+    private CategoryDataMapper mapper;
+    @Autowired
+    public CategoryRestController( CategoryService service, CategoryDataMapper mapper) {
         this.service = service;
+        this.mapper = mapper;
     }
 
     @RequestMapping(method = RequestMethod.POST)
     CategoryData addCategory(@RequestBody CategoryData categoryData) throws InvalidCategoryException {
 
-        Category category = new CategoryDataAdapter(categoryData);
+        Category category = mapper.mapToEntity(categoryData);
         service.addCategory(category);
-        return new CategoryData(category.getId(), category.getName());
+        return mapper.mapToData(category);
     }
 
     @RequestMapping(method = RequestMethod.GET)
     List<CategoryData> categoryList() {
 
         Set<Category> categories = service.allCategories();
-        return new CategoryDataList(categories).asList();
+        return mapper.mapToDataList(categories);
     }
 
     @RequestMapping(method = RequestMethod.GET, params = "type")
     List<CategoryData> categoriesByType(@QueryParam("type") String type) {
 
         Set<Category> categories = service.getCategoriesByType(type);
-        return new CategoryDataList(categories).asList();
+        return mapper.mapToDataList(categories);
     }
 
     @RequestMapping(path = "/{id}", method = RequestMethod.GET)
     CategoryData getCategory(@PathVariable("id") String id) throws CategoryNotFoundException {
-        return new CategoryData(service.getCategory(id));
+
+        Category category = service.getCategory(id);
+        return mapper.mapToData(category);
     }
 
     @RequestMapping(path = "/{id}", method = RequestMethod.DELETE)
@@ -66,7 +70,7 @@ public class CategoryRestController {
     @RequestMapping(path = "/{id}", method = RequestMethod.PUT)
     void updateCategory(@PathVariable("id") String id, @RequestBody CategoryData categoryData) throws CategoryNotFoundException {
 
-        Category category = new CategoryDataAdapter(id, categoryData);
+        Category category = mapper.mapToEntity(id, categoryData);
         service.updateCategory(category);
     }
 

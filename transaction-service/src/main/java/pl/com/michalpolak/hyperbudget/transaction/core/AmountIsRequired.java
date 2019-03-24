@@ -17,7 +17,6 @@ class AmountIsRequired implements ValidationRule {
     public void validate(Transaction transaction) throws InvalidTransactionException {
 
         if (transaction.getAmount() == null) {
-            LOGGER.info("Transaction amount is null - Transaction ID: {} ", transaction.getId());
             throw new InvalidTransactionException(MessageFormat.format(MESSAGE_PATTERN, transaction.getId()));
         }
 

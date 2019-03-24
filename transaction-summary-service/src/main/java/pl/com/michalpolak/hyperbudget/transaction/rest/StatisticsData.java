@@ -1,8 +1,5 @@
 package pl.com.michalpolak.hyperbudget.transaction.rest;
 
-import pl.com.michalpolak.hyperbudget.transaction.core.api.TransactionStatistics;
-
-
 class StatisticsData {
 
     private String balance;
@@ -12,15 +9,17 @@ class StatisticsData {
     private String incomeAbs;
     private String expenseAbs;
 
-    StatisticsData(TransactionStatistics statistics) {
+    public StatisticsData() {
 
-        this.balance = statistics.totalSum().toString();
-        this.income = statistics.sumOfIncomes().toString();
-        this.expense = statistics.sumOfExpenses().toString();
+    }
 
-        this.balanceAbs = statistics.totalSum().abs().toString();
-        this.incomeAbs = statistics.sumOfIncomes().abs().toString();
-        this.expenseAbs = statistics.sumOfExpenses().abs().toString();
+    public StatisticsData(String balance, String income, String expense, String balanceAbs, String incomeAbs, String expenseAbs) {
+        this.balance = balance;
+        this.income = income;
+        this.expense = expense;
+        this.balanceAbs = balanceAbs;
+        this.incomeAbs = incomeAbs;
+        this.expenseAbs = expenseAbs;
     }
 
     public String getBalance() {

@@ -17,14 +17,10 @@ class NameIsRequired implements ValidationRule {
     public void validate(Category category) throws InvalidCategoryException {
 
         if (category.getName() == null) {
-
-            LOGGER.info("Name is null - Category ID: {} ", category.getId());
             throw new InvalidCategoryException(MessageFormat.format(MESSAGE_PATTERN, category.getId()));
         }
 
         if (category.getName().isEmpty()) {
-
-            LOGGER.info("Name is empty - Category ID: {} ", category.getId());
             throw new InvalidCategoryException(MessageFormat.format(MESSAGE_PATTERN, category.getId()));
         }
 
