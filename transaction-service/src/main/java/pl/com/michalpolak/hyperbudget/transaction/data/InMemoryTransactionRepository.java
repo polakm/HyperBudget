@@ -31,9 +31,9 @@ public class InMemoryTransactionRepository implements TransactionRepository {
     }
 
     @Override
-    public void remove(String id) {
+    public Transaction remove(String id) {
 
-        this.storage.remove(id);
+      return  this.storage.remove(id);
     }
 
     @Override
