@@ -10,15 +10,15 @@ import pl.com.michalpolak.hyperbudget.transaction.test.IntegrationTest;
 
 import java.util.UUID;
 
+import static pl.com.michalpolak.hyperbudget.transaction.event.EventConfiguration.createEventPublisher;
+
 @IntegrationTest // need working kafka
 public class EventPublisherTest {
 
 
     @Test
     public void publish() {
-
-        EventPublisher publisher = new KafkaEventPublisher(new TransactionEventMapper(), new ProducerCreator(),"test");
-
+        EventPublisher publisher = createEventPublisher("test","http://message-broker:9092","test-client");
         for(int i=0; i<=100; i++) {
 
             Transaction transaction = new Transaction();

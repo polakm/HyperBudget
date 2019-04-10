@@ -1,6 +1,6 @@
 package pl.com.michalpolak.hyperbudget.transaction.event;
 
-public class EventContext {
+class EventContext {
 
     private String id;
 

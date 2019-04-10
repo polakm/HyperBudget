@@ -2,11 +2,10 @@ package pl.com.michalpolak.hyperbudget.transaction.event;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.stereotype.Component;
 import pl.com.michalpolak.hyperbudget.transaction.core.api.Transaction;
 import pl.com.michalpolak.hyperbudget.transaction.core.spi.TransactionEvent;
 
-@Component
+
 class TransactionEventMapper {
 
     String mapToEventMessage(TransactionEvent event) throws JsonProcessingException {
@@ -16,12 +15,12 @@ class TransactionEventMapper {
         return message;
     }
 
-    private EventData mapToEventData(TransactionEvent event) {
+    EventData mapToEventData(TransactionEvent event) {
         EventContext context = this.mapToEventContext(event.getEntity());
         return new EventData(event.getAction(), context);
     }
 
-    private EventContext mapToEventContext(Transaction transaction) {
+    EventContext mapToEventContext(Transaction transaction) {
         EventContext eventContext = new EventContext();
         eventContext.setId(transaction.getId());
         eventContext.setTitle(transaction.getTitle());

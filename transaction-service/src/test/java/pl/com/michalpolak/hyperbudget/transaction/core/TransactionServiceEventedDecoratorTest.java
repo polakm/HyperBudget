@@ -156,7 +156,7 @@ public class TransactionServiceEventedDecoratorTest {
 
     private TransactionService getTransactionService() {
         TransactionService service = TransactionServiceConfiguration.createTransactionService(new InMemoryTransactionRepository());
-        EventPublisher publisher = EventConfiguration.createEventPublisher("test");
+        EventPublisher publisher = EventConfiguration.createEventPublisher("test","http://message-broker:9092","test-client");
         return TransactionServiceConfiguration.transactionServiceBean(service,publisher);
     }
 
