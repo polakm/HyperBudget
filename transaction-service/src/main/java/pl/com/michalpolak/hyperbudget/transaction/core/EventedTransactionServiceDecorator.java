@@ -22,14 +22,14 @@ public class EventedTransactionServiceDecorator implements TransactionService {
     @Override
     public Transaction addTransaction(Transaction transaction) throws InvalidTransactionException {
         Transaction result = service.addTransaction(transaction);
-        publisher.publish(new TransactionEvent(TransactionEvent.Actions.ADDED, result));
+        publisher.publish(new AddedTransactionEvent(result));
         return result;
     }
 
     @Override
     public Transaction removeTransaction(String id) throws TransactionNotFoundException {
         Transaction removedTransaction = service.removeTransaction(id);
-        publisher.publish(new TransactionEvent(TransactionEvent.Actions.REMOVED, removedTransaction));
+        publisher.publish(new RemovedTransactionEvent(removedTransaction));
         return removedTransaction;
     }
 
@@ -48,7 +48,7 @@ public class EventedTransactionServiceDecorator implements TransactionService {
     @Override
     public Transaction updateTransaction(Transaction transaction) throws TransactionNotFoundException {
         Transaction result = service.updateTransaction(transaction);
-        publisher.publish(new TransactionEvent(TransactionEvent.Actions.UPDATED, result));
+        publisher.publish(new UpdatedTransactionEvent(result));
         return result;
     }
 }

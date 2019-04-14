@@ -9,6 +9,8 @@ import pl.com.michalpolak.hyperbudget.transaction.core.spi.TransactionEvent;
 import java.util.UUID;
 
 import static junit.framework.Assert.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 
 public class TransactionEventMapperTest {
@@ -17,7 +19,7 @@ public class TransactionEventMapperTest {
     public void mapTransactionEventToEventDataWithAction() {
 
         //given
-        TransactionEvent event = createTransactionEvent("test-action","test-title","USD 299.99");
+        TransactionEvent event = mockTransactionEvent("test-action","test-title","USD 299.99");
         TransactionEventMapper mapper = new TransactionEventMapper();
 
         //when
@@ -31,7 +33,7 @@ public class TransactionEventMapperTest {
     public void mapTransactionEventToEventDataWithContext() {
 
         //given
-        TransactionEvent event = createTransactionEvent("test-action","test-title","USD 299.99");
+        TransactionEvent event = mockTransactionEvent("test-action","test-title","USD 299.99");
         TransactionEventMapper mapper = new TransactionEventMapper();
 
         //when
@@ -46,7 +48,7 @@ public class TransactionEventMapperTest {
     public void mapTransactionEventToEventDataWithPositiveAmount() {
 
         //given
-        TransactionEvent event = createTransactionEvent("test-action","test-title","USD 1099.99");
+        TransactionEvent event = mockTransactionEvent("test-action","test-title","USD 1099.99");
         TransactionEventMapper mapper = new TransactionEventMapper();
 
         //when
@@ -63,7 +65,7 @@ public class TransactionEventMapperTest {
     public void mapTransactionEventToEventDataWithNegativeAmount() {
 
         //given
-        TransactionEvent event = createTransactionEvent("test-action","test-title","EUR -1099.99");
+        TransactionEvent event = mockTransactionEvent("test-action","test-title","EUR -1099.99");
         TransactionEventMapper mapper = new TransactionEventMapper();
 
         //when
@@ -76,12 +78,17 @@ public class TransactionEventMapperTest {
 
     }
 
-    private TransactionEvent createTransactionEvent(String action,String title,String amount) {
+    private TransactionEvent mockTransactionEvent(String action, String title, String amount) {
 
-        return new TransactionEvent(action,createTranaction(title,amount));
+        TransactionEvent event = mock(TransactionEvent.class);
+        when(event.getAction()).thenReturn(action);
+        when(event.getEntity()).thenReturn(createTransaction(title,amount));
+
+        return event;
     }
 
-    private Transaction createTranaction(String title, String amount) {
+
+    private Transaction createTransaction(String title, String amount) {
 
             Transaction transaction = new Transaction();
             transaction.setTitle(title);

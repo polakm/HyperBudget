@@ -2,7 +2,7 @@ package pl.com.michalpolak.hyperbudget.transaction.core.spi;
 
 import pl.com.michalpolak.hyperbudget.transaction.core.api.Transaction;
 
-public class TransactionEvent {
+public abstract class TransactionEvent {
 
     public interface Actions{
         String ADDED = "transaction_added";

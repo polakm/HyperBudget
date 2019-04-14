@@ -9,6 +9,7 @@ import org.junit.Test;
 import pl.com.michalpolak.hyperbudget.transaction.core.api.Transaction;
 import pl.com.michalpolak.hyperbudget.transaction.core.spi.EventPublisher;
 import pl.com.michalpolak.hyperbudget.transaction.core.spi.TransactionEvent;
+import pl.com.michalpolak.hyperbudget.transaction.event.spi.ProducerCreator;
 
 import java.util.UUID;
 
@@ -27,14 +28,7 @@ public class EventPublisherTest {
         //given
         MockProducer<Long, String> producer = new MockProducer<>(true, new LongSerializer(), new StringSerializer());
         EventPublisher publisher = createEventPublisher("test-topic",  mockProducerCreator(producer));
-
-        Transaction transaction = new Transaction();
-        transaction.setAccountId(UUID.randomUUID().toString());
-        transaction.setAmount(Money.parse("USD 1023.33"));
-        transaction.setExecutionDate(DateTime.now());
-        transaction.setTitle("TRANSACTION-TEST ");
-        transaction.setCategoryId(UUID.randomUUID().toString());
-        TransactionEvent event = new TransactionEvent(TransactionEvent.Actions.UPDATED, transaction);
+        TransactionEvent event = mockTransactionEvent(TransactionEvent.Actions.UPDATED, "test-title","USD 1023.33");
 
         //when
         publisher.publish(event);
@@ -44,6 +38,35 @@ public class EventPublisherTest {
             assertEquals(e.topic(), "test-topic");
             assertNotNull(e.value());
         });
+    }
+
+    private TransactionEvent mockTransactionEvent(String action,Transaction transaction) {
+
+        TransactionEvent event = mock(TransactionEvent.class);
+        when(event.getAction()).thenReturn(action);
+        when(event.getEntity()).thenReturn(transaction);
+
+        return event;
+    }
+
+    private TransactionEvent mockTransactionEvent(String action, String title, String amount) {
+
+        TransactionEvent event = mock(TransactionEvent.class);
+        when(event.getAction()).thenReturn(action);
+        when(event.getEntity()).thenReturn(createTransaction(title,amount));
+
+        return event;
+    }
+
+
+    private Transaction createTransaction(String title, String amount) {
+
+        Transaction transaction = new Transaction();
+        transaction.setTitle(title);
+        transaction.setExecutionDate(new DateTime());
+        transaction.setAccountId(UUID.randomUUID().toString());
+        transaction.setAmount(Money.parse(amount));
+        return transaction;
     }
 
     private ProducerCreator mockProducerCreator(MockProducer<Long, String> producer) {
