@@ -69,8 +69,8 @@ public class EventPublisherTest {
         return transaction;
     }
 
-    private ProducerCreator mockProducerCreator(MockProducer<Long, String> producer) {
-        ProducerCreator producerCreator = mock(ProducerCreator.class);
+    private BasicProducerCreator mockProducerCreator(MockProducer<Long, String> producer) {
+        BasicProducerCreator producerCreator = mock(BasicProducerCreator.class);
         when(producerCreator.createProducer()).thenReturn(producer);
         return producerCreator;
     }

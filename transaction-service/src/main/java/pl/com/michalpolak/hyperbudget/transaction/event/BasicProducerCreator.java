@@ -2,19 +2,21 @@ package pl.com.michalpolak.hyperbudget.transaction.event;
 
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.Producer;
+import pl.com.michalpolak.hyperbudget.transaction.event.spi.ProducerCreator;
 
 import java.util.Properties;
 
 
-class ProducerCreator {
+class BasicProducerCreator extends ProducerCreator {
 
    private Properties properties;
 
-    ProducerCreator(Properties properties){
+    BasicProducerCreator(Properties properties){
         this.properties = properties;
     }
 
-    Producer<Long, String> createProducer() {
+    @Override
+    public Producer<Long, String> createProducer() {
 
         return new KafkaProducer<>(this.properties);
     }

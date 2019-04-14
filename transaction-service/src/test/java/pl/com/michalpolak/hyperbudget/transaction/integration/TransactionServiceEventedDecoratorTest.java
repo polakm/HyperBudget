@@ -1,8 +1,12 @@
-package pl.com.michalpolak.hyperbudget.transaction.core;
+package pl.com.michalpolak.hyperbudget.transaction.integration;
 
+import org.apache.kafka.clients.producer.MockProducer;
+import org.apache.kafka.common.serialization.LongSerializer;
+import org.apache.kafka.common.serialization.StringSerializer;
 import org.joda.money.Money;
 import org.joda.time.DateTime;
 import org.junit.Test;
+import pl.com.michalpolak.hyperbudget.transaction.core.TransactionServiceConfiguration;
 import pl.com.michalpolak.hyperbudget.transaction.core.api.InvalidTransactionException;
 import pl.com.michalpolak.hyperbudget.transaction.core.api.Transaction;
 import pl.com.michalpolak.hyperbudget.transaction.core.api.TransactionNotFoundException;
@@ -10,14 +14,17 @@ import pl.com.michalpolak.hyperbudget.transaction.core.api.TransactionService;
 import pl.com.michalpolak.hyperbudget.transaction.core.spi.EventPublisher;
 import pl.com.michalpolak.hyperbudget.transaction.data.InMemoryTransactionRepository;
 import pl.com.michalpolak.hyperbudget.transaction.event.EventConfiguration;
+import pl.com.michalpolak.hyperbudget.transaction.event.spi.ProducerCreator;
 import pl.com.michalpolak.hyperbudget.transaction.test.IntegrationTest;
 
 import java.util.Set;
 import java.util.UUID;
 
 import static org.junit.Assert.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
-@IntegrationTest // need working kafka
+@IntegrationTest
 public class TransactionServiceEventedDecoratorTest {
 
     @Test
@@ -136,8 +143,6 @@ public class TransactionServiceEventedDecoratorTest {
         assertEquals(3, transactions.size());
     }
 
-
-
     private Transaction getExampleTransaction() {
         Transaction transaction = new Transaction();
         transaction.setTitle("title");
@@ -147,17 +152,17 @@ public class TransactionServiceEventedDecoratorTest {
         return transaction;
     }
 
-//    private TransactionService getTransactionService() {
-//        TransactionService service = mock(TransactionService.class);
-//        EventPublisher publisher = mock(EventPublisher.class);
-//        return TransactionServiceConfiguration.transactionServiceBean(service,publisher);
-//    }
-
-
     private TransactionService getTransactionService() {
         TransactionService service = TransactionServiceConfiguration.createTransactionService(new InMemoryTransactionRepository());
-        EventPublisher publisher = EventConfiguration.createEventPublisher("test","http://message-broker:9092","test-client");
+        ProducerCreator producerCreator = mockProducerCreator();
+        EventPublisher publisher = EventConfiguration.createEventPublisher("test-topic", producerCreator);
         return TransactionServiceConfiguration.transactionServiceBean(service,publisher);
+    }
+
+    private ProducerCreator mockProducerCreator() {
+        ProducerCreator producerCreator = mock(ProducerCreator.class);
+        when(producerCreator.createProducer()).thenReturn(new MockProducer<>(true, new LongSerializer(), new StringSerializer()) );
+        return producerCreator;
     }
 
 }

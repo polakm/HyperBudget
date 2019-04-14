@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import pl.com.michalpolak.hyperbudget.transaction.core.spi.EventPublisher;
 import pl.com.michalpolak.hyperbudget.transaction.core.spi.TransactionEvent;
+import pl.com.michalpolak.hyperbudget.transaction.event.spi.ProducerCreator;
 
 import java.text.MessageFormat;
 import java.util.concurrent.ExecutionException;

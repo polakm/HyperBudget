@@ -17,7 +17,7 @@ import java.util.List;
 
 @Configuration
 @ComponentScan("pl.com.michalpolak")
-class TransactionServiceConfiguration {
+public class TransactionServiceConfiguration {
 
     @Bean
     public static TransactionValidator transactionValdiatorBean() {

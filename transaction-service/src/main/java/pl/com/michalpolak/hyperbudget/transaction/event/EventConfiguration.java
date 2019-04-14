@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import pl.com.michalpolak.hyperbudget.transaction.core.spi.EventPublisher;
+import pl.com.michalpolak.hyperbudget.transaction.event.spi.ProducerCreator;
 
 import java.util.Properties;
 
@@ -37,7 +38,7 @@ public class EventConfiguration {
         properties.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, LongSerializer.class);
         properties.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
 
-        return new ProducerCreator(properties);
+        return new BasicProducerCreator(properties);
     }
 
     public static EventPublisher createEventPublisher(String topic, String kafkaBrokers, String clientId) {
