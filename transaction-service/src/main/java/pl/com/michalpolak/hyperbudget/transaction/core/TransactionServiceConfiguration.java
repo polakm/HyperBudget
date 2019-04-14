@@ -2,10 +2,13 @@ package pl.com.michalpolak.hyperbudget.transaction.core;
 
 import org.joda.money.CurrencyUnit;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import pl.com.michalpolak.hyperbudget.transaction.core.api.TransactionService;
+import pl.com.michalpolak.hyperbudget.transaction.core.spi.EventPublisher;
 import pl.com.michalpolak.hyperbudget.transaction.core.spi.TransactionRepository;
 import pl.com.michalpolak.hyperbudget.transaction.core.spi.TransactionValidator;
 
@@ -14,7 +17,7 @@ import java.util.List;
 
 @Configuration
 @ComponentScan("pl.com.michalpolak")
-class TransactionServiceConfiguration {
+public class TransactionServiceConfiguration {
 
     @Bean
     public static TransactionValidator transactionValdiatorBean() {
@@ -26,14 +29,24 @@ class TransactionServiceConfiguration {
         return new BasicTransactionValidator(rules);
     }
 
-    @Bean
+    @Bean("basic")
+    @ConditionalOnProperty(prefix = "hyperbudget.transaction.service", name = "mode", havingValue = "basic", matchIfMissing = false)
     @Autowired
     public static TransactionService transactionServiceBean(TransactionRepository transactionRepository, TransactionValidator transactionValidator) {
         return new BasicTransactionService(transactionRepository, transactionValidator);
     }
 
-    public static TransactionService createTransactionService( TransactionRepository transactionRepository) {
-        TransactionValidator transactionValidator =  transactionValdiatorBean();
+
+    @Bean("evented")
+    @ConditionalOnProperty(prefix = "hyperbudget.transaction.service", name = "mode", havingValue = "evented", matchIfMissing = true)
+    @Autowired
+    public static TransactionService transactionServiceBean(@Qualifier("basic") TransactionService service, EventPublisher publisher) {
+        return new EventedTransactionServiceDecorator(service, publisher);
+    }
+
+
+    public static TransactionService createTransactionService(TransactionRepository transactionRepository) {
+        TransactionValidator transactionValidator = transactionValdiatorBean();
         return new BasicTransactionService(transactionRepository, transactionValidator);
     }
 

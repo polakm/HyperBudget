@@ -12,7 +12,7 @@ public interface TransactionRepository {
 
     Set<Transaction> getAll();
 
-    void remove(String id);
+    Transaction remove(String id);
 
     Transaction findById(String id);
 

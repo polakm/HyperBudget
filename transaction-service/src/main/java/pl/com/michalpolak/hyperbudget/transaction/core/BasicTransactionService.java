@@ -35,12 +35,13 @@ class BasicTransactionService implements TransactionService {
     }
 
     @Override
-    public void removeTransaction(String id) throws TransactionNotFoundException {
+    public Transaction removeTransaction(String id) throws TransactionNotFoundException {
 
         LOGGER.info("Remove transaction - Transaction ID: {}", id);
         this.getTransaction(id);
-        this.transactionRepository.remove(id);
+       Transaction removedTranastion = this.transactionRepository.remove(id);
         LOGGER.info("Transaction has removed - Transaction ID: {}", id);
+        return removedTranastion;
     }
 
     @Override
