@@ -4,18 +4,13 @@ import java.util.UUID;
 
 public class Account {
 
-    private String id;
-    private String name;
-
-    public Account(){
-        setId(UUID.randomUUID().toString());
-    }
+    private final String id;
+    private final String name;
 
     public Account(String name){
-        this();
-        this.name=name;
+        this.id= UUID.randomUUID().toString();
+        this.name= name;
     }
-
 
     public Account(String id, String name){
         this.id =id;
@@ -26,16 +21,8 @@ public class Account {
         return id;
     }
 
-    public void setId(String id) {
-        this.id = id;
-    }
-
     public String getName() {
         return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
 

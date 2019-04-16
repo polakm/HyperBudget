@@ -18,7 +18,7 @@ public class BasicAccountServiceTest {
 
         //given
         AccountService accountService = AccountServiceConfiguration.createAccountService(new InMemoryAccountRepository());
-        Account account = getExampleAccount();
+        Account account = getExampleAccount("example-account-name");
 
         //when
         accountService.addAccount(account);
@@ -51,8 +51,7 @@ public class BasicAccountServiceTest {
 
         //given
         AccountService accountService = AccountServiceConfiguration.createAccountService(new InMemoryAccountRepository());
-        Account account = getExampleAccount();
-        account.setName(null);
+        Account account = getExampleAccount(null);
 
         //when
         try {
@@ -72,19 +71,17 @@ public class BasicAccountServiceTest {
         //given
         AccountService accountService = AccountServiceConfiguration.createAccountService(new InMemoryAccountRepository());
 
-        Account account = getExampleAccount();
+        Account account = getExampleAccount("example-account-name");
         accountService.addAccount(account);
 
-        Account updatedAccount = getExampleAccount();
-        updatedAccount.setId(account.getId());
-        updatedAccount.setName("updated");
+        Account updatedAccount =  new Account(account.getId(),"updated-title");
 
         //when
         accountService.updateAccount(updatedAccount);
         Account resultAccount = accountService.getAccount(account.getId());
 
         //then
-        assertEquals("updated", resultAccount.getName());
+        assertEquals("updated-title", resultAccount.getName());
 
     }
 
@@ -93,7 +90,7 @@ public class BasicAccountServiceTest {
 
         //given
         AccountService accountService = AccountServiceConfiguration.createAccountService(new InMemoryAccountRepository());
-        Account account = getExampleAccount();
+        Account account = getExampleAccount("example-account-name");
 
         //when
         accountService.addAccount(account);
@@ -117,9 +114,9 @@ public class BasicAccountServiceTest {
 
         //given
         AccountService accountService = AccountServiceConfiguration.createAccountService(new InMemoryAccountRepository());
-        Account account1 = getExampleAccount();
-        Account account2 = getExampleAccount();
-        Account account3 = getExampleAccount();
+        Account account1 = getExampleAccount("example-account-name-1");
+        Account account2 = getExampleAccount("example-account-name-2");
+        Account account3 = getExampleAccount("example-account-name-3");
 
         //when
         accountService.addAccount(account1);
@@ -133,9 +130,8 @@ public class BasicAccountServiceTest {
 
 
 
-    private Account getExampleAccount() {
-        Account account = new Account();
-        account.setName("example-account-name");
+    private Account getExampleAccount(String name) {
+        Account account = new Account(name);
         return account;
     }
 

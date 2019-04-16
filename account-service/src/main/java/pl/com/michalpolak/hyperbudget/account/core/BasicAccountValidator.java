@@ -7,7 +7,7 @@ import java.util.List;
 
 class BasicAccountValidator implements AccountValidator {
 
-    private List<ValidationRule>  rules;
+    private final List<ValidationRule>  rules;
 
     BasicAccountValidator(List<ValidationRule> rules) {
         this.rules = rules;

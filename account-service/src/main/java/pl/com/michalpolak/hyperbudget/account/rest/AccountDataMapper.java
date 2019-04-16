@@ -1,9 +1,9 @@
 package pl.com.michalpolak.hyperbudget.account.rest;
 
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 import pl.com.michalpolak.hyperbudget.account.core.api.Account;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -27,7 +27,8 @@ class AccountDataMapper {
     }
 
     List<AccountData> mapToDataList(Set<Account> accounts) {
-        return accounts.stream().map(a -> mapToData(a)).collect(Collectors.toList());
+        List<AccountData> list = accounts.stream().map(a -> mapToData(a)).collect(Collectors.toList());
+        return Collections.unmodifiableList(list);
     }
 
 }
