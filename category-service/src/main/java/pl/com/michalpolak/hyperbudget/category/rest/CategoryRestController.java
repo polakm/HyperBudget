@@ -24,8 +24,8 @@ public class CategoryRestController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(CategoryRestController.class);
 
-    private CategoryService service;
-    private CategoryDataMapper mapper;
+    private final CategoryService service;
+    private final CategoryDataMapper mapper;
     @Autowired
     public CategoryRestController( CategoryService service, CategoryDataMapper mapper) {
         this.service = service;

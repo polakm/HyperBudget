@@ -21,7 +21,7 @@ class CategoryDataMapper {
         return new Category(category.getId(), category.getName(),category.getType());
     }
 
-    Category mapToEntity(String id,CategoryData category) {
+    Category mapToEntity(String id, CategoryData category) {
         return new Category(id, category.getName(),category.getType());
     }
 
