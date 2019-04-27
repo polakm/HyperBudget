@@ -15,17 +15,14 @@ import java.util.concurrent.ExecutionException;
 
 class KafkaEventPublisher implements EventPublisher {
 
-    private static String MESSAGE_PATTERN = "Error during sending event for topic: \"{0}\"  with transaction ID : \"{1}\" ";
-
     private static final Logger LOGGER = LoggerFactory.getLogger(KafkaEventPublisher.class);
+    private static final String MESSAGE_PATTERN = "Error during sending event for topic: \"{0}\"  with transaction ID : \"{1}\" ";
 
-    private ProducerCreator producerCreator;
+    private final ProducerCreator producerCreator;
+    private final TransactionEventMapper mapper;
+    private final String topic;
 
-    private TransactionEventMapper mapper;
-
-    private String topic;
-
-    KafkaEventPublisher(TransactionEventMapper mapper, ProducerCreator producerCreator, String topic){
+    KafkaEventPublisher(TransactionEventMapper mapper, ProducerCreator producerCreator, String topic) {
         this.mapper = mapper;
         this.producerCreator = producerCreator;
         this.topic = topic;
@@ -44,9 +41,9 @@ class KafkaEventPublisher implements EventPublisher {
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         } catch (ExecutionException e) {
-            LOGGER.error(MessageFormat.format(MESSAGE_PATTERN, topic, event.getEntity().getId()),e);
+            LOGGER.error(MessageFormat.format(MESSAGE_PATTERN, topic, event.getEntity().getId()), e);
         } catch (JsonProcessingException e) {
-           throw new RuntimeException(e);
+            throw new RuntimeException(e);
         }
 
     }

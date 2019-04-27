@@ -11,7 +11,7 @@ class ExecutionDateIsRequired implements ValidationRule {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ExecutionDateIsRequired.class);
 
-    private static String MESSAGE_PATTERN = "Execution date of transaction with id \"{0}\" is null. The execution date is required value.";
+    private static final String MESSAGE_PATTERN = "Execution date of transaction with id \"{0}\" is null. The execution date is required value.";
 
     @Override
     public void validate(Transaction transaction) throws InvalidTransactionException {

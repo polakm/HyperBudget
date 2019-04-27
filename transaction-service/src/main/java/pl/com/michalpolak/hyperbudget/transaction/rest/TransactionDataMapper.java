@@ -28,11 +28,11 @@ class TransactionDataMapper {
             transactionData.setCurrencyCode(transaction.getAmount().getCurrencyUnit().getCode());
         }
 
-        if(transaction.getAmount() != null && transaction.getAmount().isPositive()) {
+        if (transaction.getAmount() != null && transaction.getAmount().isPositive()) {
             transactionData.setType("income");
         }
 
-        if(transaction.getAmount() != null && transaction.getAmount().isNegative()){
+        if (transaction.getAmount() != null && transaction.getAmount().isNegative()) {
             transactionData.setType("expense");
         }
 
@@ -44,40 +44,40 @@ class TransactionDataMapper {
 
     Transaction mapToEntity(TransactionData transactionData) {
 
-        Transaction transaction = new Transaction();
-        transaction.setTitle(transactionData.getTitle());
-        transaction.setAccountId(transactionData.getAccountId());
-        transaction.setCategoryId(transactionData.getCategoryId());
+        Transaction.Builder builder = new Transaction.Builder();
+        builder.withTitle(transactionData.getTitle());
+        builder.forAccount(transactionData.getAccountId());
+        builder.inCategory(transactionData.getCategoryId());
 
         if (transactionData.getCurrencyCode() != null && transactionData.getAmount() != null) {
             LOGGER.debug("Parse currency code and decimal value to Money - Transaction ID: {} ", transactionData.getId());
 
             Money moneyValue = Money.parse(transactionData.getCurrencyCode() + " " + transactionData.getAmount());
-            if(transactionData.getType().equals("expense")){
+            if (transactionData.getType().equals("expense")) {
                 moneyValue = moneyValue.abs().negated();
             }
 
-            if(transactionData.getType().equals("income")){
-                moneyValue =  moneyValue.abs();
+            if (transactionData.getType().equals("income")) {
+                moneyValue = moneyValue.abs();
             }
-            transaction.setAmount(moneyValue);
+            builder.withAmount(moneyValue);
         }
         if (transactionData.getExecutionDate() != null && !transactionData.getExecutionDate().isEmpty()) {
             LOGGER.debug("Parse date format and string date to DateTime - Transaction ID: {} ", transactionData.getId());
-            transaction.setExecutionDate(DateTime.parse(transactionData.getExecutionDate()));
+            builder.onExecutionDate(DateTime.parse(transactionData.getExecutionDate()));
         }
-        return  transaction;
+        return builder.build();
     }
 
-    Transaction mapToEntity(String id,TransactionData transactionData) {
+    Transaction mapToEntity(String id, TransactionData transactionData) {
+
         Transaction transaction = this.mapToEntity(transactionData);
-        transaction.setId(id);
-        return transaction;
+        return Transaction.builder().from(transaction).withId(id).build();
     }
 
     List<TransactionData> mapToDataList(Set<Transaction> transactions) {
         return transactions.stream().map(a -> mapToData(a)).collect(Collectors.toList());
     }
-    
-    
+
+
 }

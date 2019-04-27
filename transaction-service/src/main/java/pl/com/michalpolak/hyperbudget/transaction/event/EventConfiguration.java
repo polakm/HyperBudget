@@ -15,7 +15,6 @@ import java.util.Properties;
 @Configuration
 public class EventConfiguration {
 
-
     @Bean
     @Autowired
     @Value("kafka.producer.topic")
@@ -25,24 +24,21 @@ public class EventConfiguration {
         return new KafkaEventPublisher(mapper, producerCreator, topic);
     }
 
-
     @Bean
     public static ProducerCreator createProducerCreator(
             @Value("kafka.producer.brokers") String kafkaBrokers,
             @Value("kafka.producer.clientId") String clientId) {
-
 
         Properties properties = new Properties();
         properties.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, kafkaBrokers);
         properties.put(ProducerConfig.CLIENT_ID_CONFIG, clientId);
         properties.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, LongSerializer.class);
         properties.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
-
         return new BasicProducerCreator(properties);
     }
 
     public static EventPublisher createEventPublisher(String topic, String kafkaBrokers, String clientId) {
 
-      return createEventPublisher(topic, createProducerCreator(kafkaBrokers, clientId));
+        return createEventPublisher(topic, createProducerCreator(kafkaBrokers, clientId));
     }
 }

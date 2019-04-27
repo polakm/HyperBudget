@@ -4,17 +4,10 @@ import pl.com.michalpolak.hyperbudget.transaction.core.api.Transaction;
 
 public abstract class TransactionEvent {
 
-    public interface Actions{
-        String ADDED = "transaction_added";
-        String UPDATED = "transaction_updated";
-        String REMOVED = "transaction_removed";
-    }
-
-    private String action;
-
+    private final String action;
     private final Transaction transaction;
 
-    public TransactionEvent(String action, Transaction transaction){
+    public TransactionEvent(String action, Transaction transaction) {
         this.action = action;
         this.transaction = transaction;
     }
@@ -24,6 +17,12 @@ public abstract class TransactionEvent {
     }
 
     public String getAction() {
-        return  action;
+        return action;
+    }
+
+    public interface Actions {
+        String ADDED = "transaction_added";
+        String UPDATED = "transaction_updated";
+        String REMOVED = "transaction_removed";
     }
 }

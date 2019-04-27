@@ -14,10 +14,10 @@ import static org.mockito.Mockito.when;
 public class CurrencyIsAcceptedTest {
 
     @Test
-   public void  validCurrency() throws InvalidTransactionException {
+    public void validCurrency() throws InvalidTransactionException {
 
         //given
-        CurrencyIsAccepted currencyValidationRule =new CurrencyIsAccepted(CurrencyUnit.USD);
+        CurrencyIsAccepted currencyValidationRule = new CurrencyIsAccepted(CurrencyUnit.USD);
         Transaction transaction = mock(Transaction.class);
         when(transaction.getAmount()).thenReturn(Money.parse("USD 200"));
 
@@ -28,15 +28,17 @@ public class CurrencyIsAcceptedTest {
             //then
             assertTrue(true);
         } catch (InvalidTransactionException e) {
-          fail();
+            fail();
 
         }
-    };
+    }
+
+    ;
 
     @Test
-    public void invalidCurrency(){
+    public void invalidCurrency() {
         //given
-        CurrencyIsAccepted currencyValidationRule =new CurrencyIsAccepted(CurrencyUnit.USD);
+        CurrencyIsAccepted currencyValidationRule = new CurrencyIsAccepted(CurrencyUnit.USD);
         Transaction transaction = mock(Transaction.class);
         when(transaction.getAmount()).thenReturn(Money.parse("PLN 200"));
 
@@ -49,13 +51,15 @@ public class CurrencyIsAcceptedTest {
             assertTrue(true);
 
         }
-    };
+    }
+
+    ;
 
 
     @Test
-    public void validOfManyAcceptedCurrencies(){
+    public void validOfManyAcceptedCurrencies() {
         //given
-        CurrencyIsAccepted currencyValidationRule =new CurrencyIsAccepted(CurrencyUnit.USD, CurrencyUnit.EUR);
+        CurrencyIsAccepted currencyValidationRule = new CurrencyIsAccepted(CurrencyUnit.USD, CurrencyUnit.EUR);
         Transaction transaction = mock(Transaction.class);
         when(transaction.getAmount()).thenReturn(Money.parse("EUR 200"));
 
@@ -69,12 +73,14 @@ public class CurrencyIsAcceptedTest {
             fail();
 
         }
-    };
+    }
+
+    ;
 
     @Test
-    public void invalidOfManyAcceptedCurrencies(){
+    public void invalidOfManyAcceptedCurrencies() {
         //given
-        CurrencyIsAccepted currencyValidationRule =new CurrencyIsAccepted(CurrencyUnit.USD, CurrencyUnit.EUR);
+        CurrencyIsAccepted currencyValidationRule = new CurrencyIsAccepted(CurrencyUnit.USD, CurrencyUnit.EUR);
         Transaction transaction = mock(Transaction.class);
         when(transaction.getAmount()).thenReturn(Money.parse("PLN 200"));
 
@@ -87,8 +93,9 @@ public class CurrencyIsAcceptedTest {
             assertTrue(true);
 
         }
-    };
+    }
 
+    ;
 
 
 }

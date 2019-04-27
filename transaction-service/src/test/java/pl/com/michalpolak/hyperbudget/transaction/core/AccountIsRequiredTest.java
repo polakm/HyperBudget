@@ -6,7 +6,7 @@ import pl.com.michalpolak.hyperbudget.transaction.core.api.Transaction;
 
 import java.util.UUID;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.fail;
 
 public class AccountIsRequiredTest {
 
@@ -65,16 +65,14 @@ public class AccountIsRequiredTest {
 
 
     private Transaction getTranasctionWithoutAccountId() {
-        Transaction transaction = new Transaction();
-        transaction.setAccountId(null);
-        return transaction;
+
+        return Transaction.builder().forAccount(null).build();
     }
 
 
     private Transaction getTransactionWithAccountId(String accountID) {
-        Transaction transaction = new Transaction();
-        transaction.setAccountId(accountID);
-        return transaction;
+
+        return Transaction.builder().forAccount(accountID).build();
 
     }
 

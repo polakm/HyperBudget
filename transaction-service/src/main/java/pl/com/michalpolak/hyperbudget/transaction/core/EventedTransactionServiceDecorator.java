@@ -5,14 +5,13 @@ import pl.com.michalpolak.hyperbudget.transaction.core.api.Transaction;
 import pl.com.michalpolak.hyperbudget.transaction.core.api.TransactionNotFoundException;
 import pl.com.michalpolak.hyperbudget.transaction.core.api.TransactionService;
 import pl.com.michalpolak.hyperbudget.transaction.core.spi.EventPublisher;
-import pl.com.michalpolak.hyperbudget.transaction.core.spi.TransactionEvent;
 
 import java.util.Set;
 
 public class EventedTransactionServiceDecorator implements TransactionService {
 
-    private TransactionService service;
-    private EventPublisher publisher;
+    private final TransactionService service;
+    private final EventPublisher publisher;
 
     public EventedTransactionServiceDecorator(TransactionService service, EventPublisher publisher) {
         this.service = service;
