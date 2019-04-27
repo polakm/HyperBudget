@@ -17,32 +17,42 @@ class TransactionDataMapper {
     private static final Logger LOGGER = LoggerFactory.getLogger(TransactionDataMapper.class);
 
     TransactionData mapToData(Transaction transaction) {
-        TransactionData transactionData = new TransactionData();
-        transactionData.setId(transaction.getId());
-        transactionData.setTitle(transaction.getTitle());
-        transactionData.setAccountId(transaction.getAccountId());
-        transactionData.setCategoryId(transaction.getCategoryId());
+        // The class is safe to extend when no method that can be overridden is called internally by the class.
+        return mapEntityToData(transaction);
+    }
+
+    final TransactionData mapEntityToData(Transaction transaction) {
+        TransactionData.Builder builder = new TransactionData.Builder();
+        builder.withId(transaction.getId());
+        builder.withTitle(transaction.getTitle());
+        builder.withAccountId(transaction.getAccountId());
+        builder.withCategoryId(transaction.getCategoryId());
 
         if (transaction.getAmount() != null) {
-            transactionData.setAmount(transaction.getAmount().getAmount().toPlainString());
-            transactionData.setCurrencyCode(transaction.getAmount().getCurrencyUnit().getCode());
+            builder.withAmount(transaction.getAmount().getAmount().toPlainString());
+            builder.withCurrencyCode(transaction.getAmount().getCurrencyUnit().getCode());
         }
 
         if (transaction.getAmount() != null && transaction.getAmount().isPositive()) {
-            transactionData.setType("income");
+            builder.withType("income");
         }
 
         if (transaction.getAmount() != null && transaction.getAmount().isNegative()) {
-            transactionData.setType("expense");
+            builder.withType("expense");
         }
 
         if (transaction.getExecutionDate() != null) {
-            transactionData.setExecutionDate(transaction.getExecutionDate().toString());
+            builder.withExecutionDate(transaction.getExecutionDate().toString());
         }
-        return transactionData;
+        return builder.build();
     }
 
     Transaction mapToEntity(TransactionData transactionData) {
+        // The class is safe to extend when no method that can be overridden is called internally by the class.
+        return this.mapDataToEntity(transactionData);
+    }
+
+    final Transaction mapDataToEntity(TransactionData transactionData) {
 
         Transaction.Builder builder = new Transaction.Builder();
         builder.withTitle(transactionData.getTitle());
@@ -71,12 +81,13 @@ class TransactionDataMapper {
 
     Transaction mapToEntity(String id, TransactionData transactionData) {
 
-        Transaction transaction = this.mapToEntity(transactionData);
+        Transaction transaction = this.mapDataToEntity(transactionData);
         return Transaction.builder().from(transaction).withId(id).build();
     }
 
+
     List<TransactionData> mapToDataList(Set<Transaction> transactions) {
-        return transactions.stream().map(a -> mapToData(a)).collect(Collectors.toList());
+        return transactions.stream().map(a -> this.mapEntityToData(a)).collect(Collectors.toList());
     }
 
 

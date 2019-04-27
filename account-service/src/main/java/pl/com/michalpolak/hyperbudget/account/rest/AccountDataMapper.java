@@ -12,6 +12,10 @@ import java.util.stream.Collectors;
 class AccountDataMapper {
 
     AccountData mapToData(Account account) {
+        return mapEntityToData(account);
+    }
+
+   final AccountData mapEntityToData(Account account) {
         return new AccountData(account.getId(), account.getName());
     }
 
@@ -27,7 +31,7 @@ class AccountDataMapper {
     }
 
     List<AccountData> mapToDataList(Set<Account> accounts) {
-        List<AccountData> list = accounts.stream().map(a -> mapToData(a)).collect(Collectors.toList());
+        List<AccountData> list = accounts.stream().map(a -> mapEntityToData(a)).collect(Collectors.toList());
         return Collections.unmodifiableList(list);
     }
 

@@ -7,20 +7,20 @@ import pl.com.michalpolak.hyperbudget.transaction.core.spi.TransactionEvent;
 
 class TransactionEventMapper {
 
-    String mapToEventMessage(TransactionEvent event) throws JsonProcessingException {
+   String mapToEventMessage(TransactionEvent event) throws JsonProcessingException {
 
         EventData eventData = mapToEventData(event);
         String message = new ObjectMapper().writeValueAsString(eventData);
         return message;
     }
 
-    EventData mapToEventData(TransactionEvent event) {
+    final EventData mapToEventData(TransactionEvent event) {
 
         EventContext context = this.mapToEventContext(event.getEntity());
         return new EventData(event.getAction(), context);
     }
 
-    EventContext mapToEventContext(Transaction transaction) {
+    final EventContext mapToEventContext(Transaction transaction) {
 
         EventContext.Builder builder = EventContext.builder();
         builder.withId(transaction.getId());
