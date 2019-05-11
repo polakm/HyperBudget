@@ -8,9 +8,8 @@ import org.springframework.stereotype.Component;
 import pl.com.michalpolak.hyperbudget.transaction.core.api.TransactionInfo;
 import pl.com.michalpolak.hyperbudget.transaction.core.api.TransactionStatistics;
 import pl.com.michalpolak.hyperbudget.transaction.core.api.TransactionSummary;
-import pl.com.michalpolak.hyperbudget.transaction.core.api.TransactionTypes;
+import pl.com.michalpolak.hyperbudget.transaction.core.api.TransactionType;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -53,11 +52,11 @@ class TransactionSummaryDataMapper {
         });
 
         Optional.ofNullable(transactionInfo.getAmount()).filter(Money::isPositive).ifPresent(ammount->{
-            transactionInfoData.setType(TransactionTypes.INCOME);
+            transactionInfoData.setType(TransactionType.INCOME);
         });
 
         Optional.ofNullable(transactionInfo.getAmount()).filter(Money::isNegative).ifPresent(ammount->{
-            transactionInfoData.setType(TransactionTypes.EXPENSE);
+            transactionInfoData.setType(TransactionType.EXPENSE);
         });
 
         Optional.ofNullable(transactionInfo.getExecutionDate()).
