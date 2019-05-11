@@ -11,16 +11,17 @@ import java.util.List;
 public class TransactionServiceAdapter implements TransactionService {
 
     private TransactionServiceClient client;
+    private TransactionDataMapper mapper;
 
     @Autowired
-    public TransactionServiceAdapter(TransactionServiceClient client){
+    public TransactionServiceAdapter(TransactionServiceClient client, TransactionDataMapper mapper) {
         this.client = client;
+        this.mapper = mapper;
     }
 
     @Override
     public List<Transaction> transactionList() {
-        List<TransactionData> list = client.transactionList();
-        return new TransactionDataListAdapter(list).asList();
-    }
+        return mapper.mapToEntities(client.transactionList());
 
+    }
 }
