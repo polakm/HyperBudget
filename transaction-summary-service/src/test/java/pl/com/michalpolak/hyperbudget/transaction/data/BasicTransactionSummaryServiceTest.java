@@ -82,8 +82,7 @@ public class BasicTransactionSummaryServiceTest {
         List<Transaction> transactionList = new ArrayList();
 
         for (String date : dates) {
-            Transaction transaction = new Transaction();
-            transaction.setExecutionDate(DateTime.parse(date));
+            Transaction transaction = Transaction.builder().onExecutionDate(DateTime.parse(date)).build();
             transactionList.add(transaction);
         }
         return transactionList;

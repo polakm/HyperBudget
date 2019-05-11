@@ -4,66 +4,127 @@ package pl.com.michalpolak.hyperbudget.transaction.core.spi;
 import org.joda.money.Money;
 import org.joda.time.DateTime;
 
+import java.util.UUID;
+
 public class Transaction {
 
-    private String id;
+    public static class Builder {
 
-    private String title;
+        private String id;
+        private String title;
+        private DateTime executionDate;
+        private Money amount;
+        private String accountId;
+        private String categoryId;
 
-    private DateTime executionDate;
+        public Builder from(Transaction transaction) {
+            this.id = transaction.id;
+            this.title = transaction.title;
+            this.executionDate = transaction.executionDate;
+            this.amount = transaction.amount;
+            this.accountId = transaction.accountId;
+            this.categoryId = transaction.categoryId;
+            return this;
+        }
 
-    private Money amount;
+        public Builder withId(String id) {
+            this.id = id;
+            return this;
+        }
 
-    private String categoryId;
+        public Builder withTitle(String title) {
+            this.title = title;
+            return this;
+        }
 
-    private String accountId;
+        public Builder onExecutionDate(DateTime executionDate) {
+            this.executionDate = executionDate;
+            return this;
+        }
 
+        public Builder withAmount(Money amount) {
+            this.amount = amount;
+            return this;
+        }
+
+        public Builder inCategory(String categoryId) {
+            this.categoryId = categoryId;
+            return this;
+        }
+
+        public Builder forAccount(String accountId) {
+            this.accountId = accountId;
+            return this;
+        }
+
+        public Transaction build() {
+
+            if (id == null) {
+                return new Transaction(title, executionDate, amount, accountId, categoryId);
+            }
+            return new Transaction(id, title, executionDate, amount, accountId, categoryId);
+        }
+
+    }
+
+    public static Builder builder() {
+        return new Builder();
+    }
+
+    private final String id;
+
+    private final String title;
+
+    private final DateTime executionDate;
+
+    private final Money amount;
+
+    private final String categoryId;
+
+    private final String accountId;
+
+    private Transaction(String id, String title, DateTime executionDate, Money amount, String accountId, String categoryId) {
+        this.id = id;
+        this.title = title;
+        this.executionDate = executionDate;
+        this.amount = amount;
+        this.accountId = accountId;
+        this.categoryId = categoryId;
+
+    }
+
+    private Transaction(String title, DateTime executionDate, Money amount, String accountId, String categoryId) {
+        this.id = UUID.randomUUID().toString();
+        this.title = title;
+        this.executionDate = executionDate;
+        this.amount = amount;
+        this.accountId = accountId;
+        this.categoryId = categoryId;
+
+    }
 
     public String getId() {
         return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 
     public String getTitle() {
         return title;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
     public DateTime getExecutionDate() {
         return executionDate;
-    }
-
-    public void setExecutionDate(DateTime executionDate) {
-        this.executionDate = executionDate;
     }
 
     public Money getAmount() {
         return amount;
     }
 
-    public void setAmount(Money amount) {
-        this.amount = amount;
-    }
-
     public String getCategoryId() {
         return categoryId;
-    }
-
-    public void setCategoryId(String categoryId) {
-        this.categoryId = categoryId;
     }
 
     public String getAccountId() {
         return accountId;
     }
 
-    public void setAccountId(String accountId) {
-        this.accountId = accountId;
-    }
 }
