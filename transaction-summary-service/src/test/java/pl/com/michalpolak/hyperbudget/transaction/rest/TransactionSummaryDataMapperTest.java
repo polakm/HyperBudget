@@ -5,7 +5,7 @@ import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.junit.Test;
 import pl.com.michalpolak.hyperbudget.transaction.core.api.TransactionInfo;
-import pl.com.michalpolak.hyperbudget.transaction.core.api.TransactionTypes;
+import pl.com.michalpolak.hyperbudget.transaction.core.api.TransactionType;
 import pl.com.michalpolak.hyperbudget.transaction.core.spi.Account;
 import pl.com.michalpolak.hyperbudget.transaction.core.spi.Category;
 
@@ -28,7 +28,7 @@ public class TransactionSummaryDataMapperTest {
         //then
         assertEquals(data.getAmount(), "99999.99");
         assertEquals(data.getCurrencyCode(), "USD");
-        assertEquals(data.getType(), TransactionTypes.INCOME);
+        assertEquals(data.getType(), TransactionType.INCOME);
     }
 
     @Test
@@ -45,7 +45,7 @@ public class TransactionSummaryDataMapperTest {
         //then
         assertEquals(data.getAmount(), "-99999.99");
         assertEquals(data.getCurrencyCode(), "USD");
-        assertEquals(data.getType(), TransactionTypes.EXPENSE);
+        assertEquals(data.getType(), TransactionType.EXPENSE);
     }
 
     @Test
