@@ -23,8 +23,8 @@ public class TransactionRestController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(TransactionRestController.class);
 
-    private TransactionService service;
-    private TransactionDataMapper mapper;
+    private final TransactionService service;
+    private final TransactionDataMapper mapper;
 
     @Autowired
     public TransactionRestController(TransactionService service, TransactionDataMapper mapper) {
