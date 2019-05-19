@@ -17,8 +17,7 @@ public class EventConfiguration {
 
     @Bean
     @Autowired
-    @Value("kafka.producer.topic")
-    public static EventPublisher createEventPublisher(String topic, ProducerCreator producerCreator) {
+    public static EventPublisher createEventPublisher( @Value("kafka.producer.topic") String topic, ProducerCreator producerCreator) {
 
         TransactionEventMapper mapper = new TransactionEventMapper();
         return new KafkaEventPublisher(mapper, producerCreator, topic);
