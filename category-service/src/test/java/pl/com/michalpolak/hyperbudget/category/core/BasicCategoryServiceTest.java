@@ -18,7 +18,7 @@ public class BasicCategoryServiceTest {
 
         //given
         CategoryService categoryService = CategoryServiceConfiguration.createCategoryService(new InMemoryCategoryRepository());
-        Category category = getExampleCategory();
+        Category category = createCategory("test-name");
 
         //when
         categoryService.addCategory(category);
@@ -51,8 +51,7 @@ public class BasicCategoryServiceTest {
 
         //given
         CategoryService categoryService = CategoryServiceConfiguration.createCategoryService(new InMemoryCategoryRepository());
-        Category category = getExampleCategory();
-        category.setName(null);
+        Category category = createCategory(null);
 
         //when
         try {
@@ -72,12 +71,10 @@ public class BasicCategoryServiceTest {
         //given
         CategoryService categoryService = CategoryServiceConfiguration.createCategoryService(new InMemoryCategoryRepository());
 
-        Category category = getExampleCategory();
+        Category category = createCategory("test-name");
         categoryService.addCategory(category);
 
-        Category updatedCategory = getExampleCategory();
-        updatedCategory.setId(category.getId());
-        updatedCategory.setName("updated");
+        Category updatedCategory = new Category(category.getId(),"updated",Category.Types.INCOME);
 
         //when
         categoryService.updateCategory(updatedCategory);
@@ -93,7 +90,7 @@ public class BasicCategoryServiceTest {
 
         //given
         CategoryService categoryService = CategoryServiceConfiguration.createCategoryService(new InMemoryCategoryRepository());
-        Category category = getExampleCategory();
+        Category category = createCategory("test-name");
 
         //when
         categoryService.addCategory(category);
@@ -117,9 +114,9 @@ public class BasicCategoryServiceTest {
 
         //given
         CategoryService categoryService = CategoryServiceConfiguration.createCategoryService(new InMemoryCategoryRepository());
-        Category category1 = getExampleCategory();
-        Category category2 = getExampleCategory();
-        Category category3 = getExampleCategory();
+        Category category1 = createCategory("test-name-1");
+        Category category2 = createCategory("test-name-2");
+        Category category3 = createCategory("test-name-3");
 
         //when
         categoryService.addCategory(category1);
@@ -133,9 +130,9 @@ public class BasicCategoryServiceTest {
 
 
 
-    private Category getExampleCategory() {
-        Category category = new Category();
-        category.setName("example-category-name");
+    private Category createCategory(String name) {
+
+        Category category = new Category(name,Category.Types.INCOME);
         return category;
     }
 

@@ -8,17 +8,18 @@ import pl.com.michalpolak.hyperbudget.transaction.core.spi.TransactionValidator;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 class BasicTransactionValidator implements TransactionValidator {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(BasicTransactionValidator.class);
 
-    private List<ValidationRule> validationRules;
+    private final List<ValidationRule> validationRules;
 
     BasicTransactionValidator(List<ValidationRule> validationRules) {
 
-        this.validationRules = validationRules;
+        this.validationRules = Collections.unmodifiableList(validationRules);
     }
 
     BasicTransactionValidator(ValidationRule... validationRules) {

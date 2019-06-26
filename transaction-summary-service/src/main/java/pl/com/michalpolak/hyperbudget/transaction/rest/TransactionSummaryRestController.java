@@ -29,8 +29,8 @@ class TransactionSummaryRestController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(TransactionSummaryRestController.class);
 
-    private TransactionSummaryService service;
-    private TransactionSummaryDataMapper mapper;
+    private final TransactionSummaryService service;
+    private final TransactionSummaryDataMapper mapper;
 
     @Autowired
     TransactionSummaryRestController( TransactionSummaryService service, TransactionSummaryDataMapper mapper) {
@@ -92,7 +92,7 @@ class TransactionSummaryRestController {
     @ExceptionHandler({Exception.class})
     public ResponseEntity handleUnknownException(Exception exception, WebRequest request) {
         LOGGER.error(exception.getMessage(), exception);
-        ErrorData errorData =  new ErrorData("f2f0f0","Unknown Error", exception.getMessage());
+        ErrorData errorData =  ErrorData.of("f2f0f0","Unknown Error", exception.getMessage());
         return new ResponseEntity(errorData, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 

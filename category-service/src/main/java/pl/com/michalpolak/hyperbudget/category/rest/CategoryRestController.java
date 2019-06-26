@@ -24,8 +24,8 @@ public class CategoryRestController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(CategoryRestController.class);
 
-    private CategoryService service;
-    private CategoryDataMapper mapper;
+    private final CategoryService service;
+    private final CategoryDataMapper mapper;
     @Autowired
     public CategoryRestController( CategoryService service, CategoryDataMapper mapper) {
         this.service = service;
@@ -78,7 +78,7 @@ public class CategoryRestController {
     ResponseEntity handleCategoryNotExistException(CategoryNotFoundException exception, WebRequest request) {
 
         LOGGER.warn(exception.getMessage(), exception);
-        ErrorData errorData =  new ErrorData("b4e618","Category not found", exception.getMessage());
+        ErrorData errorData =  ErrorData.of("b4e618","Category not found", exception.getMessage());
         return new ResponseEntity(errorData, HttpStatus.NOT_FOUND);
     }
 
@@ -86,7 +86,7 @@ public class CategoryRestController {
     ResponseEntity handleInvalidCategoryException(InvalidCategoryException exception, WebRequest request) {
 
         LOGGER.warn(exception.getMessage(), exception);
-        ErrorData errorData =  new ErrorData("c38984","Invalid category", exception.getMessage());
+        ErrorData errorData =  ErrorData.of("c38984","Invalid category", exception.getMessage());
         return new ResponseEntity(errorData, HttpStatus.BAD_REQUEST);
     }
 
@@ -94,7 +94,7 @@ public class CategoryRestController {
     ResponseEntity handleUnknownException(Exception exception, WebRequest request) {
 
         LOGGER.error(exception.getMessage(), exception);
-        ErrorData errorData =  new ErrorData("43514a","Unknown Error", exception.getMessage());
+        ErrorData errorData =  ErrorData.of("43514a","Unknown Error", exception.getMessage());
         return new ResponseEntity(errorData, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }

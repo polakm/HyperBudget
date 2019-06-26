@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 
 class CategoryJsonFileLoader implements InitialDataLoader {
 
-    private InputStream dataStream;
+    private final InputStream dataStream;
 
     CategoryJsonFileLoader(InputStream dataStream) {
         this.dataStream = dataStream;

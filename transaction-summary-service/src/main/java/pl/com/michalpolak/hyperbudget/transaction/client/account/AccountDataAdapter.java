@@ -9,10 +9,7 @@ class AccountDataAdapter extends Account {
     private static final Logger LOGGER = LoggerFactory.getLogger(AccountDataAdapter.class);
 
     AccountDataAdapter(AccountData accountData) {
-
-        this.setId(accountData.getId());
-        this.setName(accountData.getName());
-
+        super(accountData.getId(), accountData.getName());
     }
 
 }

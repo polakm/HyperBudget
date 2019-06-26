@@ -8,9 +8,8 @@ import org.springframework.stereotype.Component;
 import pl.com.michalpolak.hyperbudget.transaction.core.api.TransactionInfo;
 import pl.com.michalpolak.hyperbudget.transaction.core.api.TransactionStatistics;
 import pl.com.michalpolak.hyperbudget.transaction.core.api.TransactionSummary;
-import pl.com.michalpolak.hyperbudget.transaction.core.api.TransactionTypes;
+import pl.com.michalpolak.hyperbudget.transaction.core.api.TransactionType;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -18,7 +17,7 @@ import java.util.stream.Collectors;
 @Component
 class TransactionSummaryDataMapper {
 
-    public TransactionSummaryData mapToData(TransactionSummary summary, YearMonth yearMonth) {
+    TransactionSummaryData mapToData(TransactionSummary summary, YearMonth yearMonth) {
 
         TransactionSummaryData transactionSummaryData = new TransactionSummaryData();
         List<TransactionInfoData> transactions = summary.getTransactionInfos().stream().map(this::mapToTransactionInfoData).collect(Collectors.toList());
@@ -31,7 +30,7 @@ class TransactionSummaryDataMapper {
 
     }
 
-    public TransactionInfoData mapToTransactionInfoData(TransactionInfo transactionInfo) {
+    TransactionInfoData mapToTransactionInfoData(TransactionInfo transactionInfo) {
 
         TransactionInfoData transactionInfoData = new TransactionInfoData();
         transactionInfoData.setId(transactionInfo.getId());
@@ -53,11 +52,11 @@ class TransactionSummaryDataMapper {
         });
 
         Optional.ofNullable(transactionInfo.getAmount()).filter(Money::isPositive).ifPresent(ammount->{
-            transactionInfoData.setType(TransactionTypes.INCOME);
+            transactionInfoData.setType(TransactionType.INCOME);
         });
 
         Optional.ofNullable(transactionInfo.getAmount()).filter(Money::isNegative).ifPresent(ammount->{
-            transactionInfoData.setType(TransactionTypes.EXPENSE);
+            transactionInfoData.setType(TransactionType.EXPENSE);
         });
 
         Optional.ofNullable(transactionInfo.getExecutionDate()).
@@ -68,7 +67,7 @@ class TransactionSummaryDataMapper {
         return transactionInfoData;
     }
 
-    public StatisticsData mapStatisticsData(TransactionStatistics statistics) {
+    final StatisticsData mapStatisticsData(TransactionStatistics statistics) {
 
         StatisticsData statisticsData = new StatisticsData();
         statisticsData.setBalance(statistics.totalSum().toString());
@@ -80,7 +79,7 @@ class TransactionSummaryDataMapper {
         return statisticsData;
     }
 
-    public RangeData mapToRangeData(YearMonth yearMonth) {
+    final RangeData mapToRangeData(YearMonth yearMonth) {
 
         RangeData rangeData = new RangeData();
         rangeData.setYear(yearMonth.getYear());

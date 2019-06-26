@@ -11,6 +11,10 @@ import java.util.stream.Collectors;
 class CategoryDataMapper {
 
     CategoryData mapToData(Category category) {
+        return mapEntityToData(category);
+    }
+
+    final CategoryData mapEntityToData(Category category) {
         return new CategoryData(category.getId(), category.getName(),category.getType());
     }
 
@@ -21,12 +25,12 @@ class CategoryDataMapper {
         return new Category(category.getId(), category.getName(),category.getType());
     }
 
-    Category mapToEntity(String id,CategoryData category) {
+    Category mapToEntity(String id, CategoryData category) {
         return new Category(id, category.getName(),category.getType());
     }
 
     List<CategoryData> mapToDataList(Set<Category> categories) {
-        return categories.stream().map(a -> mapToData(a)).collect(Collectors.toList());
+        return categories.stream().map(a -> mapEntityToData(a)).collect(Collectors.toList());
     }
 
 }

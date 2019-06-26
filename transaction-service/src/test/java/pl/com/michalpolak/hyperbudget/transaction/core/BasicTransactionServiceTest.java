@@ -54,8 +54,8 @@ public class BasicTransactionServiceTest {
 
         //given
         TransactionService transactionService = TransactionServiceConfiguration.createTransactionService(new InMemoryTransactionRepository());
-        Transaction transaction = getExampleTransaction();
-        transaction.setAmount(null);
+
+        Transaction transaction = Transaction.builder().withAmount(null).withTitle("updated").build();
 
         //when
         try {
@@ -78,9 +78,7 @@ public class BasicTransactionServiceTest {
         Transaction transaction = getExampleTransaction();
         transactionService.addTransaction(transaction);
 
-        Transaction updatedTransaction = getExampleTransaction();
-        updatedTransaction.setId(transaction.getId());
-        updatedTransaction.setTitle("updated");
+        Transaction updatedTransaction = Transaction.builder().withId(transaction.getId()).withTitle("updated").build();
 
         //when
         transactionService.updateTransaction(updatedTransaction);
@@ -135,15 +133,13 @@ public class BasicTransactionServiceTest {
     }
 
 
-
     private Transaction getExampleTransaction() {
-        Transaction transaction = new Transaction();
-        transaction.setTitle("title");
-        transaction.setExecutionDate(new DateTime());
-        transaction.setAccountId(UUID.randomUUID().toString());
-        transaction.setAmount(Money.parse("USD 299.99"));
-        return transaction;
+
+        Transaction.Builder builder = new Transaction.Builder();
+        builder.withTitle("title");
+        builder.onExecutionDate(new DateTime());
+        builder.forAccount(UUID.randomUUID().toString());
+        builder.withAmount(Money.parse("USD 299.99"));
+        return builder.build();
     }
-
-
 }

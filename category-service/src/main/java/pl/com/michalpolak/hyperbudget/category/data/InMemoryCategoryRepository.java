@@ -10,7 +10,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class InMemoryCategoryRepository implements CategoryRepository {
 
-    private Map<String, Category> storage;
+    private final Map<String, Category> storage;
 
     public InMemoryCategoryRepository() {
         this.storage = new ConcurrentHashMap<>();

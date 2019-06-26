@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.WebRequest;
 import pl.com.michalpolak.hyperbudget.account.core.api.Account;
 import pl.com.michalpolak.hyperbudget.account.core.api.AccountNotFoundException;
-import pl.com.michalpolak.hyperbudget.account.core.api.InvalidAccountException;
 import pl.com.michalpolak.hyperbudget.account.core.api.AccountService;
+import pl.com.michalpolak.hyperbudget.account.core.api.InvalidAccountException;
 
 import java.util.List;
 import java.util.Set;
@@ -23,8 +23,8 @@ public class AccountRestController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AccountRestController.class);
 
-    private AccountService service;
-    private AccountDataMapper mapper;
+    private final AccountService service;
+    private final AccountDataMapper mapper;
 
     @Autowired
     public AccountRestController(AccountService service, AccountDataMapper mapper) {
@@ -71,7 +71,7 @@ public class AccountRestController {
     ResponseEntity handleAccountNotExistException(AccountNotFoundException exception, WebRequest request) {
 
         LOGGER.warn(exception.getMessage(), exception);
-        ErrorData errorData = new ErrorData("e2fe0a", "Account not found", exception.getMessage());
+        ErrorData errorData = ErrorData.of("e2fe0a", "Account not found", exception.getMessage());
         return new ResponseEntity(errorData, HttpStatus.NOT_FOUND);
     }
 
@@ -79,7 +79,7 @@ public class AccountRestController {
     ResponseEntity handleInvalidAccountException(InvalidAccountException exception, WebRequest request) {
 
         LOGGER.warn(exception.getMessage(), exception);
-        ErrorData errorData = new ErrorData("f059ab", "Invalid account", exception.getMessage());
+        ErrorData errorData = ErrorData.of("f059ab", "Invalid account", exception.getMessage());
         return new ResponseEntity(errorData, HttpStatus.BAD_REQUEST);
     }
 
@@ -87,7 +87,7 @@ public class AccountRestController {
     ResponseEntity handleUnknownException(Exception exception, WebRequest request) {
 
         LOGGER.error(exception.getMessage(), exception);
-        ErrorData errorData = new ErrorData("3e1b0b", "Unknown Error", exception.getMessage());
+        ErrorData errorData = ErrorData.of("3e1b0b", "Unknown Error", exception.getMessage());
         return new ResponseEntity(errorData, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }

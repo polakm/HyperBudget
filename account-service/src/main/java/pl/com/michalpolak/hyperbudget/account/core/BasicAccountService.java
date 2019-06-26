@@ -8,6 +8,7 @@ import pl.com.michalpolak.hyperbudget.account.core.api.InvalidAccountException;
 import pl.com.michalpolak.hyperbudget.account.core.spi.AccountRepository;
 import pl.com.michalpolak.hyperbudget.account.core.api.AccountService;
 
+import java.util.Collections;
 import java.util.Set;
 
 
@@ -15,8 +16,8 @@ class BasicAccountService implements AccountService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(BasicAccountService.class);
 
-    private AccountRepository accountRepository;
-    private AccountValidator validator;
+    private final AccountRepository accountRepository;
+    private final AccountValidator validator;
 
     BasicAccountService(AccountRepository accountRepository, AccountValidator validator) {
         this.accountRepository = accountRepository;
@@ -54,7 +55,7 @@ class BasicAccountService implements AccountService {
 
     @Override
     public Set<Account> allAccounts() {
-        return this.accountRepository.getAll();
+        return Collections.unmodifiableSet(this.accountRepository.getAll());
     }
 
     @Override

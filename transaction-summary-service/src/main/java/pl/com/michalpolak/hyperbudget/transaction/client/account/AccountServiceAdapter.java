@@ -6,12 +6,12 @@ import pl.com.michalpolak.hyperbudget.transaction.core.spi.Account;
 import pl.com.michalpolak.hyperbudget.transaction.data.spi.AccountService;
 
 @Component
-public class AccountAdapter implements AccountService {
+final public class AccountServiceAdapter implements AccountService {
 
-    private AccountServiceClient client;
+    private final AccountServiceClient client;
 
     @Autowired
-    public AccountAdapter(AccountServiceClient client) {
+    public AccountServiceAdapter(AccountServiceClient client) {
         this.client = client;
     }
 

@@ -8,6 +8,7 @@ import pl.com.michalpolak.hyperbudget.category.core.api.InvalidCategoryException
 import pl.com.michalpolak.hyperbudget.category.core.spi.CategoryRepository;
 import pl.com.michalpolak.hyperbudget.category.core.api.CategoryService;
 
+import java.util.Collections;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -16,8 +17,8 @@ class BasicCategoryService implements CategoryService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(BasicCategoryService.class);
 
-    private CategoryRepository categoryRepository;
-    private CategoryValidator validator;
+    private final CategoryRepository categoryRepository;
+    private final CategoryValidator validator;
 
     BasicCategoryService(CategoryRepository categoryRepository, CategoryValidator validator) {
         this.categoryRepository = categoryRepository;
@@ -55,7 +56,7 @@ class BasicCategoryService implements CategoryService {
 
     @Override
     public Set<Category> allCategories() {
-        return this.categoryRepository.getAll();
+        return Collections.unmodifiableSet(this.categoryRepository.getAll());
     }
 
     @Override
@@ -71,7 +72,8 @@ class BasicCategoryService implements CategoryService {
     @Override
     public Set<Category> getCategoriesByType(String type) {
 
-        return this.categoryRepository.getAll().stream().filter(c-> c.getType().equals(type)).collect(Collectors.toSet());
+        Set<Category> result = this.categoryRepository.getAll().stream().filter(c-> c.getType().equals(type)).collect(Collectors.toSet());
+    return Collections.unmodifiableSet(result);
     }
 }
 

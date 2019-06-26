@@ -66,7 +66,7 @@ public class TransactionServiceEventedDecoratorTest {
         //given
         TransactionService transactionService = getTransactionService();
         Transaction transaction = getExampleTransaction();
-        transaction.setAmount(null);
+        transaction = Transaction.builder().from(transaction).withAmount(null).build();
 
         //when
         try {
@@ -89,8 +89,7 @@ public class TransactionServiceEventedDecoratorTest {
         transactionService.addTransaction(transaction);
 
         Transaction updatedTransaction = getExampleTransaction();
-        updatedTransaction.setId(transaction.getId());
-        updatedTransaction.setTitle("updated");
+        updatedTransaction = Transaction.builder().from(updatedTransaction).withId(transaction.getId()).withTitle("updated").build();
 
         //when
         transactionService.updateTransaction(updatedTransaction);
@@ -125,7 +124,7 @@ public class TransactionServiceEventedDecoratorTest {
     }
 
     @Test
-    public void allTrascations() throws InvalidTransactionException {
+    public void allTrasacations() throws InvalidTransactionException {
 
         //given
         TransactionService transactionService = getTransactionService();
@@ -144,24 +143,24 @@ public class TransactionServiceEventedDecoratorTest {
     }
 
     private Transaction getExampleTransaction() {
-        Transaction transaction = new Transaction();
-        transaction.setTitle("title");
-        transaction.setExecutionDate(new DateTime());
-        transaction.setAccountId(UUID.randomUUID().toString());
-        transaction.setAmount(Money.parse("USD 299.99"));
-        return transaction;
+        Transaction.Builder builder = new Transaction.Builder();
+        builder.withTitle("title");
+        builder.onExecutionDate(new DateTime());
+        builder.forAccount(UUID.randomUUID().toString());
+        builder.withAmount(Money.parse("USD 299.99"));
+        return builder.build();
     }
 
     private TransactionService getTransactionService() {
         TransactionService service = TransactionServiceConfiguration.createTransactionService(new InMemoryTransactionRepository());
         ProducerCreator producerCreator = mockProducerCreator();
         EventPublisher publisher = EventConfiguration.createEventPublisher("test-topic", producerCreator);
-        return TransactionServiceConfiguration.transactionServiceBean(service,publisher);
+        return TransactionServiceConfiguration.transactionServiceBean(service, publisher);
     }
 
     private ProducerCreator mockProducerCreator() {
         ProducerCreator producerCreator = mock(ProducerCreator.class);
-        when(producerCreator.createProducer()).thenReturn(new MockProducer<>(true, new LongSerializer(), new StringSerializer()) );
+        when(producerCreator.createProducer()).thenReturn(new MockProducer<>(true, new LongSerializer(), new StringSerializer()));
         return producerCreator;
     }
 

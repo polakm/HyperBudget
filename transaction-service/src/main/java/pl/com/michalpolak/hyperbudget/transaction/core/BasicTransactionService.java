@@ -5,10 +5,11 @@ import org.slf4j.LoggerFactory;
 import pl.com.michalpolak.hyperbudget.transaction.core.api.InvalidTransactionException;
 import pl.com.michalpolak.hyperbudget.transaction.core.api.Transaction;
 import pl.com.michalpolak.hyperbudget.transaction.core.api.TransactionNotFoundException;
-import pl.com.michalpolak.hyperbudget.transaction.core.spi.TransactionRepository;
 import pl.com.michalpolak.hyperbudget.transaction.core.api.TransactionService;
+import pl.com.michalpolak.hyperbudget.transaction.core.spi.TransactionRepository;
 import pl.com.michalpolak.hyperbudget.transaction.core.spi.TransactionValidator;
 
+import java.util.Collections;
 import java.util.Set;
 
 
@@ -16,8 +17,8 @@ class BasicTransactionService implements TransactionService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(BasicTransactionService.class);
 
-    private TransactionRepository transactionRepository;
-    private TransactionValidator validator;
+    private final TransactionRepository transactionRepository;
+    private final TransactionValidator validator;
 
     BasicTransactionService(TransactionRepository transactionRepository, TransactionValidator validator) {
         this.transactionRepository = transactionRepository;
@@ -39,7 +40,7 @@ class BasicTransactionService implements TransactionService {
 
         LOGGER.info("Remove transaction - Transaction ID: {}", id);
         this.getTransaction(id);
-       Transaction removedTranastion = this.transactionRepository.remove(id);
+        Transaction removedTranastion = this.transactionRepository.remove(id);
         LOGGER.info("Transaction has removed - Transaction ID: {}", id);
         return removedTranastion;
     }
@@ -56,7 +57,7 @@ class BasicTransactionService implements TransactionService {
 
     @Override
     public Set<Transaction> allTrascations() {
-        return this.transactionRepository.getAll();
+        return Collections.unmodifiableSet(this.transactionRepository.getAll());
     }
 
     @Override
