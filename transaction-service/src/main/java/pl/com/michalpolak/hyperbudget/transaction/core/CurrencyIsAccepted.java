@@ -7,19 +7,18 @@ import pl.com.michalpolak.hyperbudget.transaction.core.api.InvalidTransactionExc
 import pl.com.michalpolak.hyperbudget.transaction.core.api.Transaction;
 
 import java.text.MessageFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 class CurrencyIsAccepted implements ValidationRule {
 
-    private static String MESSAGE_PATTERN = "Currency \"{0}\" is not accepted. The accepted currencies is only {1}.";
-
     private static final Logger LOGGER = LoggerFactory.getLogger(ExecutionDateIsRequired.class);
+    private static String MESSAGE_PATTERN = "Currency \"{0}\" is not accepted. The accepted currencies is only {1}.";
+    private final List<CurrencyUnit> acceptableCurrencies;
 
-    private List<CurrencyUnit> acceptableCurrencies;
-
-    CurrencyIsAccepted(CurrencyUnit ... currencyUnits){
-        this.acceptableCurrencies = Arrays.asList(currencyUnits);
+    CurrencyIsAccepted(CurrencyUnit... currencyUnits) {
+        this.acceptableCurrencies = new ArrayList<>(Arrays.asList(currencyUnits));
     }
 
     @Override

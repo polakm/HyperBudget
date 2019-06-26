@@ -5,7 +5,7 @@ import org.junit.Test;
 import pl.com.michalpolak.hyperbudget.transaction.core.api.InvalidTransactionException;
 import pl.com.michalpolak.hyperbudget.transaction.core.api.Transaction;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.fail;
 
 public class ExecutionDateIsRequiredTest {
 
@@ -45,7 +45,6 @@ public class ExecutionDateIsRequiredTest {
     }
 
 
-
     @Test
     public void validateTransactionWithExecutionDateInPast() {
 
@@ -83,23 +82,18 @@ public class ExecutionDateIsRequiredTest {
 
 
     private Transaction getTransactionWithoutExecutionDate() {
-        Transaction transaction = new Transaction();
-        transaction.setExecutionDate(null);
-        return transaction;
+        return Transaction.builder().onExecutionDate(null).build();
     }
 
 
     private Transaction getTransactionWithExecutionDate(String dateString) {
-        Transaction transaction = new Transaction();
-        transaction.setExecutionDate(DateTime.parse(dateString));
-        return transaction;
+        return Transaction.builder().onExecutionDate(DateTime.parse(dateString)).build();
 
     }
 
     private Transaction getTransactionWithExecutionDate(DateTime dateTime) {
-        Transaction transaction = new Transaction();
-        transaction.setExecutionDate(dateTime);
-        return transaction;
+
+        return Transaction.builder().onExecutionDate(dateTime).build();
 
     }
 

@@ -8,7 +8,7 @@ import pl.com.michalpolak.hyperbudget.transaction.core.spi.TransactionEvent;
 
 import java.util.UUID;
 
-import static junit.framework.Assert.*;
+import static junit.framework.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -19,28 +19,28 @@ public class TransactionEventMapperTest {
     public void mapTransactionEventToEventDataWithAction() {
 
         //given
-        TransactionEvent event = mockTransactionEvent("test-action","test-title","USD 299.99");
-        TransactionEventMapper mapper = new TransactionEventMapper();
-
-        //when
-       EventData eventData = mapper.mapToEventData(event);
-
-        //then
-        assertEquals(eventData.getAction(),"test-action");
-    }
-
-    @Test
-    public void mapTransactionEventToEventDataWithContext() {
-
-        //given
-        TransactionEvent event = mockTransactionEvent("test-action","test-title","USD 299.99");
+        TransactionEvent event = mockTransactionEvent("test-action", "test-title", "USD 299.99");
         TransactionEventMapper mapper = new TransactionEventMapper();
 
         //when
         EventData eventData = mapper.mapToEventData(event);
 
         //then
-        assertEquals(eventData.getContext().getTitle(),"test-title");
+        assertEquals(eventData.getAction(), "test-action");
+    }
+
+    @Test
+    public void mapTransactionEventToEventDataWithContext() {
+
+        //given
+        TransactionEvent event = mockTransactionEvent("test-action", "test-title", "USD 299.99");
+        TransactionEventMapper mapper = new TransactionEventMapper();
+
+        //when
+        EventData eventData = mapper.mapToEventData(event);
+
+        //then
+        assertEquals(eventData.getContext().getTitle(), "test-title");
 
     }
 
@@ -48,16 +48,16 @@ public class TransactionEventMapperTest {
     public void mapTransactionEventToEventDataWithPositiveAmount() {
 
         //given
-        TransactionEvent event = mockTransactionEvent("test-action","test-title","USD 1099.99");
+        TransactionEvent event = mockTransactionEvent("test-action", "test-title", "USD 1099.99");
         TransactionEventMapper mapper = new TransactionEventMapper();
 
         //when
         EventData eventData = mapper.mapToEventData(event);
 
         //then
-        assertEquals(eventData.getContext().getAmount(),"1099.99");
-        assertEquals(eventData.getContext().getCurrencyCode(),"USD");
-        assertEquals(eventData.getContext().getType(),"income");
+        assertEquals(eventData.getContext().getAmount(), "1099.99");
+        assertEquals(eventData.getContext().getCurrencyCode(), "USD");
+        assertEquals(eventData.getContext().getType(), "income");
 
     }
 
@@ -65,16 +65,16 @@ public class TransactionEventMapperTest {
     public void mapTransactionEventToEventDataWithNegativeAmount() {
 
         //given
-        TransactionEvent event = mockTransactionEvent("test-action","test-title","EUR -1099.99");
+        TransactionEvent event = mockTransactionEvent("test-action", "test-title", "EUR -1099.99");
         TransactionEventMapper mapper = new TransactionEventMapper();
 
         //when
         EventData eventData = mapper.mapToEventData(event);
 
         //then
-        assertEquals(eventData.getContext().getAmount(),"-1099.99");
-        assertEquals(eventData.getContext().getCurrencyCode(),"EUR");
-        assertEquals(eventData.getContext().getType(),"expense");
+        assertEquals(eventData.getContext().getAmount(), "-1099.99");
+        assertEquals(eventData.getContext().getCurrencyCode(), "EUR");
+        assertEquals(eventData.getContext().getType(), "expense");
 
     }
 
@@ -82,7 +82,7 @@ public class TransactionEventMapperTest {
 
         TransactionEvent event = mock(TransactionEvent.class);
         when(event.getAction()).thenReturn(action);
-        when(event.getEntity()).thenReturn(createTransaction(title,amount));
+        when(event.getEntity()).thenReturn(createTransaction(title, amount));
 
         return event;
     }
@@ -90,11 +90,11 @@ public class TransactionEventMapperTest {
 
     private Transaction createTransaction(String title, String amount) {
 
-            Transaction transaction = new Transaction();
-            transaction.setTitle(title);
-            transaction.setExecutionDate(new DateTime());
-            transaction.setAccountId(UUID.randomUUID().toString());
-            transaction.setAmount(Money.parse(amount));
-            return transaction;
+        Transaction.Builder builder = new Transaction.Builder();
+        builder.withTitle(title);
+        builder.onExecutionDate(new DateTime());
+        builder.forAccount(UUID.randomUUID().toString());
+        builder.withAmount(Money.parse(amount));
+        return builder.build();
     }
 }

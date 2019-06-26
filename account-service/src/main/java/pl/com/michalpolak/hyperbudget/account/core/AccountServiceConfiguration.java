@@ -8,6 +8,7 @@ import pl.com.michalpolak.hyperbudget.account.core.api.AccountService;
 import pl.com.michalpolak.hyperbudget.account.core.spi.AccountRepository;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Configuration
@@ -18,7 +19,7 @@ class AccountServiceConfiguration {
     public static AccountValidator accountValdiatorBean() {
         List<ValidationRule> rules = new ArrayList<>();
         rules.add(new NameIsRequired());
-        return new BasicAccountValidator(rules);
+        return new BasicAccountValidator(Collections.unmodifiableList(rules));
     }
 
     @Bean

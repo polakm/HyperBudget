@@ -17,17 +17,17 @@ import java.util.List;
 import java.util.Set;
 
 @RestController
-@RequestMapping(path="/api/transactions",  headers = {"X-API-Version=1"})
+@RequestMapping(path = "/api/transactions", headers = {"X-API-Version=1"})
 public class TransactionRestController {
 
 
     private static final Logger LOGGER = LoggerFactory.getLogger(TransactionRestController.class);
 
-    private TransactionService service;
-    private TransactionDataMapper mapper;
+    private final TransactionService service;
+    private final TransactionDataMapper mapper;
 
     @Autowired
-    public TransactionRestController( TransactionService service, TransactionDataMapper mapper) {
+    public TransactionRestController(TransactionService service, TransactionDataMapper mapper) {
         this.service = service;
         this.mapper = mapper;
     }
@@ -64,7 +64,7 @@ public class TransactionRestController {
     @RequestMapping(path = "/{id}", method = RequestMethod.PUT)
     void updateTransaction(@PathVariable("id") String id, @RequestBody TransactionData transactionData) throws TransactionNotFoundException {
 
-        Transaction transaction =  mapper.mapToEntity(id, transactionData);
+        Transaction transaction = mapper.mapToEntity(id, transactionData);
         service.updateTransaction(transaction);
     }
 
@@ -72,7 +72,7 @@ public class TransactionRestController {
     ResponseEntity handleTransactionNotExistException(TransactionNotFoundException exception, WebRequest request) {
 
         LOGGER.warn(exception.getMessage(), exception);
-        ErrorData errorData =  new ErrorData("6c19dd","Transaction not found", exception.getMessage());
+        ErrorData errorData = new ErrorData("6c19dd", "Transaction not found", exception.getMessage());
         return new ResponseEntity(errorData, HttpStatus.NOT_FOUND);
     }
 
@@ -80,7 +80,7 @@ public class TransactionRestController {
     ResponseEntity handleInvalidTransactionException(InvalidTransactionException exception, WebRequest request) {
 
         LOGGER.warn(exception.getMessage(), exception);
-        ErrorData errorData =  new ErrorData("75026b","Invalid transaction", exception.getMessage());
+        ErrorData errorData = new ErrorData("75026b", "Invalid transaction", exception.getMessage());
         return new ResponseEntity(errorData, HttpStatus.BAD_REQUEST);
     }
 
@@ -88,7 +88,7 @@ public class TransactionRestController {
     ResponseEntity handleUnknownException(Exception exception, WebRequest request) {
 
         LOGGER.error(exception.getMessage(), exception);
-        ErrorData errorData =  new ErrorData("747f81","Unknown Error", exception.getMessage());
+        ErrorData errorData = new ErrorData("747f81", "Unknown Error", exception.getMessage());
         return new ResponseEntity(errorData, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }

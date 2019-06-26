@@ -23,8 +23,8 @@ public class AccountRestController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AccountRestController.class);
 
-    private AccountService service;
-    private AccountDataMapper mapper;
+    private final AccountService service;
+    private final AccountDataMapper mapper;
 
     @Autowired
     public AccountRestController(AccountService service, AccountDataMapper mapper) {

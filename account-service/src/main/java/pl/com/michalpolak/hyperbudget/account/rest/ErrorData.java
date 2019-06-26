@@ -5,11 +5,11 @@ import java.util.UUID;
 
 public class ErrorData {
 
-    private String id = UUID.randomUUID().toString();
-    private Date timestamp = new Date();
-    private String code;
-    private String title;
-    private String message;
+    private final String id = UUID.randomUUID().toString();
+    private final Date timestamp = new Date();
+    private final String code;
+    private final String title;
+    private final String message;
 
     public ErrorData(String code, String title, String message) {
 
@@ -22,41 +22,21 @@ public class ErrorData {
         return id;
     }
 
-    public void setId(String id) {
-        this.id = id;
-    }
-
     public Date getTimestamp() {
-        return timestamp;
+        return new Date(timestamp.getTime());
     }
-
-    public void setTimestamp(Date timestamp) {
-        this.timestamp = timestamp;
-    }
-
 
     public String getCode() {
         return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
     }
 
     public String getTitle() {
         return title;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
     public String getMessage() {
         return message;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
-    }
 
 }

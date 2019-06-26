@@ -9,10 +9,7 @@ class CategoryDataAdapter extends Category {
     private static final Logger LOGGER = LoggerFactory.getLogger(CategoryDataAdapter.class);
 
     CategoryDataAdapter(CategoryData categoryData) {
-
-        this.setId(categoryData.getId());
-        this.setName(categoryData.getName());
-
+        super(categoryData.getId(), categoryData.getName());
     }
 
 }

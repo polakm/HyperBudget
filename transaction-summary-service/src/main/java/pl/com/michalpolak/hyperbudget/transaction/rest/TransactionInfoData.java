@@ -1,6 +1,8 @@
 package pl.com.michalpolak.hyperbudget.transaction.rest;
 
-class TransactionInfoData {
+import pl.com.michalpolak.hyperbudget.transaction.core.api.TransactionType;
+
+final class TransactionInfoData {
 
     private String id;
 
@@ -20,7 +22,7 @@ class TransactionInfoData {
 
     private String categoryName;
 
-    private String type;
+    private TransactionType type;
 
     public String getTitle() {
         return title;
@@ -37,7 +39,6 @@ class TransactionInfoData {
     public void setExecutionDate(String executionDate) {
         this.executionDate = executionDate;
     }
-
 
     public String getAmount() {
         return amount;
@@ -95,11 +96,11 @@ class TransactionInfoData {
         this.categoryName = categoryName;
     }
 
-    public String getType() {
+    public TransactionType getType() {
         return type;
-    }
+}
 
-    public void setType(String type) {
+    public void setType(TransactionType type) {
         this.type = type;
     }
 }

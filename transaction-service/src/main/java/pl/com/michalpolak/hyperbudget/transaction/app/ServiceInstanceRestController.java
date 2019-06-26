@@ -12,15 +12,15 @@ import java.util.List;
 @RestController
 public class ServiceInstanceRestController {
 
-    private DiscoveryClient discoveryClient;
+    private final DiscoveryClient discoveryClient;
 
     @Autowired
-    public ServiceInstanceRestController(DiscoveryClient discoveryClient){
+    public ServiceInstanceRestController(DiscoveryClient discoveryClient) {
         this.discoveryClient = discoveryClient;
     }
 
     @RequestMapping("/service-instances/{applicationName}")
-    public List<ServiceInstance> serviceInstancesByApplicationName(@PathVariable String applicationName){
+    public List<ServiceInstance> serviceInstancesByApplicationName(@PathVariable String applicationName) {
         return discoveryClient.getInstances(applicationName);
     }
 }

@@ -4,5 +4,5 @@ import org.apache.kafka.clients.producer.Producer;
 
 public abstract class ProducerCreator {
 
-   public abstract Producer<Long, String> createProducer();
+    public abstract Producer<Long, String> createProducer();
 }

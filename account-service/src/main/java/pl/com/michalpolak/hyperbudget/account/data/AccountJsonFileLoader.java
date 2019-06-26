@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 
 class AccountJsonFileLoader implements InitialDataLoader {
 
-    private InputStream dataStream;
+    private final InputStream dataStream;
 
     AccountJsonFileLoader(InputStream dataStream) {
         this.dataStream = dataStream;

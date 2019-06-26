@@ -5,7 +5,7 @@ import org.junit.Test;
 import pl.com.michalpolak.hyperbudget.transaction.core.api.InvalidTransactionException;
 import pl.com.michalpolak.hyperbudget.transaction.core.api.Transaction;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.fail;
 
 public class AmountIsRequiredTest {
 
@@ -78,17 +78,14 @@ public class AmountIsRequiredTest {
     }
 
     private Transaction getTransactionWithoutAmount() {
-        Transaction transaction = new Transaction();
-        transaction.setAmount(null);
-        return transaction;
+
+        return Transaction.builder().withAmount(null).build();
     }
 
 
     private Transaction getTransactionWithAmount(String moneyString) {
-        Transaction transaction = new Transaction();
-        transaction.setAmount(Money.parse(moneyString));
-        return transaction;
 
+        return Transaction.builder().withAmount(Money.parse(moneyString)).build();
     }
 
 }

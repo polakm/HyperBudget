@@ -29,8 +29,8 @@ class TransactionSummaryRestController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(TransactionSummaryRestController.class);
 
-    private TransactionSummaryService service;
-    private TransactionSummaryDataMapper mapper;
+    private final TransactionSummaryService service;
+    private final TransactionSummaryDataMapper mapper;
 
     @Autowired
     TransactionSummaryRestController( TransactionSummaryService service, TransactionSummaryDataMapper mapper) {
