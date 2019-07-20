@@ -32,7 +32,7 @@ public class TransactionRestController {
         this.mapper = mapper;
     }
 
-    @ResponseStatus(value = HttpStatus.NO_CONTENT)
+    @ResponseStatus(value = HttpStatus.CREATED)
     @RequestMapping(method = RequestMethod.POST)
     void addTranasaction(@RequestBody TransactionData transactionData) throws InvalidTransactionException {
 
