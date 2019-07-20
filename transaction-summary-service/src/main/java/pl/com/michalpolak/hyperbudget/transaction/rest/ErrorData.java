@@ -22,23 +22,23 @@ class ErrorData {
         return new ErrorData(code,title,message);
     }
 
-    public String getId() {
+     String getId() {
         return id;
     }
 
-    public Date getTimestamp() {
+     Date getTimestamp() {
         return new Date(timestamp.getTime());
     }
 
-    public String getCode() {
+     String getCode() {
         return code;
     }
 
-    public String getTitle() {
+     String getTitle() {
         return title;
     }
 
-    public String getMessage() {
+     String getMessage() {
         return message;
     }
 

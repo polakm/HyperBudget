@@ -8,10 +8,10 @@ import pl.com.michalpolak.hyperbudget.transaction.data.spi.CategoryService;
 import pl.com.michalpolak.hyperbudget.transaction.data.spi.TransactionService;
 
 @Configuration
-public class TransactionRepositoryConfiguration {
+class TransactionRepositoryConfiguration {
 
     @Bean
-    public static TransactionRepository getTransactionRepository(TransactionService transactionService, CategoryService categoryService, AccountService accountService) {
+    static TransactionRepository getTransactionRepository(TransactionService transactionService, CategoryService categoryService, AccountService accountService) {
         return new RestClientsTransactionRepository(transactionService,categoryService,accountService);
     }
 }

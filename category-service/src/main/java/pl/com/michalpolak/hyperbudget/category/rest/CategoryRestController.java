@@ -19,15 +19,14 @@ import java.util.Set;
 
 @RestController
 @RequestMapping(path="/api/categories",  headers = {"X-API-Version=1"})
-public class CategoryRestController {
-
+class CategoryRestController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(CategoryRestController.class);
 
     private final CategoryService service;
     private final CategoryDataMapper mapper;
     @Autowired
-    public CategoryRestController( CategoryService service, CategoryDataMapper mapper) {
+    CategoryRestController( CategoryService service, CategoryDataMapper mapper) {
         this.service = service;
         this.mapper = mapper;
     }

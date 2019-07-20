@@ -10,17 +10,17 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-public class ServiceInstanceRestController {
+class ServiceInstanceRestController {
 
     private final DiscoveryClient discoveryClient;
 
     @Autowired
-    public ServiceInstanceRestController(DiscoveryClient discoveryClient){
+    ServiceInstanceRestController(DiscoveryClient discoveryClient) {
         this.discoveryClient = discoveryClient;
     }
 
     @RequestMapping("/service-instances/{applicationName}")
-    public List<ServiceInstance> serviceInstancesByApplicationName(@PathVariable String applicationName){
+    List<ServiceInstance> serviceInstancesByApplicationName(@PathVariable String applicationName) {
         return discoveryClient.getInstances(applicationName);
     }
 }

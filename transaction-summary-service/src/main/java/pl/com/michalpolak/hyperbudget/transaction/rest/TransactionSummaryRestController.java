@@ -39,7 +39,7 @@ class TransactionSummaryRestController {
     }
 
     @RequestMapping(path="/{year}/{month}", method = RequestMethod.GET, headers = {"X-API-Version=1"})
-    public TransactionSummaryData transactionsSummaryPerMonth(@PathVariable("year") int year , @PathVariable("month") int month){
+    TransactionSummaryData transactionsSummaryPerMonth(@PathVariable("year") int year , @PathVariable("month") int month){
         YearMonth yearMonth = new YearMonth(year,month);
         TransactionSummary summary = service.getTransactionsSummaryPeMonth(yearMonth);
         TransactionSummaryData summaryData = mapper.mapToData(summary,yearMonth);
@@ -51,7 +51,7 @@ class TransactionSummaryRestController {
 
 
     @RequestMapping(path="/{year}/{month}", method = RequestMethod.GET, headers = {"X-API-Version=1.1"})
-    public TransactionSummaryData transactionsSummaryPerMonthWithTimeZone(@PathVariable("year") int year , @PathVariable("month") int month, @HeaderParam("X-Time-Zone") String timeZone){
+    TransactionSummaryData transactionsSummaryPerMonthWithTimeZone(@PathVariable("year") int year , @PathVariable("month") int month, @HeaderParam("X-Time-Zone") String timeZone){
 
         Chronology chronology = ISOChronology.getInstance(DateTimeZone.forID(timeZone));
         YearMonth yearMonth = new YearMonth(year,month,chronology);
@@ -90,7 +90,7 @@ class TransactionSummaryRestController {
     }
 
     @ExceptionHandler({Exception.class})
-    public ResponseEntity handleUnknownException(Exception exception, WebRequest request) {
+    ResponseEntity handleUnknownException(Exception exception, WebRequest request) {
         LOGGER.error(exception.getMessage(), exception);
         ErrorData errorData =  ErrorData.of("f2f0f0","Unknown Error", exception.getMessage());
         return new ResponseEntity(errorData, HttpStatus.INTERNAL_SERVER_ERROR);

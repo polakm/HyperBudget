@@ -3,9 +3,8 @@ package pl.com.michalpolak.hyperbudget.account.core;
 import org.junit.Test;
 import pl.com.michalpolak.hyperbudget.account.core.api.Account;
 import pl.com.michalpolak.hyperbudget.account.core.api.AccountNotFoundException;
-import pl.com.michalpolak.hyperbudget.account.core.api.InvalidAccountException;
 import pl.com.michalpolak.hyperbudget.account.core.api.AccountService;
-import pl.com.michalpolak.hyperbudget.account.data.InMemoryAccountRepository;
+import pl.com.michalpolak.hyperbudget.account.core.api.InvalidAccountException;
 
 import java.util.Set;
 
@@ -17,6 +16,7 @@ public class BasicAccountServiceTest {
     public void addAccount() throws AccountNotFoundException, InvalidAccountException {
 
         //given
+
         AccountService accountService = AccountServiceConfiguration.createAccountService(new InMemoryAccountRepository());
         Account account = getExampleAccount("example-account-name");
 

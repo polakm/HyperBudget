@@ -16,7 +16,7 @@ import java.util.List;
 class AccountServiceConfiguration {
 
     @Bean
-    public static AccountValidator accountValdiatorBean() {
+    static AccountValidator accountValdiatorBean() {
         List<ValidationRule> rules = new ArrayList<>();
         rules.add(new NameIsRequired());
         return new BasicAccountValidator(Collections.unmodifiableList(rules));
@@ -28,7 +28,7 @@ class AccountServiceConfiguration {
         return new BasicAccountService(accountRepository, accountValidator);
     }
 
-    public static AccountService createAccountService(AccountRepository accountRepository) {
+    static AccountService createAccountService(AccountRepository accountRepository) {
         AccountValidator accountValidator =  accountValdiatorBean();
         return new BasicAccountService(accountRepository, accountValidator);
     }

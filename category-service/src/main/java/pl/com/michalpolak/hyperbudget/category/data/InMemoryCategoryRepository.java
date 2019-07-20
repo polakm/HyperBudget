@@ -8,7 +8,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class InMemoryCategoryRepository implements CategoryRepository {
+class InMemoryCategoryRepository implements CategoryRepository {
 
     private final Map<String, Category> storage;
 
@@ -16,7 +16,7 @@ public class InMemoryCategoryRepository implements CategoryRepository {
         this.storage = new ConcurrentHashMap<>();
     }
 
-    public InMemoryCategoryRepository(Map<String,Category> initialData) {
+    InMemoryCategoryRepository(Map<String,Category> initialData) {
         this.storage = new ConcurrentHashMap<>(initialData);
     }
 

@@ -18,7 +18,7 @@ import java.util.Set;
 
 @RestController
 @RequestMapping(path = "/api/accounts", headers = {"X-API-Version=1"})
-public class AccountRestController {
+class AccountRestController {
 
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AccountRestController.class);
@@ -27,7 +27,7 @@ public class AccountRestController {
     private final AccountDataMapper mapper;
 
     @Autowired
-    public AccountRestController(AccountService service, AccountDataMapper mapper) {
+    AccountRestController(AccountService service, AccountDataMapper mapper) {
         this.service = service;
         this.mapper = mapper;
     }

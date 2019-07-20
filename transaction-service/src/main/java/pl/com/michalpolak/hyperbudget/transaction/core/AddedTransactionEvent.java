@@ -5,7 +5,7 @@ import pl.com.michalpolak.hyperbudget.transaction.core.spi.TransactionEvent;
 
 class AddedTransactionEvent extends TransactionEvent {
 
-    public AddedTransactionEvent(Transaction transaction) {
+    AddedTransactionEvent(Transaction transaction) {
         super(Actions.ADDED, transaction);
     }
 

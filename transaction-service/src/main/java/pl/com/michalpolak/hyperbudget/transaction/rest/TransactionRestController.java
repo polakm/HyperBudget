@@ -18,7 +18,7 @@ import java.util.Set;
 
 @RestController
 @RequestMapping(path = "/api/transactions", headers = {"X-API-Version=1"})
-public class TransactionRestController {
+class TransactionRestController {
 
 
     private static final Logger LOGGER = LoggerFactory.getLogger(TransactionRestController.class);
@@ -27,7 +27,7 @@ public class TransactionRestController {
     private final TransactionDataMapper mapper;
 
     @Autowired
-    public TransactionRestController(TransactionService service, TransactionDataMapper mapper) {
+    TransactionRestController(TransactionService service, TransactionDataMapper mapper) {
         this.service = service;
         this.mapper = mapper;
     }
@@ -72,7 +72,7 @@ public class TransactionRestController {
     ResponseEntity handleTransactionNotExistException(TransactionNotFoundException exception, WebRequest request) {
 
         LOGGER.warn(exception.getMessage(), exception);
-        ErrorData errorData = ErrorData.of("6c19dd", "Transaction not found", exception.getMessage()); 
+        ErrorData errorData = ErrorData.of("6c19dd", "Transaction not found", exception.getMessage());
         return new ResponseEntity(errorData, HttpStatus.NOT_FOUND);
     }
 

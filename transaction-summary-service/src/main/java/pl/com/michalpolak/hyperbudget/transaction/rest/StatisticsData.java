@@ -9,11 +9,11 @@ class StatisticsData {
     private String incomeAbs;
     private String expenseAbs;
 
-    public StatisticsData() {
+     StatisticsData() {
 
     }
 
-    public StatisticsData(String balance, String income, String expense, String balanceAbs, String incomeAbs, String expenseAbs) {
+     StatisticsData(String balance, String income, String expense, String balanceAbs, String incomeAbs, String expenseAbs) {
         this.balance = balance;
         this.income = income;
         this.expense = expense;
@@ -22,51 +22,51 @@ class StatisticsData {
         this.expenseAbs = expenseAbs;
     }
 
-    public String getBalance() {
+     String getBalance() {
         return balance;
     }
 
-    public void setBalance(String balance) {
+     void setBalance(String balance) {
         this.balance = balance;
     }
 
-    public String getIncome() {
+     String getIncome() {
         return income;
     }
 
-    public void setIncome(String income) {
+     void setIncome(String income) {
         this.income = income;
     }
 
-    public String getExpense() {
+     String getExpense() {
         return expense;
     }
 
-    public void setExpense(String expense) {
+     void setExpense(String expense) {
         this.expense = expense;
     }
 
-    public String getBalanceAbs() {
+     String getBalanceAbs() {
         return balanceAbs;
     }
 
-    public void setBalanceAbs(String balanceAbs) {
+     void setBalanceAbs(String balanceAbs) {
         this.balanceAbs = balanceAbs;
     }
 
-    public String getIncomeAbs() {
+     String getIncomeAbs() {
         return incomeAbs;
     }
 
-    public void setIncomeAbs(String incomeAbs) {
+     void setIncomeAbs(String incomeAbs) {
         this.incomeAbs = incomeAbs;
     }
 
-    public String getExpenseAbs() {
+     String getExpenseAbs() {
         return expenseAbs;
     }
 
-    public void setExpenseAbs(String expenseAbs) {
+     void setExpenseAbs(String expenseAbs) {
         this.expenseAbs = expenseAbs;
     }
 }

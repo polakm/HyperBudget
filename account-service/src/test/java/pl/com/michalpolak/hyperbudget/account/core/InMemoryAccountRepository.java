@@ -1,4 +1,4 @@
-package pl.com.michalpolak.hyperbudget.account.data;
+package pl.com.michalpolak.hyperbudget.account.core;
 
 import pl.com.michalpolak.hyperbudget.account.core.api.Account;
 import pl.com.michalpolak.hyperbudget.account.core.spi.AccountRepository;

@@ -24,83 +24,83 @@ final class TransactionInfoData {
 
     private TransactionType type;
 
-    public String getTitle() {
+     String getTitle() {
         return title;
     }
 
-    public void setTitle(String title) {
+     void setTitle(String title) {
         this.title = title;
     }
 
-    public String getExecutionDate() {
+     String getExecutionDate() {
         return executionDate;
     }
 
-    public void setExecutionDate(String executionDate) {
+     void setExecutionDate(String executionDate) {
         this.executionDate = executionDate;
     }
 
-    public String getAmount() {
+     String getAmount() {
         return amount;
     }
 
-    public void setAmount(String amount) {
+     void setAmount(String amount) {
         this.amount = amount;
     }
 
-    public String getCurrencyCode() {
+     String getCurrencyCode() {
         return currencyCode;
     }
 
-    public void setCurrencyCode(String currencyCode) {
+     void setCurrencyCode(String currencyCode) {
         this.currencyCode = currencyCode;
     }
 
-    public String getId() {
+     String getId() {
         return id;
     }
 
-    public void setId(String id) {
+     void setId(String id) {
         this.id = id;
     }
 
-    public String getAccountId() {
+     String getAccountId() {
         return this.accountId;
     }
 
-    public void setAccountId(String accountId) {
+     void setAccountId(String accountId) {
         this.accountId = accountId;
     }
 
-    public String getCategoryId() {
+     String getCategoryId() {
         return categoryId;
     }
 
-    public void setCategoryId(String categoryId) {
+     void setCategoryId(String categoryId) {
         this.categoryId = categoryId;
     }
 
-    public String getAccountName() {
+     String getAccountName() {
         return accountName;
     }
 
-    public void setAccountName(String accountName) {
+     void setAccountName(String accountName) {
         this.accountName = accountName;
     }
 
-    public String getCategoryName() {
+     String getCategoryName() {
         return categoryName;
     }
 
-    public void setCategoryName(String categoryName) {
+     void setCategoryName(String categoryName) {
         this.categoryName = categoryName;
     }
 
-    public TransactionType getType() {
+     TransactionType getType() {
         return type;
 }
 
-    public void setType(TransactionType type) {
+     void setType(TransactionType type) {
         this.type = type;
     }
 }

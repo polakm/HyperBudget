@@ -12,12 +12,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Configuration
-public class DataLayerConfiguration {
+class DataLayerConfiguration {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(DataLayerConfiguration.class);
 
     @Bean
-    public static AccountRepository categoryRepositoryBean() {
+    static AccountRepository categoryRepositoryBean() {
 
         Map<String, Account> initialData = loadInitialData();
         return new InMemoryAccountRepository(initialData);

@@ -1,6 +1,6 @@
 package pl.com.michalpolak.hyperbudget.transaction.rest;
 
-public class TransactionData {
+class TransactionData {
 
     static class Builder {
 
@@ -58,7 +58,7 @@ public class TransactionData {
         }
     }
 
-    public static Builder builder() {
+    static Builder builder() {
         return new Builder();
     }
 
@@ -71,7 +71,7 @@ public class TransactionData {
     private String categoryId;
     private String type;
 
-    public TransactionData(String id, String title, String executionDate, String amount, String currencyCode, String accountId, String categoryId, String type) {
+    TransactionData(String id, String title, String executionDate, String amount, String currencyCode, String accountId, String categoryId, String type) {
         this.id = id;
         this.title = title;
         this.executionDate = executionDate;
@@ -82,67 +82,67 @@ public class TransactionData {
         this.type = type;
     }
 
-    public String getTitle() {
+    String getTitle() {
         return title;
     }
 
-    public void setTitle(String title) {
+    void setTitle(String title) {
         this.title = title;
     }
 
-    public String getExecutionDate() {
+    String getExecutionDate() {
         return executionDate;
     }
 
-    public void setExecutionDate(String executionDate) {
+    void setExecutionDate(String executionDate) {
         this.executionDate = executionDate;
     }
 
-    public String getAmount() {
+    String getAmount() {
         return amount;
     }
 
-    public void setAmount(String amount) {
+    void setAmount(String amount) {
         this.amount = amount;
     }
 
-    public String getCurrencyCode() {
+    String getCurrencyCode() {
         return currencyCode;
     }
 
-    public void setCurrencyCode(String currencyCode) {
+    void setCurrencyCode(String currencyCode) {
         this.currencyCode = currencyCode;
     }
 
-    public String getId() {
+    String getId() {
         return id;
     }
 
-    public void setId(String id) {
+    void setId(String id) {
         this.id = id;
     }
 
-    public String getAccountId() {
+    String getAccountId() {
         return this.accountId;
     }
 
-    public void setAccountId(String accountId) {
+    void setAccountId(String accountId) {
         this.accountId = accountId;
     }
 
-    public String getCategoryId() {
+    String getCategoryId() {
         return categoryId;
     }
 
-    public void setCategoryId(String categoryId) {
+    void setCategoryId(String categoryId) {
         this.categoryId = categoryId;
     }
 
-    public String getType() {
+    String getType() {
         return type;
     }
 
-    public void setType(String type) {
+    void setType(String type) {
         this.type = type;
     }
 }

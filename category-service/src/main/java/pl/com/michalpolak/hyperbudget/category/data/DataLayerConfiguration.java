@@ -12,7 +12,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Configuration
-public class DataLayerConfiguration {
+class DataLayerConfiguration {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(DataLayerConfiguration.class);
 

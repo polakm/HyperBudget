@@ -6,37 +6,37 @@ class RangeData {
     private int month;
     private String monthName;
 
-    public RangeData() {
+     RangeData() {
 
     }
 
-    public RangeData(int year, int month, String monthName) {
+     RangeData(int year, int month, String monthName) {
         this.year = year;
         this.month = month;
         this.monthName = monthName;
     }
 
-    public int getYear() {
+     int getYear() {
         return year;
     }
 
-    public void setYear(int year) {
+     void setYear(int year) {
         this.year = year;
     }
 
-    public int getMonth() {
+     int getMonth() {
         return month;
     }
 
-    public void setMonth(int month) {
+     void setMonth(int month) {
         this.month = month;
     }
 
-    public String getMonthName() {
+     String getMonthName() {
         return monthName;
     }
 
-    public void setMonthName(String monthName) {
+     void setMonthName(String monthName) {
         this.monthName = monthName;
     }
 }

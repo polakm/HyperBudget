@@ -7,11 +7,11 @@ import pl.com.michalpolak.hyperbudget.transaction.core.api.TransactionSummarySer
 import pl.com.michalpolak.hyperbudget.transaction.core.spi.TransactionRepository;
 
 @Configuration
-public class TransactionSummaryConfiguration {
+class TransactionSummaryConfiguration {
 
     @Bean
     @Autowired
-    public static TransactionSummaryService transactionSummaryServiceBean(TransactionRepository transactionRepository){
+    static TransactionSummaryService transactionSummaryServiceBean(TransactionRepository transactionRepository){
 
         return new BasicTransactionSummaryService(transactionRepository);
     }

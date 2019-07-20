@@ -15,7 +15,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableSwagger2
 @EnableDiscoveryClient
 @ComponentScan("pl.com.michalpolak.hyperbudget")
-public class TransactionServiceApplication {
+class TransactionServiceApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(TransactionServiceApplication.class, args);

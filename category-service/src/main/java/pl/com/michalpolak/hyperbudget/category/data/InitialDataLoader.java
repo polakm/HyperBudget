@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
-public interface InitialDataLoader {
+interface InitialDataLoader {
 
    List<Category> loadAsList() throws IOException;
 

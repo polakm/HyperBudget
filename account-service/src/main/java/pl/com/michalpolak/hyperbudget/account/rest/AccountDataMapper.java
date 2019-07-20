@@ -15,7 +15,7 @@ class AccountDataMapper {
         return mapEntityToData(account);
     }
 
-   final AccountData mapEntityToData(Account account) {
+    final AccountData mapEntityToData(Account account) {
         return new AccountData(account.getId(), account.getName());
     }
 

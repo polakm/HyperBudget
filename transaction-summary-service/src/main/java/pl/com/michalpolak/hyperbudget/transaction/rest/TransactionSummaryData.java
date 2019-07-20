@@ -9,37 +9,37 @@ class TransactionSummaryData extends ResourceSupport {
     private RangeData range;
     private StatisticsData statistics;
 
-    public TransactionSummaryData(){
+    TransactionSummaryData(){
 
     };
 
-    public TransactionSummaryData(List<TransactionInfoData> transactions, RangeData range, StatisticsData statistics) {
+    TransactionSummaryData(List<TransactionInfoData> transactions, RangeData range, StatisticsData statistics) {
         this.transactions = transactions;
         this.range = range;
         this.statistics = statistics;
     }
 
-    public List<TransactionInfoData> getTransactions() {
+    List<TransactionInfoData> getTransactions() {
         return transactions;
     }
 
-    public void setTransactions(List<TransactionInfoData> transactions) {
+    void setTransactions(List<TransactionInfoData> transactions) {
         this.transactions = transactions;
     }
 
-    public StatisticsData getStatistics() {
+    StatisticsData getStatistics() {
         return statistics;
     }
 
-    public void setStatistics(StatisticsData statistics) {
+    void setStatistics(StatisticsData statistics) {
         this.statistics = statistics;
     }
 
-    public RangeData getRange() {
+    RangeData getRange() {
         return range;
     }
 
-    public void setRange(RangeData range) {
+    void setRange(RangeData range) {
         this.range = range;
     }
 }
