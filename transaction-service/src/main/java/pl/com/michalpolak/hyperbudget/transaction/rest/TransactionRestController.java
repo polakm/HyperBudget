@@ -72,7 +72,7 @@ public class TransactionRestController {
     ResponseEntity handleTransactionNotExistException(TransactionNotFoundException exception, WebRequest request) {
 
         LOGGER.warn(exception.getMessage(), exception);
-        ErrorData errorData = ErrorData.of("6c19dd", "Transaction not found", exception.getMessage());
+        ErrorData errorData = ErrorData.of("6c19dd", "Transaction not found", exception.getMessage()); 
         return new ResponseEntity(errorData, HttpStatus.NOT_FOUND);
     }
 
