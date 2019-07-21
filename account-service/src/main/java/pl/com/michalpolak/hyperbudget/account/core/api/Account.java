@@ -1,5 +1,7 @@
 package pl.com.michalpolak.hyperbudget.account.core.api;
 
+import org.springframework.core.style.ToStringCreator;
+
 import java.util.UUID;
 
 public class Account {
@@ -25,5 +27,10 @@ public class Account {
         return name;
     }
 
-
+    @Override
+    public String toString() {
+      return new ToStringCreator(this)
+              .append("id",id)
+              .append("name",name).toString();
+    }
 }

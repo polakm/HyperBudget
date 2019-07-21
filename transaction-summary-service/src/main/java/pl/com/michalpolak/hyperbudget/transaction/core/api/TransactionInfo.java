@@ -2,6 +2,7 @@ package pl.com.michalpolak.hyperbudget.transaction.core.api;
 
 import org.joda.money.Money;
 import org.joda.time.DateTime;
+import org.springframework.core.style.ToStringCreator;
 import pl.com.michalpolak.hyperbudget.transaction.core.spi.Account;
 import pl.com.michalpolak.hyperbudget.transaction.core.spi.Category;
 import pl.com.michalpolak.hyperbudget.transaction.core.spi.Transaction;
@@ -80,5 +81,18 @@ public class TransactionInfo {
 
     public void setAccount(Account account) {
         this.account = account;
+    }
+
+
+    @Override
+    public String toString() {
+        return new ToStringCreator(this)
+                .append("id", id)
+                .append("title", title)
+                .append("executionDate", executionDate)
+                .append("amount", amount)
+                .append("category", category)
+                .append("account", account)
+                .toString();
     }
 }

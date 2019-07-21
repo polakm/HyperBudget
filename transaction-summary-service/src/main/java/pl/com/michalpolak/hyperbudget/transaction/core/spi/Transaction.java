@@ -3,6 +3,7 @@ package pl.com.michalpolak.hyperbudget.transaction.core.spi;
 
 import org.joda.money.Money;
 import org.joda.time.DateTime;
+import org.springframework.core.style.ToStringCreator;
 
 import java.util.UUID;
 
@@ -125,6 +126,18 @@ public class Transaction {
 
     public String getAccountId() {
         return accountId;
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringCreator(this)
+                .append("id", id)
+                .append("title", title)
+                .append("executionDate", executionDate)
+                .append("amount", amount)
+                .append("accountId", accountId)
+                .append("categoryId", categoryId)
+                .toString();
     }
 
 }

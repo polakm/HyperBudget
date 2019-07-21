@@ -1,5 +1,7 @@
 package pl.com.michalpolak.hyperbudget.transaction.core.spi;
 
+import org.springframework.core.style.ToStringCreator;
+
 public class Category {
 
     private final String id;
@@ -17,6 +19,14 @@ public class Category {
 
     public String getName() {
         return name;
+    }
+
+
+    @Override
+    public String toString() {
+        return new ToStringCreator(this)
+                .append("id", id)
+                .append("name", name).toString();
     }
 
 }

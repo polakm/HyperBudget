@@ -2,6 +2,7 @@ package pl.com.michalpolak.hyperbudget.transaction.core.api;
 
 import org.joda.money.Money;
 import org.joda.time.DateTime;
+import org.springframework.core.style.ToStringCreator;
 
 import java.util.UUID;
 
@@ -112,13 +113,24 @@ public class Transaction {
         }
 
         public Transaction build() {
-
             if (id == null) {
                 return new Transaction(title, executionDate, amount, accountId, categoryId);
             }
             return new Transaction(id, title, executionDate, amount, accountId, categoryId);
         }
 
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringCreator(this)
+                .append("id", id)
+                .append("title", title)
+                .append("executionDate", executionDate)
+                .append("amount", amount)
+                .append("accountId", accountId)
+                .append("categoryId", categoryId)
+                .toString();
     }
 
 }

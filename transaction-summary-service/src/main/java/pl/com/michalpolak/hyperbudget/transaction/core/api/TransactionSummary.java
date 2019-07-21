@@ -1,5 +1,7 @@
 package pl.com.michalpolak.hyperbudget.transaction.core.api;
 
+import org.springframework.core.style.ToStringCreator;
+
 import java.util.List;
 
 public class TransactionSummary {
@@ -27,5 +29,14 @@ public class TransactionSummary {
 
     public void setStatistics(TransactionStatistics statistics) {
         this.statistics = statistics;
+    }
+
+
+    @Override
+    public String toString() {
+        return new ToStringCreator(this)
+                .append("transactionInfos", transactionInfos)
+                .append("statistics", statistics)
+                .toString();
     }
 }
