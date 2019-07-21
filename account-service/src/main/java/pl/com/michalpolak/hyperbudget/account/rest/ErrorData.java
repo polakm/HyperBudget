@@ -49,4 +49,5 @@ class ErrorData {
     public String toString() {
         return new Gson().toJson(this);
     }
+
 }

@@ -16,18 +16,18 @@ class AccountDataMapper {
     }
 
     final AccountData mapEntityToData(Account account) {
-        return new AccountData(account.getId(), account.getName());
+        return AccountData.of(account.getId(), account.getName());
     }
 
     Account mapToEntity(AccountData account) {
         if (account.getId() == null) {
-            new Account(account.getName());
+            Account.of(account.getName());
         }
-        return new Account(account.getId(), account.getName());
+        return Account.of(account.getId(), account.getName());
     }
 
     Account mapToEntity(String id, AccountData account) {
-        return new Account(id, account.getName());
+        return Account.of(id, account.getName());
     }
 
     List<AccountData> mapToDataList(Set<Account> accounts) {

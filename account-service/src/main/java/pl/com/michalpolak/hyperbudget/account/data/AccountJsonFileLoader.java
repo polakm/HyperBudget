@@ -11,16 +11,16 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-class AccountJsonFileLoader implements InitialDataLoader {
+final class AccountJsonFileLoader implements InitialDataLoader {
 
     private final InputStream dataStream;
 
-    AccountJsonFileLoader(InputStream dataStream) {
-        this.dataStream = dataStream;
+    private AccountJsonFileLoader(String path) throws IOException {
+        this.dataStream = new ClassPathResource(path).getInputStream();
     }
 
-    AccountJsonFileLoader(String path) throws IOException {
-        this.dataStream = new ClassPathResource(path).getInputStream();
+    static AccountJsonFileLoader fromJsonFile(String path) throws IOException {
+       return new AccountJsonFileLoader(path);
     }
 
     public List<Account> loadAsList() throws IOException {

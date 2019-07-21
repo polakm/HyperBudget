@@ -10,14 +10,22 @@ public class Account {
     private final String id;
     private final String name;
 
-    public Account(String name){
+    private Account(String name){
         this.id= UUID.randomUUID().toString();
         this.name= name;
     }
 
-    public Account(String id, String name){
+    private Account(String id, String name){
         this.id =id;
         this.name=name;
+    }
+
+    public static Account of(String id, String name) {
+       return new Account(id, name);
+    }
+
+    public static Account of( String name) {
+        return new Account(name);
     }
 
     public String getId() {

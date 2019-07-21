@@ -12,14 +12,13 @@ class InMemoryAccountRepository implements AccountRepository {
 
     private Map<String, Account> storage;
 
-    InMemoryAccountRepository() {
-        this.storage = new ConcurrentHashMap<>();
-    }
-
-    InMemoryAccountRepository(Map<String,Account> initialData) {
+    private InMemoryAccountRepository(Map<String, Account> initialData) {
         this.storage = new ConcurrentHashMap<>(initialData);
     }
 
+    static InMemoryAccountRepository of(Map<String, Account> data) {
+        return new InMemoryAccountRepository(data);
+    }
 
     @Override
     public Account save(Account account) {

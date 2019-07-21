@@ -8,6 +8,7 @@ import pl.com.michalpolak.hyperbudget.account.core.api.Account;
 import pl.com.michalpolak.hyperbudget.account.core.spi.AccountRepository;
 
 import java.io.IOException;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -18,25 +19,22 @@ class DataLayerConfiguration {
 
     @Bean
     static AccountRepository categoryRepositoryBean() {
-
         Map<String, Account> initialData = loadInitialData();
-        return new InMemoryAccountRepository(initialData);
+        return InMemoryAccountRepository.of(initialData);
     }
 
     private static Map<String, Account> loadInitialData() {
-
         try {
             InitialDataLoader initialDataLoader = initialDataLoader();
             return   initialDataLoader.loadAsMap();
         } catch (IOException e) {
             LOGGER.error("Error during load initial data.", e);
-            return new HashMap<>();
+            return Collections.emptyMap();
         }
     }
 
     private static InitialDataLoader initialDataLoader() throws IOException {
-
-        return new AccountJsonFileLoader("classpath:initial.data.json");
+        return AccountJsonFileLoader.fromJsonFile("classpath:initial.data.json");
     }
 
 }
