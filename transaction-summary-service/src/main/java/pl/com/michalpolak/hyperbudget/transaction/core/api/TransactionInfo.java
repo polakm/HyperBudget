@@ -7,6 +7,8 @@ import pl.com.michalpolak.hyperbudget.transaction.core.spi.Account;
 import pl.com.michalpolak.hyperbudget.transaction.core.spi.Category;
 import pl.com.michalpolak.hyperbudget.transaction.core.spi.Transaction;
 
+import java.util.Objects;
+
 public class TransactionInfo {
 
     private String id;
@@ -94,5 +96,10 @@ public class TransactionInfo {
                 .append("category", category)
                 .append("account", account)
                 .toString();
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }

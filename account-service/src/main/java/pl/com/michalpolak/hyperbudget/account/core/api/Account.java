@@ -2,6 +2,7 @@ package pl.com.michalpolak.hyperbudget.account.core.api;
 
 import org.springframework.core.style.ToStringCreator;
 
+import java.util.Objects;
 import java.util.UUID;
 
 public class Account {
@@ -32,5 +33,10 @@ public class Account {
       return new ToStringCreator(this)
               .append("id",id)
               .append("name",name).toString();
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }

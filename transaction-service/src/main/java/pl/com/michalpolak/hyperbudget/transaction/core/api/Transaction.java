@@ -4,6 +4,7 @@ import org.joda.money.Money;
 import org.joda.time.DateTime;
 import org.springframework.core.style.ToStringCreator;
 
+import java.util.Objects;
 import java.util.UUID;
 
 public class Transaction {
@@ -133,4 +134,8 @@ public class Transaction {
                 .toString();
     }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
 }

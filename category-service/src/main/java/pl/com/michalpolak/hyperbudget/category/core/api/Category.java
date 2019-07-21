@@ -2,6 +2,7 @@ package pl.com.michalpolak.hyperbudget.category.core.api;
 
 import org.springframework.core.style.ToStringCreator;
 
+import java.util.Objects;
 import java.util.UUID;
 
 public class Category {
@@ -61,6 +62,11 @@ public class Category {
                 .append("id", id)
                 .append("name", name)
                 .append("type", type).toString();
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 
 }
