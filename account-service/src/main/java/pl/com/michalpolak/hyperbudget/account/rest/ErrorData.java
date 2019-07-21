@@ -1,5 +1,8 @@
 package pl.com.michalpolak.hyperbudget.account.rest;
 
+import com.google.gson.Gson;
+import org.springframework.core.style.ToStringCreator;
+
 import java.util.Date;
 import java.util.UUID;
 
@@ -18,8 +21,8 @@ class ErrorData {
         this.message = message;
     }
 
-    static ErrorData of(String code, String title, String message){
-        return new ErrorData(code,title,message);
+    static ErrorData of(String code, String title, String message) {
+        return new ErrorData(code, title, message);
     }
 
     public String getId() {
@@ -42,4 +45,8 @@ class ErrorData {
         return message;
     }
 
+    @Override
+    public String toString() {
+        return new Gson().toJson(this);
+    }
 }

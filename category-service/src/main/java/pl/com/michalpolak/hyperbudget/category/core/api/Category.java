@@ -25,6 +25,21 @@ public class Category {
         this.type = type;
     }
 
+    static Category incomeCategory(String id ,String name){
+        return new Category(name, Types.INCOME);
+    }
+
+    static Category incomeCategory(String name){
+        return new Category(name, Types.INCOME);
+    }
+
+    static Category expenseCategory(String id , String name){
+        return new Category(name, Types.EXPENSE);
+    }
+
+    static Category expenseCategory(String name){
+        return new Category(name, Types.EXPENSE);
+    }
 
     public String getName() {
         return name;

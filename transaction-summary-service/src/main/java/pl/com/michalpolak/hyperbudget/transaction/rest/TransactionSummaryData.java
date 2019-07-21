@@ -1,5 +1,6 @@
 package pl.com.michalpolak.hyperbudget.transaction.rest;
 
+import com.google.gson.Gson;
 import org.springframework.hateoas.ResourceSupport;
 import java.util.List;
 
@@ -41,5 +42,10 @@ class TransactionSummaryData extends ResourceSupport {
 
     void setRange(RangeData range) {
         this.range = range;
+    }
+
+    @Override
+    public String toString() {
+        return new Gson().toJson(this);
     }
 }

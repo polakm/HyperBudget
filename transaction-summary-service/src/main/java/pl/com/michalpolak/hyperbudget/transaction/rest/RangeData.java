@@ -1,5 +1,7 @@
 package pl.com.michalpolak.hyperbudget.transaction.rest;
 
+import com.google.gson.Gson;
+
 class RangeData {
 
     private int year;
@@ -38,5 +40,10 @@ class RangeData {
 
      void setMonthName(String monthName) {
         this.monthName = monthName;
+    }
+
+    @Override
+    public String toString() {
+        return new Gson().toJson(this);
     }
 }

@@ -1,5 +1,7 @@
 package pl.com.michalpolak.hyperbudget.account.rest;
 
+import com.google.gson.Gson;
+
 class AccountData {
 
     private final String id;
@@ -25,5 +27,9 @@ class AccountData {
         return id;
     }
 
+    @Override
+    public String toString() {
+        return new Gson().toJson(this);
+    }
 
 }

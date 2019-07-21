@@ -1,6 +1,7 @@
 package pl.com.michalpolak.hyperbudget.transaction.client.transaction;
 
 
+import com.google.gson.Gson;
 import pl.com.michalpolak.hyperbudget.transaction.core.spi.Transaction;
 
 public class TransactionData {
@@ -93,5 +94,10 @@ public class TransactionData {
 
     public void setCategoryId(String categoryId) {
         this.categoryId = categoryId;
+    }
+
+    @Override
+    public String toString() {
+        return new Gson().toJson(this);
     }
 }

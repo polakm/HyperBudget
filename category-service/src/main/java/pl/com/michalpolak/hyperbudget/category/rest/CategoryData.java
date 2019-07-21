@@ -1,5 +1,7 @@
 package pl.com.michalpolak.hyperbudget.category.rest;
 
+import com.google.gson.Gson;
+
 class CategoryData {
 
     private final String id;
@@ -34,5 +36,8 @@ class CategoryData {
         return type;
     }
 
-
+    @Override
+    public String toString() {
+        return new Gson().toJson(this);
+    }
 }

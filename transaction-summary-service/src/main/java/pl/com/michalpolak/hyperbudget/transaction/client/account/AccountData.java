@@ -1,5 +1,7 @@
 package pl.com.michalpolak.hyperbudget.transaction.client.account;
 
+import com.google.gson.Gson;
+
 public class AccountData {
 
     private String id;
@@ -29,5 +31,10 @@ public class AccountData {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        return new Gson().toJson(this);
     }
 }

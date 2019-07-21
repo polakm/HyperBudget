@@ -1,5 +1,7 @@
 package pl.com.michalpolak.hyperbudget.category.rest;
 
+import com.google.gson.Gson;
+
 import java.util.Date;
 import java.util.UUID;
 
@@ -40,6 +42,11 @@ class ErrorData {
 
     String getMessage() {
         return message;
+    }
+
+    @Override
+    public String toString() {
+        return new Gson().toJson(this);
     }
 
 }

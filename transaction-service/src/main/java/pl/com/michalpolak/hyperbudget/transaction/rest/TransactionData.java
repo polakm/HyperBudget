@@ -1,5 +1,7 @@
 package pl.com.michalpolak.hyperbudget.transaction.rest;
 
+import com.google.gson.Gson;
+
 class TransactionData {
 
     static class Builder {
@@ -144,5 +146,10 @@ class TransactionData {
 
     void setType(String type) {
         this.type = type;
+    }
+
+    @Override
+    public String toString() {
+        return new Gson().toJson(this);
     }
 }

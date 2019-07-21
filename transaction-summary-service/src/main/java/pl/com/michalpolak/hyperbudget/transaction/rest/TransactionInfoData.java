@@ -1,5 +1,6 @@
 package pl.com.michalpolak.hyperbudget.transaction.rest;
 
+import com.google.gson.Gson;
 import pl.com.michalpolak.hyperbudget.transaction.core.api.TransactionType;
 
 final class TransactionInfoData {
@@ -102,5 +103,10 @@ final class TransactionInfoData {
 
      void setType(TransactionType type) {
         this.type = type;
+    }
+
+    @Override
+    public String toString() {
+        return new Gson().toJson(this);
     }
 }

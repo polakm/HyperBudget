@@ -1,5 +1,7 @@
 package pl.com.michalpolak.hyperbudget.transaction.client.category;
 
+import com.google.gson.Gson;
+
 public class CategoryData {
 
     private String id;
@@ -29,5 +31,10 @@ public class CategoryData {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        return new Gson().toJson(this);
     }
 }

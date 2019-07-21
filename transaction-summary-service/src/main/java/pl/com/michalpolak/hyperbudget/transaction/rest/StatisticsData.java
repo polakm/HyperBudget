@@ -1,5 +1,7 @@
 package pl.com.michalpolak.hyperbudget.transaction.rest;
 
+import com.google.gson.Gson;
+
 class StatisticsData {
 
     private String balance;
@@ -68,5 +70,10 @@ class StatisticsData {
 
      void setExpenseAbs(String expenseAbs) {
         this.expenseAbs = expenseAbs;
+    }
+
+    @Override
+    public String toString() {
+        return new Gson().toJson(this);
     }
 }
