@@ -24,7 +24,7 @@ public class EventConfiguration {
     }
 
     @Bean
-    public static ProducerCreator createProducerCreator(
+    static ProducerCreator createProducerCreator(
             @Value("kafka.producer.brokers") String kafkaBrokers,
             @Value("kafka.producer.clientId") String clientId) {
 
@@ -36,7 +36,7 @@ public class EventConfiguration {
         return new BasicProducerCreator(properties);
     }
 
-    public static EventPublisher createEventPublisher(String topic, String kafkaBrokers, String clientId) {
+    static EventPublisher createEventPublisher(String topic, String kafkaBrokers, String clientId) {
 
         return createEventPublisher(topic, createProducerCreator(kafkaBrokers, clientId));
     }

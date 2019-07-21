@@ -12,9 +12,9 @@ import pl.com.michalpolak.hyperbudget.transaction.core.api.Transaction;
 import pl.com.michalpolak.hyperbudget.transaction.core.api.TransactionNotFoundException;
 import pl.com.michalpolak.hyperbudget.transaction.core.api.TransactionService;
 import pl.com.michalpolak.hyperbudget.transaction.core.spi.EventPublisher;
-import pl.com.michalpolak.hyperbudget.transaction.data.InMemoryTransactionRepository;
 import pl.com.michalpolak.hyperbudget.transaction.event.EventConfiguration;
 import pl.com.michalpolak.hyperbudget.transaction.event.spi.ProducerCreator;
+import pl.com.michalpolak.hyperbudget.transaction.test.InMemoryTransactionRepository;
 import pl.com.michalpolak.hyperbudget.transaction.test.IntegrationTest;
 
 import java.util.Set;
@@ -152,7 +152,7 @@ public class TransactionServiceEventedDecoratorTest {
     }
 
     private TransactionService getTransactionService() {
-        TransactionService service = TransactionServiceConfiguration.createTransactionService(new InMemoryTransactionRepository());
+        TransactionService service = TransactionServiceConfiguration.createTransactionService(InMemoryTransactionRepository.empty());
         ProducerCreator producerCreator = mockProducerCreator();
         EventPublisher publisher = EventConfiguration.createEventPublisher("test-topic", producerCreator);
         return TransactionServiceConfiguration.transactionServiceBean(service, publisher);

@@ -1,5 +1,6 @@
 package pl.com.michalpolak.hyperbudget.transaction.rest;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.google.gson.Gson;
 
 class TransactionData {
@@ -73,7 +74,8 @@ class TransactionData {
     private String categoryId;
     private String type;
 
-    TransactionData(String id, String title, String executionDate, String amount, String currencyCode, String accountId, String categoryId, String type) {
+    @JsonCreator
+    private TransactionData(String id, String title, String executionDate, String amount, String currencyCode, String accountId, String categoryId, String type) {
         this.id = id;
         this.title = title;
         this.executionDate = executionDate;
@@ -88,65 +90,34 @@ class TransactionData {
         return title;
     }
 
-    void setTitle(String title) {
-        this.title = title;
-    }
-
     String getExecutionDate() {
         return executionDate;
-    }
-
-    void setExecutionDate(String executionDate) {
-        this.executionDate = executionDate;
     }
 
     String getAmount() {
         return amount;
     }
 
-    void setAmount(String amount) {
-        this.amount = amount;
-    }
-
     String getCurrencyCode() {
         return currencyCode;
-    }
-
-    void setCurrencyCode(String currencyCode) {
-        this.currencyCode = currencyCode;
     }
 
     String getId() {
         return id;
     }
 
-    void setId(String id) {
-        this.id = id;
-    }
-
     String getAccountId() {
         return this.accountId;
-    }
-
-    void setAccountId(String accountId) {
-        this.accountId = accountId;
     }
 
     String getCategoryId() {
         return categoryId;
     }
 
-    void setCategoryId(String categoryId) {
-        this.categoryId = categoryId;
-    }
-
     String getType() {
         return type;
     }
 
-    void setType(String type) {
-        this.type = type;
-    }
 
     @Override
     public String toString() {

@@ -7,9 +7,13 @@ class EventData {
     private final String action;
     private final EventContext context;
 
-    EventData(String action, EventContext context) {
+    private EventData(String action, EventContext context) {
         this.action = action;
         this.context = context;
+    }
+
+    static EventData of(String action, EventContext context) {
+        return new EventData(action, context);
     }
 
     public String getAction() {
@@ -24,6 +28,5 @@ class EventData {
     public String toString() {
         return new Gson().toJson(this);
     }
-
 
 }

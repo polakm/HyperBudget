@@ -73,7 +73,7 @@ public class NameIsRequiredTest {
     }
 
     private Category getCategoryWithName(String name) {
-        return new Category(name, null);
+        return Category.of(name, null);
     }
 
 }

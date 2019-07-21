@@ -20,13 +20,13 @@ import java.util.List;
 public class TransactionServiceConfiguration {
 
     @Bean
-    public static TransactionValidator transactionValdiatorBean() {
+    static TransactionValidator transactionValdiatorBean() {
         List<ValidationRule> rules = new ArrayList<>();
         rules.add(new AmountIsRequired());
-        rules.add(new CurrencyIsAccepted(CurrencyUnit.USD));
+        rules.add(CurrencyIsAccepted.of(CurrencyUnit.USD));
         rules.add(new ExecutionDateIsRequired());
         rules.add(new AccountIsRequired());
-        return new BasicTransactionValidator(rules);
+        return BasicTransactionValidator.of(rules);
     }
 
     @Bean("basic")

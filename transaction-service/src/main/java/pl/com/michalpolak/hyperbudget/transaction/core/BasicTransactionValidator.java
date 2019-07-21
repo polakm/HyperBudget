@@ -17,18 +17,13 @@ class BasicTransactionValidator implements TransactionValidator {
 
     private final List<ValidationRule> validationRules;
 
-    BasicTransactionValidator(List<ValidationRule> validationRules) {
+    private BasicTransactionValidator(List<ValidationRule> validationRules) {
 
         this.validationRules = Collections.unmodifiableList(validationRules);
     }
 
-    BasicTransactionValidator(ValidationRule... validationRules) {
-
-        this.validationRules = new ArrayList(Arrays.asList(validationRules));
-    }
-
-    BasicTransactionValidator() {
-        this.validationRules = new ArrayList<>();
+    static TransactionValidator of(List<ValidationRule> rules) {
+        return new BasicTransactionValidator(rules);
     }
 
     @Override

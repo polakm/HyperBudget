@@ -12,7 +12,6 @@ import pl.com.michalpolak.hyperbudget.transaction.core.spi.TransactionValidator;
 import java.util.Collections;
 import java.util.Set;
 
-
 class BasicTransactionService implements TransactionService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(BasicTransactionService.class);

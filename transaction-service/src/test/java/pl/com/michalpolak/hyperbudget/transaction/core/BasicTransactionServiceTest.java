@@ -7,7 +7,7 @@ import pl.com.michalpolak.hyperbudget.transaction.core.api.InvalidTransactionExc
 import pl.com.michalpolak.hyperbudget.transaction.core.api.Transaction;
 import pl.com.michalpolak.hyperbudget.transaction.core.api.TransactionNotFoundException;
 import pl.com.michalpolak.hyperbudget.transaction.core.api.TransactionService;
-import pl.com.michalpolak.hyperbudget.transaction.data.InMemoryTransactionRepository;
+import pl.com.michalpolak.hyperbudget.transaction.test.InMemoryTransactionRepository;
 
 import java.util.Set;
 import java.util.UUID;
@@ -20,7 +20,7 @@ public class BasicTransactionServiceTest {
     public void addTransaction() throws TransactionNotFoundException, InvalidTransactionException {
 
         //given
-        TransactionService transactionService = TransactionServiceConfiguration.createTransactionService(new InMemoryTransactionRepository());
+        TransactionService transactionService = TransactionServiceConfiguration.createTransactionService(InMemoryTransactionRepository.empty());
         Transaction transaction = getExampleTransaction();
 
         //when
@@ -36,7 +36,7 @@ public class BasicTransactionServiceTest {
     public void transactionNotFoundException() {
 
         //given
-        TransactionService transactionService = TransactionServiceConfiguration.createTransactionService(new InMemoryTransactionRepository());
+        TransactionService transactionService = TransactionServiceConfiguration.createTransactionService(InMemoryTransactionRepository.empty());
 
         //when
         try {
@@ -53,7 +53,7 @@ public class BasicTransactionServiceTest {
     public void invalidTransactionException() {
 
         //given
-        TransactionService transactionService = TransactionServiceConfiguration.createTransactionService(new InMemoryTransactionRepository());
+        TransactionService transactionService = TransactionServiceConfiguration.createTransactionService(InMemoryTransactionRepository.empty());
 
         Transaction transaction = Transaction.builder().withAmount(null).withTitle("updated").build();
 
@@ -73,7 +73,7 @@ public class BasicTransactionServiceTest {
     public void updateTransaction() throws TransactionNotFoundException, InvalidTransactionException {
 
         //given
-        TransactionService transactionService = TransactionServiceConfiguration.createTransactionService(new InMemoryTransactionRepository());
+        TransactionService transactionService = TransactionServiceConfiguration.createTransactionService(InMemoryTransactionRepository.empty());
 
         Transaction transaction = getExampleTransaction();
         transactionService.addTransaction(transaction);
@@ -93,7 +93,7 @@ public class BasicTransactionServiceTest {
     public void removeTransaction() throws TransactionNotFoundException, InvalidTransactionException {
 
         //given
-        TransactionService transactionService = TransactionServiceConfiguration.createTransactionService(new InMemoryTransactionRepository());
+        TransactionService transactionService = TransactionServiceConfiguration.createTransactionService(InMemoryTransactionRepository.empty());
         Transaction transaction = getExampleTransaction();
 
         //when
@@ -117,7 +117,7 @@ public class BasicTransactionServiceTest {
     public void allTrascations() throws InvalidTransactionException {
 
         //given
-        TransactionService transactionService = TransactionServiceConfiguration.createTransactionService(new InMemoryTransactionRepository());
+        TransactionService transactionService = TransactionServiceConfiguration.createTransactionService(InMemoryTransactionRepository.empty());
         Transaction transaction1 = getExampleTransaction();
         Transaction transaction2 = getExampleTransaction();
         Transaction transaction3 = getExampleTransaction();

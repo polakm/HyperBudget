@@ -1,6 +1,5 @@
-package pl.com.michalpolak.hyperbudget.transaction.data;
+package pl.com.michalpolak.hyperbudget.transaction.test;
 
-import org.springframework.stereotype.Repository;
 import pl.com.michalpolak.hyperbudget.transaction.core.api.Transaction;
 import pl.com.michalpolak.hyperbudget.transaction.core.spi.TransactionRepository;
 
@@ -9,17 +8,16 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
-@Repository
-class InMemoryTransactionRepository implements TransactionRepository {
+public class InMemoryTransactionRepository implements TransactionRepository {
 
     private final Map<String, Transaction> storage;
 
-    public InMemoryTransactionRepository() {
+    private InMemoryTransactionRepository() {
         this.storage = new ConcurrentHashMap<>();
     }
 
-    public InMemoryTransactionRepository(Map<String, Transaction> initialData) {
-        this.storage = new ConcurrentHashMap<>(initialData);
+    public static TransactionRepository empty() {
+        return new InMemoryTransactionRepository();
     }
 
     @Override

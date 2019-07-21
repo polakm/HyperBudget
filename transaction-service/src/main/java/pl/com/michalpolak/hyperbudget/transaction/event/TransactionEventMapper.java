@@ -17,7 +17,7 @@ class TransactionEventMapper {
     final EventData mapToEventData(TransactionEvent event) {
 
         EventContext context = this.mapToEventContext(event.getEntity());
-        return new EventData(event.getAction(), context);
+        return EventData.of(event.getAction(), context);
     }
 
     final EventContext mapToEventContext(Transaction transaction) {

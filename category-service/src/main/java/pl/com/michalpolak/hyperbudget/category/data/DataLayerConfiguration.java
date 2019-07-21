@@ -20,7 +20,7 @@ class DataLayerConfiguration {
     public static CategoryRepository categoryRepositoryBean() {
 
         Map<String, Category> initialData = loadInitialData();
-        return new InMemoryCategoryRepository(initialData);
+        return InMemoryCategoryRepository.of(initialData);
     }
 
     private static Map<String, Category> loadInitialData() {

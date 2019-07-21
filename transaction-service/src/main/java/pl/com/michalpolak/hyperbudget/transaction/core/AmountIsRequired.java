@@ -10,7 +10,6 @@ import java.text.MessageFormat;
 class AmountIsRequired implements ValidationRule {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AmountIsRequired.class);
-
     private static final String MESSAGE_PATTERN = "Amount of transaction with id \"{0}\" is null. The amount is required value.";
 
     @Override

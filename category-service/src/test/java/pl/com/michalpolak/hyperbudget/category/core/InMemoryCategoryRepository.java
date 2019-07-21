@@ -1,4 +1,4 @@
-package pl.com.michalpolak.hyperbudget.category.data;
+package pl.com.michalpolak.hyperbudget.category.core;
 
 import pl.com.michalpolak.hyperbudget.category.core.api.Category;
 import pl.com.michalpolak.hyperbudget.category.core.spi.CategoryRepository;

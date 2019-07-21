@@ -3,9 +3,8 @@ package pl.com.michalpolak.hyperbudget.category.core;
 import org.junit.Test;
 import pl.com.michalpolak.hyperbudget.category.core.api.Category;
 import pl.com.michalpolak.hyperbudget.category.core.api.CategoryNotFoundException;
-import pl.com.michalpolak.hyperbudget.category.core.api.InvalidCategoryException;
 import pl.com.michalpolak.hyperbudget.category.core.api.CategoryService;
-import pl.com.michalpolak.hyperbudget.category.data.InMemoryCategoryRepository;
+import pl.com.michalpolak.hyperbudget.category.core.api.InvalidCategoryException;
 
 import java.util.Set;
 
@@ -17,7 +16,7 @@ public class BasicCategoryServiceTest {
     public void addCategory() throws CategoryNotFoundException, InvalidCategoryException {
 
         //given
-        CategoryService categoryService = CategoryServiceConfiguration.createCategoryService(new InMemoryCategoryRepository());
+        CategoryService categoryService = CategoryServiceConfiguration.createCategoryService(InMemoryCategoryRepository.empty());
         Category category = createCategory("test-name");
 
         //when
@@ -33,7 +32,7 @@ public class BasicCategoryServiceTest {
     public void categoryNotFoundException() {
 
         //given
-        CategoryService categoryService = CategoryServiceConfiguration.createCategoryService(new InMemoryCategoryRepository());
+        CategoryService categoryService = CategoryServiceConfiguration.createCategoryService(InMemoryCategoryRepository.empty());
 
         //when
         try {
@@ -50,7 +49,7 @@ public class BasicCategoryServiceTest {
     public void invalidCategoryException() {
 
         //given
-        CategoryService categoryService = CategoryServiceConfiguration.createCategoryService(new InMemoryCategoryRepository());
+        CategoryService categoryService = CategoryServiceConfiguration.createCategoryService(InMemoryCategoryRepository.empty());
         Category category = createCategory(null);
 
         //when
@@ -69,12 +68,12 @@ public class BasicCategoryServiceTest {
     public void updateCategory() throws CategoryNotFoundException, InvalidCategoryException {
 
         //given
-        CategoryService categoryService = CategoryServiceConfiguration.createCategoryService(new InMemoryCategoryRepository());
+        CategoryService categoryService = CategoryServiceConfiguration.createCategoryService(InMemoryCategoryRepository.empty());
 
         Category category = createCategory("test-name");
         categoryService.addCategory(category);
 
-        Category updatedCategory = new Category(category.getId(),"updated",Category.Types.INCOME);
+        Category updatedCategory = Category.of(category.getId(),"updated",Category.Types.INCOME);
 
         //when
         categoryService.updateCategory(updatedCategory);
@@ -89,7 +88,7 @@ public class BasicCategoryServiceTest {
     public void removeCategory() throws CategoryNotFoundException, InvalidCategoryException {
 
         //given
-        CategoryService categoryService = CategoryServiceConfiguration.createCategoryService(new InMemoryCategoryRepository());
+        CategoryService categoryService = CategoryServiceConfiguration.createCategoryService(InMemoryCategoryRepository.empty());
         Category category = createCategory("test-name");
 
         //when
@@ -113,7 +112,7 @@ public class BasicCategoryServiceTest {
     public void allCategories() throws InvalidCategoryException {
 
         //given
-        CategoryService categoryService = CategoryServiceConfiguration.createCategoryService(new InMemoryCategoryRepository());
+        CategoryService categoryService = CategoryServiceConfiguration.createCategoryService(InMemoryCategoryRepository.empty());
         Category category1 = createCategory("test-name-1");
         Category category2 = createCategory("test-name-2");
         Category category3 = createCategory("test-name-3");
@@ -132,7 +131,7 @@ public class BasicCategoryServiceTest {
 
     private Category createCategory(String name) {
 
-        Category category = new Category(name,Category.Types.INCOME);
+        Category category = Category.of(name,Category.Types.INCOME);
         return category;
     }
 

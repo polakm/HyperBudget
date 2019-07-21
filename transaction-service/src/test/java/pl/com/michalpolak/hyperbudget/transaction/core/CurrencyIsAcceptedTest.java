@@ -17,7 +17,7 @@ public class CurrencyIsAcceptedTest {
     public void validCurrency() throws InvalidTransactionException {
 
         //given
-        CurrencyIsAccepted currencyValidationRule = new CurrencyIsAccepted(CurrencyUnit.USD);
+        CurrencyIsAccepted currencyValidationRule = CurrencyIsAccepted.of(CurrencyUnit.USD);
         Transaction transaction = mock(Transaction.class);
         when(transaction.getAmount()).thenReturn(Money.parse("USD 200"));
 
@@ -38,7 +38,7 @@ public class CurrencyIsAcceptedTest {
     @Test
     public void invalidCurrency() {
         //given
-        CurrencyIsAccepted currencyValidationRule = new CurrencyIsAccepted(CurrencyUnit.USD);
+        CurrencyIsAccepted currencyValidationRule = CurrencyIsAccepted.of(CurrencyUnit.USD);
         Transaction transaction = mock(Transaction.class);
         when(transaction.getAmount()).thenReturn(Money.parse("PLN 200"));
 
@@ -59,7 +59,7 @@ public class CurrencyIsAcceptedTest {
     @Test
     public void validOfManyAcceptedCurrencies() {
         //given
-        CurrencyIsAccepted currencyValidationRule = new CurrencyIsAccepted(CurrencyUnit.USD, CurrencyUnit.EUR);
+        CurrencyIsAccepted currencyValidationRule = CurrencyIsAccepted.of(CurrencyUnit.USD, CurrencyUnit.EUR);
         Transaction transaction = mock(Transaction.class);
         when(transaction.getAmount()).thenReturn(Money.parse("EUR 200"));
 
@@ -80,7 +80,7 @@ public class CurrencyIsAcceptedTest {
     @Test
     public void invalidOfManyAcceptedCurrencies() {
         //given
-        CurrencyIsAccepted currencyValidationRule = new CurrencyIsAccepted(CurrencyUnit.USD, CurrencyUnit.EUR);
+        CurrencyIsAccepted currencyValidationRule = CurrencyIsAccepted.of(CurrencyUnit.USD, CurrencyUnit.EUR);
         Transaction transaction = mock(Transaction.class);
         when(transaction.getAmount()).thenReturn(Money.parse("PLN 200"));
 

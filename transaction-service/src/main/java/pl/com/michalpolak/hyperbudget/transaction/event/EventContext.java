@@ -1,5 +1,7 @@
 package pl.com.michalpolak.hyperbudget.transaction.event;
 
+import com.google.gson.Gson;
+
 class EventContext {
 
     public static Builder builder() {
@@ -114,4 +116,8 @@ class EventContext {
         return type;
     }
 
+    @Override
+    public String toString() {
+        return new Gson().toJson(this);
+    }
 }

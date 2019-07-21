@@ -17,8 +17,12 @@ class CurrencyIsAccepted implements ValidationRule {
     private static String MESSAGE_PATTERN = "Currency \"{0}\" is not accepted. The accepted currencies is only {1}.";
     private final List<CurrencyUnit> acceptableCurrencies;
 
-    CurrencyIsAccepted(CurrencyUnit... currencyUnits) {
-        this.acceptableCurrencies = new ArrayList<>(Arrays.asList(currencyUnits));
+    private CurrencyIsAccepted(List currencyUnits) {
+        this.acceptableCurrencies = new ArrayList<>(currencyUnits);
+    }
+
+    static CurrencyIsAccepted of(CurrencyUnit... currencyUnits) {
+        return new CurrencyIsAccepted(Arrays.asList(currencyUnits));
     }
 
     @Override

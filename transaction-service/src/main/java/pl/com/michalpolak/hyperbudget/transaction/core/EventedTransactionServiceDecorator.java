@@ -5,6 +5,7 @@ import pl.com.michalpolak.hyperbudget.transaction.core.api.Transaction;
 import pl.com.michalpolak.hyperbudget.transaction.core.api.TransactionNotFoundException;
 import pl.com.michalpolak.hyperbudget.transaction.core.api.TransactionService;
 import pl.com.michalpolak.hyperbudget.transaction.core.spi.EventPublisher;
+import pl.com.michalpolak.hyperbudget.transaction.core.spi.TransactionEvent;
 
 import java.util.Set;
 
@@ -13,7 +14,7 @@ public class EventedTransactionServiceDecorator implements TransactionService {
     private final TransactionService service;
     private final EventPublisher publisher;
 
-    public EventedTransactionServiceDecorator(TransactionService service, EventPublisher publisher) {
+    EventedTransactionServiceDecorator(TransactionService service, EventPublisher publisher) {
         this.service = service;
         this.publisher = publisher;
     }
@@ -21,14 +22,14 @@ public class EventedTransactionServiceDecorator implements TransactionService {
     @Override
     public Transaction addTransaction(Transaction transaction) throws InvalidTransactionException {
         Transaction result = service.addTransaction(transaction);
-        publisher.publish(new AddedTransactionEvent(result));
+        publisher.publish(TransactionEvent.added(result));
         return result;
     }
 
     @Override
     public Transaction removeTransaction(String id) throws TransactionNotFoundException {
         Transaction removedTransaction = service.removeTransaction(id);
-        publisher.publish(new RemovedTransactionEvent(removedTransaction));
+        publisher.publish(TransactionEvent.removed(removedTransaction));
         return removedTransaction;
     }
 
@@ -47,7 +48,7 @@ public class EventedTransactionServiceDecorator implements TransactionService {
     @Override
     public Transaction updateTransaction(Transaction transaction) throws TransactionNotFoundException {
         Transaction result = service.updateTransaction(transaction);
-        publisher.publish(new UpdatedTransactionEvent(result));
+        publisher.publish(TransactionEvent.updated(result));
         return result;
     }
 }
