@@ -21,8 +21,8 @@ class BasicTransactionSummaryService implements TransactionSummaryService {
     @Override
     public TransactionSummary getTransactionsSummaryPeMonth(YearMonth month) {
         List<TransactionInfo> transactionInfos = transactionRepository.getTransactionInfosByMonth(month);
-        TransactionStatistics statistics = new TransactionStatistics(transactionInfos);
-        return new TransactionSummary(transactionInfos, statistics);
+        TransactionStatistics statistics = TransactionStatistics.of(transactionInfos);
+        return TransactionSummary.of(transactionInfos, statistics);
     }
 
 }

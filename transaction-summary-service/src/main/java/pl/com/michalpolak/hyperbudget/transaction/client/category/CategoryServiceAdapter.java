@@ -6,17 +6,17 @@ import pl.com.michalpolak.hyperbudget.transaction.core.spi.Category;
 import pl.com.michalpolak.hyperbudget.transaction.data.spi.CategoryService;
 
 @Component
-public class CategoryServiceAdapter implements CategoryService {
+class CategoryServiceAdapter implements CategoryService {
 
     private CategoryServiceClient client;
 
     @Autowired
-    public CategoryServiceAdapter(CategoryServiceClient client) {
+    CategoryServiceAdapter(CategoryServiceClient client) {
         this.client = client;
     }
 
     @Override
     public Category getCategory(String id) {
-        return new CategoryDataAdapter(client.getCategory(id));
+        return CategoryDataAdapter.of(client.getCategory(id));
     }
 }

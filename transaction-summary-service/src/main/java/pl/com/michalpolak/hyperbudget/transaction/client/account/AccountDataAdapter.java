@@ -8,8 +8,12 @@ class AccountDataAdapter extends Account {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AccountDataAdapter.class);
 
-    AccountDataAdapter(AccountData accountData) {
+    private AccountDataAdapter(AccountData accountData) {
         super(accountData.getId(), accountData.getName());
+    }
+
+    static AccountDataAdapter of(AccountData accountData) {
+        return new AccountDataAdapter(accountData);
     }
 
 }

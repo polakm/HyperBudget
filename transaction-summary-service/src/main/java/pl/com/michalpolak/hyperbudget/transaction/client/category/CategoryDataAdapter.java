@@ -8,8 +8,11 @@ class CategoryDataAdapter extends Category {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(CategoryDataAdapter.class);
 
-    CategoryDataAdapter(CategoryData categoryData) {
+    private CategoryDataAdapter(CategoryData categoryData) {
         super(categoryData.getId(), categoryData.getName());
     }
 
+    public static CategoryDataAdapter of(CategoryData categoryData) {
+        return new CategoryDataAdapter(categoryData);
+    }
 }

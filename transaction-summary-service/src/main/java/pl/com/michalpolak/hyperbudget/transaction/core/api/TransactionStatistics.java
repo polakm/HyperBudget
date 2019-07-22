@@ -5,31 +5,49 @@ import java.util.List;
 
 public class TransactionStatistics {
 
-    private List<TransactionInfo> transactions;
+    private final BigDecimal sumOfIncomes;
+    private final BigDecimal sumOfExpenses;
+    private final BigDecimal totalSum;
 
-    public TransactionStatistics(List<TransactionInfo> transactions) {
-        this.transactions = transactions;
+    private TransactionStatistics(BigDecimal sumOfIncomes, BigDecimal sumOfExpenses, BigDecimal totalSum) {
+        this.sumOfIncomes = sumOfIncomes;
+        this.sumOfExpenses = sumOfExpenses;
+        this.totalSum = totalSum;
     }
 
-    public BigDecimal totalSum() {
+    public static TransactionStatistics of(List<TransactionInfo> transactions) {
 
-        BigDecimal totalSum = transactions.stream().filter(transaction -> transaction.getAmount() != null)
+        BigDecimal sumOfIncomes = calculateOfIncomes(transactions);
+        BigDecimal sumOfExpenses = calculateOfExpenses(transactions);
+        BigDecimal totalSum = calculateeTotalSum(transactions);
+        return new TransactionStatistics(sumOfIncomes, sumOfExpenses, totalSum);
+    }
+
+    private static BigDecimal calculateOfIncomes(List<TransactionInfo> transactions) {
+        return transactions.stream().filter(transaction -> transaction.getAmount() != null && transaction.getAmount().isPositive())
                 .map(transaction -> transaction.getAmount().getAmount()).reduce(BigDecimal.ZERO, BigDecimal::add);
-        return totalSum;
+
+    }
+
+    private static BigDecimal calculateOfExpenses(List<TransactionInfo> transactions) {
+        return transactions.stream().filter(transaction -> transaction.getAmount() != null && transaction.getAmount().isNegative())
+                .map(transaction -> transaction.getAmount().getAmount()).reduce(BigDecimal.ZERO, BigDecimal::add);
+    }
+
+    private static BigDecimal calculateeTotalSum(List<TransactionInfo> transactions) {
+        return transactions.stream().filter(transaction -> transaction.getAmount() != null)
+                .map(transaction -> transaction.getAmount().getAmount()).reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 
     public BigDecimal sumOfIncomes() {
-        BigDecimal sumOfIncomes = transactions.stream().filter(transaction -> transaction.getAmount() != null && transaction.getAmount().isPositive())
-                .map(transaction -> transaction.getAmount().getAmount()).reduce(BigDecimal.ZERO, BigDecimal::add);
-
         return sumOfIncomes;
     }
 
     public BigDecimal sumOfExpenses() {
-        BigDecimal sumOfExpenses = transactions.stream().filter(transaction -> transaction.getAmount() != null && transaction.getAmount().isNegative())
-                .map(transaction -> transaction.getAmount().getAmount()).reduce(BigDecimal.ZERO, BigDecimal::add);
         return sumOfExpenses;
     }
 
-
+    public BigDecimal totalSum() {
+        return totalSum;
+    }
 }

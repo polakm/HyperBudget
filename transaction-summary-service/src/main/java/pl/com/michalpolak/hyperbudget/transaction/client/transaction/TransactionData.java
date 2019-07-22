@@ -1,99 +1,73 @@
 package pl.com.michalpolak.hyperbudget.transaction.client.transaction;
 
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.google.gson.Gson;
 import pl.com.michalpolak.hyperbudget.transaction.core.spi.Transaction;
 
-public class TransactionData {
+class TransactionData {
 
-    private String id;
+    private final String id;
+    private final String title;
+    private final String executionDate;
+    private final String amount;
+    private final String currencyCode;
+    private final String accountId;
+    private final String categoryId;
 
-    private String title;
+    @JsonCreator
+    private TransactionData(Transaction transaction) {
 
-    private String executionDate;
-
-    private String amount;
-
-    private String currencyCode;
-
-    private String accountId;
-
-    private String categoryId;
-
-    public TransactionData(){
-
-    }
-
-    public TransactionData(Transaction transaction) {
-
-        setId(transaction.getId());
-        setTitle(transaction.getTitle());
-        setAccountId(transaction.getAccountId());
-        setCategoryId(transaction.getCategoryId());
+        this.id = transaction.getId();
+        this.title = transaction.getTitle();
+        this.accountId = transaction.getAccountId();
+        this.categoryId = transaction.getCategoryId();
 
         if (transaction.getAmount() != null) {
-            setAmount(transaction.getAmount().getAmount().toPlainString());
-            setCurrencyCode(transaction.getAmount().getCurrencyUnit().getCode());
+            this.amount = transaction.getAmount().getAmount().toPlainString();
+            this.currencyCode = transaction.getAmount().getCurrencyUnit().getCode();
+        }else{
+            this.amount = null;
+            this.currencyCode = null;
         }
         if (transaction.getExecutionDate() != null) {
-            setExecutionDate(transaction.getExecutionDate().toString());
+            this.executionDate = transaction.getExecutionDate().toString();
+        }else{
+            this.executionDate = null;
         }
+
     }
 
-    public String getTitle() {
+    static TransactionData of(Transaction transaction) {
+        return new TransactionData(transaction);
+    }
+
+    String getTitle() {
         return title;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getExecutionDate() {
+    String getExecutionDate() {
         return executionDate;
     }
 
-    public void setExecutionDate(String executionDate) {
-        this.executionDate = executionDate;
-    }
-
-    public String getAmount() {
+    String getAmount() {
         return amount;
     }
 
-    public void setAmount(String amount) {
-        this.amount = amount;
-    }
-
-    public String getCurrencyCode() {
+    String getCurrencyCode() {
         return currencyCode;
     }
 
-    public void setCurrencyCode(String currencyCode) {
-        this.currencyCode = currencyCode;
-    }
-
-    public String getId() {
+    String getId() {
         return id;
     }
 
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getAccountId() {
+    String getAccountId() {
         return this.accountId;
     }
 
-    public void setAccountId(String accountId) {
-        this.accountId = accountId;
-    }
-
-    public String getCategoryId() {
+    String getCategoryId() {
         return categoryId;
-    }
-
-    public void setCategoryId(String categoryId) {
-        this.categoryId = categoryId;
     }
 
     @Override

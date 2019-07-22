@@ -8,10 +8,14 @@ public class Category {
 
     private final String name;
 
-    public Category(String id, String name) {
-        this.id= id;
-        this.name=name;
-}
+    protected Category(String id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
+    public static Category of(String id, String name) {
+        return new Category(id, name);
+    }
 
     public String getId() {
         return id;

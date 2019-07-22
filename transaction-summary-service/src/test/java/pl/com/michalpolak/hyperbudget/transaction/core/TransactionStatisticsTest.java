@@ -2,9 +2,12 @@ package pl.com.michalpolak.hyperbudget.transaction.core;
 
 import org.joda.money.CurrencyUnit;
 import org.joda.money.Money;
+import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
 import org.junit.Test;
 import pl.com.michalpolak.hyperbudget.transaction.core.api.TransactionInfo;
 import pl.com.michalpolak.hyperbudget.transaction.core.api.TransactionStatistics;
+import pl.com.michalpolak.hyperbudget.transaction.core.spi.Transaction;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -20,18 +23,23 @@ public class TransactionStatisticsTest {
         List<TransactionInfo> transactions = new ArrayList<>();
         for (long amount : amounts) {
            BigDecimal decimalAmount = new BigDecimal(amount);
-            TransactionInfo transaction = new TransactionInfo();
-            transaction.setAmount(Money.of(CurrencyUnit.USD,amount));
-            transactions.add(transaction);
+
+            TransactionInfo.Builder builder = TransactionInfo.builder();
+            Transaction transaction = Transaction.builder().
+                    withAmount(Money.of(CurrencyUnit.USD,amount))
+                    .build();
+
+            TransactionInfo transactionInfo = TransactionInfo.builder().withTransaction(transaction).build();
+            transactions.add(transactionInfo);
         }
-       return new TransactionStatistics(transactions);
+       return TransactionStatistics.of(transactions);
     }
 
 
     public TransactionStatistics getTransactionStatisticsForEmptyList(){
 
         List<TransactionInfo> transactions = new ArrayList<>();
-        return new TransactionStatistics(transactions);
+        return TransactionStatistics.of(transactions);
     }
 
 

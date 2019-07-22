@@ -50,7 +50,7 @@ class RestClientsTransactionRepository implements TransactionRepository {
 
         Category category = readCategoryFromFuture(categoryFuture);
         Account account = readAccountFromFuture(accountFuture);
-        return new TransactionInfo(transaction, category, account);
+        return TransactionInfo.of(transaction, category, account);
     }
 
     private Account readAccountFromFuture(ListenableFuture<Account> accountFuture) {

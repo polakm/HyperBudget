@@ -4,18 +4,14 @@ import com.google.gson.Gson;
 
 class StatisticsData {
 
-    private String balance;
-    private String income;
-    private String expense;
-    private String balanceAbs;
-    private String incomeAbs;
-    private String expenseAbs;
+    private final String balance;
+    private final String income;
+    private final String expense;
+    private final String balanceAbs;
+    private final String incomeAbs;
+    private final String expenseAbs;
 
-     StatisticsData() {
-
-    }
-
-     StatisticsData(String balance, String income, String expense, String balanceAbs, String incomeAbs, String expenseAbs) {
+    private StatisticsData(String balance, String income, String expense, String balanceAbs, String incomeAbs, String expenseAbs) {
         this.balance = balance;
         this.income = income;
         this.expense = expense;
@@ -24,52 +20,76 @@ class StatisticsData {
         this.expenseAbs = expenseAbs;
     }
 
-     String getBalance() {
+    static Builder builder() {
+        return new Builder();
+    }
+
+    static class Builder {
+
+        private String balance;
+        private String income;
+        private String expense;
+        private String balanceAbs;
+        private String incomeAbs;
+        private String expenseAbs;
+
+        Builder withBalance(String balance) {
+            this.balance = balance;
+            return this;
+        }
+
+        Builder withIncome(String income) {
+            this.income = income;
+            return this;
+        }
+
+        Builder withExpense(String expense) {
+            this.expense = expense;
+            return this;
+        }
+
+        Builder withBalanceAbs(String balanceAbs) {
+            this.balanceAbs = balanceAbs;
+            return this;
+        }
+
+        Builder withIncomeAbs(String incomeAbs) {
+            this.incomeAbs = incomeAbs;
+            return this;
+        }
+
+        Builder withExpenseAbs(String expenseAbs) {
+            this.expenseAbs = expenseAbs;
+            return this;
+        }
+
+        StatisticsData build() {
+            return new StatisticsData(balance, income, expense, balanceAbs, incomeAbs, expenseAbs);
+        }
+    }
+
+    String getBalance() {
         return balance;
     }
 
-     void setBalance(String balance) {
-        this.balance = balance;
-    }
-
-     String getIncome() {
+    String getIncome() {
         return income;
     }
 
-     void setIncome(String income) {
-        this.income = income;
-    }
-
-     String getExpense() {
+    String getExpense() {
         return expense;
     }
 
-     void setExpense(String expense) {
-        this.expense = expense;
-    }
-
-     String getBalanceAbs() {
+    String getBalanceAbs() {
         return balanceAbs;
     }
 
-     void setBalanceAbs(String balanceAbs) {
-        this.balanceAbs = balanceAbs;
-    }
-
-     String getIncomeAbs() {
+    String getIncomeAbs() {
         return incomeAbs;
     }
 
-     void setIncomeAbs(String incomeAbs) {
-        this.incomeAbs = incomeAbs;
-    }
-
-     String getExpenseAbs() {
+    String getExpenseAbs() {
         return expenseAbs;
-    }
-
-     void setExpenseAbs(String expenseAbs) {
-        this.expenseAbs = expenseAbs;
     }
 
     @Override

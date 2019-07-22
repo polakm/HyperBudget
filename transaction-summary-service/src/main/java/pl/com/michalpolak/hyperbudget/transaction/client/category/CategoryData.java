@@ -1,36 +1,29 @@
 package pl.com.michalpolak.hyperbudget.transaction.client.category;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.google.gson.Gson;
 
-public class CategoryData {
+class CategoryData {
 
-    private String id;
+    private final String id;
+    private final String name;
 
-    private String name;
-
-    public CategoryData(){
-
+    @JsonCreator
+    private CategoryData(String id, String name) {
+        this.id = id;
+        this.name = name;
     }
 
-    public CategoryData(String id, String name) {
-        this.id= id;
-        this.name=name;
+    CategoryData of(String id, String name) {
+        return new CategoryData(id, name);
     }
 
-    public String getId() {
+    String getId() {
         return id;
     }
 
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getName() {
+    String getName() {
         return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     @Override

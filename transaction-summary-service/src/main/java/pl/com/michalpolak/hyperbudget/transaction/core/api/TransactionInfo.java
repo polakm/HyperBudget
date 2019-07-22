@@ -12,79 +12,55 @@ import java.util.Objects;
 public class TransactionInfo {
 
     private String id;
-
     private String title;
-
     private DateTime executionDate;
-
     private Money amount;
-
     private Category category;
-
     private Account account;
 
-    public TransactionInfo(){
-
-    }
-
-    public TransactionInfo(Transaction transaction, Category category, Account account) {
-
-        this.id = transaction.getId();
-        this.title = transaction.getTitle();
-        this.executionDate = transaction.getExecutionDate();
-        this.amount = transaction.getAmount();
+    private TransactionInfo(Transaction transaction, Category category, Account account) {
+        if(transaction!=null){
+            this.id = transaction.getId();
+            this.title = transaction.getTitle();
+            this.executionDate = transaction.getExecutionDate();
+            this.amount = transaction.getAmount();
+        }
         this.category = category;
         this.account = account;
     }
 
-    public String getId() {
-        return id;
+    public static TransactionInfo of(Transaction transaction, Category category, Account account) {
+        return new TransactionInfo(transaction, category, account);
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public static Builder builder() {
+        return new Builder();
+    }
+
+
+    public String getId() {
+        return id;
     }
 
     public String getTitle() {
         return title;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
     public DateTime getExecutionDate() {
         return executionDate;
-    }
-
-    public void setExecutionDate(DateTime executionDate) {
-        this.executionDate = executionDate;
     }
 
     public Money getAmount() {
         return amount;
     }
 
-    public void setAmount(Money amount) {
-        this.amount = amount;
-    }
-
     public Category getCategory() {
         return category;
-    }
-
-    public void setCategory(Category category) {
-        this.category = category;
     }
 
     public Account getAccount() {
         return account;
     }
-
-    public void setAccount(Account account) {
-        this.account = account;
-    }
-
 
     @Override
     public String toString() {
@@ -101,5 +77,31 @@ public class TransactionInfo {
     @Override
     public int hashCode() {
         return Objects.hash(id);
+    }
+
+    public static class Builder {
+
+        private Transaction transaction;
+        private Category category;
+        private Account account;
+
+        public Builder withTransaction(Transaction transaction) {
+            this.transaction = transaction;
+            return this;
+        }
+
+        public Builder withCategory(Category category) {
+            this.category = category;
+            return this;
+        }
+
+        public Builder withAccount(Account account) {
+            this.account = account;
+            return this;
+        }
+
+        public TransactionInfo build() {
+            return new TransactionInfo(transaction, category, account);
+        }
     }
 }

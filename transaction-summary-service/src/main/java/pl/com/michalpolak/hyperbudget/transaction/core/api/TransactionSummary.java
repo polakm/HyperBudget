@@ -6,31 +6,25 @@ import java.util.List;
 
 public class TransactionSummary {
 
-   private List<TransactionInfo> transactionInfos;
-    private TransactionStatistics statistics;
+    private final List<TransactionInfo> transactionInfos;
+    private final TransactionStatistics statistics;
 
-
-    public TransactionSummary(List<TransactionInfo> transactionInfos, TransactionStatistics statistics) {
+    private TransactionSummary(List<TransactionInfo> transactionInfos, TransactionStatistics statistics) {
         this.transactionInfos = transactionInfos;
-        this.statistics =  statistics;
+        this.statistics = statistics;
+    }
+
+    public static TransactionSummary of(List<TransactionInfo> transactionInfos, TransactionStatistics statistics) {
+        return new TransactionSummary(transactionInfos, statistics);
     }
 
     public List<TransactionInfo> getTransactionInfos() {
         return transactionInfos;
     }
 
-    public void setTransactionInfos(List<TransactionInfo> transactionInfos) {
-        this.transactionInfos = transactionInfos;
-    }
-
     public TransactionStatistics getStatistics() {
         return statistics;
     }
-
-    public void setStatistics(TransactionStatistics statistics) {
-        this.statistics = statistics;
-    }
-
 
     @Override
     public String toString() {

@@ -8,9 +8,13 @@ public class Account {
 
     private final String name;
 
-    public Account(String id, String name) {
+    protected Account(String id, String name) {
         this.id = id;
         this.name = name;
+    }
+
+    public static Account of(String id, String name) {
+        return new Account(id, name);
     }
 
     public String getId() {

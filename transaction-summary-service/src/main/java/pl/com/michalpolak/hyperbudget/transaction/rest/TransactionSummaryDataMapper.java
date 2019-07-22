@@ -19,72 +19,63 @@ class TransactionSummaryDataMapper {
 
     TransactionSummaryData mapToData(TransactionSummary summary, YearMonth yearMonth) {
 
-        TransactionSummaryData transactionSummaryData = new TransactionSummaryData();
         List<TransactionInfoData> transactions = summary.getTransactionInfos().stream().map(this::mapToTransactionInfoData).collect(Collectors.toList());
-        StatisticsData statistics = mapStatisticsData(summary.getStatistics());
         RangeData range = mapToRangeData(yearMonth);
-        transactionSummaryData.setTransactions(transactions);
-        transactionSummaryData.setStatistics(statistics);
-        transactionSummaryData.setRange(range);
-        return transactionSummaryData;
-
+        StatisticsData statistics = mapStatisticsData(summary.getStatistics());
+        return TransactionSummaryData.of(transactions, range,statistics);
     }
 
     TransactionInfoData mapToTransactionInfoData(TransactionInfo transactionInfo) {
 
-        TransactionInfoData transactionInfoData = new TransactionInfoData();
-        transactionInfoData.setId(transactionInfo.getId());
-        transactionInfoData.setTitle(transactionInfo.getTitle());
+        TransactionInfoData.Builder builder = TransactionInfoData.builder();
+        builder.withId(transactionInfo.getId());
+        builder.withTitle(transactionInfo.getTitle());
 
-        Optional.ofNullable(transactionInfo.getAccount()).filter(account -> !account.getId().isEmpty()).ifPresent(account->{
-            transactionInfoData.setAccountId(account.getId());
-            transactionInfoData.setAccountName(account.getName());
+        Optional.ofNullable(transactionInfo.getAccount()).filter(account -> !account.getId().isEmpty()).ifPresent(account -> {
+            builder.forAccount(account.getId());
+            builder.withAccountName(account.getName());
         });
 
-        Optional.ofNullable(transactionInfo.getCategory()).filter(category -> !category.getId().isEmpty()).ifPresent(category->{
-            transactionInfoData.setCategoryId(category.getId());
-            transactionInfoData.setCategoryName(category.getName());
+        Optional.ofNullable(transactionInfo.getCategory()).filter(category -> !category.getId().isEmpty()).ifPresent(category -> {
+            builder.inCategory(category.getId());
+            builder.withCategoryName(category.getName());
         });
 
-        Optional.ofNullable(transactionInfo.getAmount()).ifPresent(ammount->{
-            transactionInfoData.setAmount(ammount.getAmount().toPlainString());
-            transactionInfoData.setCurrencyCode(ammount.getCurrencyUnit().getCode());
+        Optional.ofNullable(transactionInfo.getAmount()).ifPresent(ammount -> {
+            builder.withAmount(ammount.getAmount().toPlainString());
+            builder.withCurrencyCode(ammount.getCurrencyUnit().getCode());
         });
 
-        Optional.ofNullable(transactionInfo.getAmount()).filter(Money::isPositive).ifPresent(ammount->{
-            transactionInfoData.setType(TransactionType.INCOME);
+        Optional.ofNullable(transactionInfo.getAmount()).filter(Money::isPositive).ifPresent(ammount -> {
+            builder.withType(TransactionType.INCOME);
         });
 
-        Optional.ofNullable(transactionInfo.getAmount()).filter(Money::isNegative).ifPresent(ammount->{
-            transactionInfoData.setType(TransactionType.EXPENSE);
+        Optional.ofNullable(transactionInfo.getAmount()).filter(Money::isNegative).ifPresent(ammount -> {
+            builder.withType(TransactionType.EXPENSE);
         });
 
         Optional.ofNullable(transactionInfo.getExecutionDate()).
-                map(d->d.toDateTime(DateTimeZone.UTC)).
+                map(d -> d.toDateTime(DateTimeZone.UTC)).
                 map(DateTime::toString).
-                ifPresent(transactionInfoData::setExecutionDate);
+                ifPresent(builder::onExecutionDate);
 
-        return transactionInfoData;
+        return  builder.build();
     }
 
     final StatisticsData mapStatisticsData(TransactionStatistics statistics) {
 
-        StatisticsData statisticsData = new StatisticsData();
-        statisticsData.setBalance(statistics.totalSum().toString());
-        statisticsData.setIncome(statistics.sumOfIncomes().toString());
-        statisticsData.setExpense(statistics.sumOfExpenses().toString());
-        statisticsData.setBalanceAbs(statistics.totalSum().abs().toString());
-        statisticsData.setIncomeAbs(statistics.sumOfIncomes().abs().toString());
-        statisticsData.setExpenseAbs(statistics.sumOfExpenses().abs().toString());
-        return statisticsData;
+        StatisticsData.Builder builder = StatisticsData.builder();
+        builder.withBalance(statistics.totalSum().toString());
+        builder.withIncome(statistics.sumOfIncomes().toString());
+        builder.withExpense(statistics.sumOfExpenses().toString());
+        builder.withBalanceAbs(statistics.totalSum().abs().toString());
+        builder.withIncomeAbs(statistics.sumOfIncomes().abs().toString());
+        builder.withExpenseAbs(statistics.sumOfExpenses().abs().toString());
+        return builder.build();
     }
 
     final RangeData mapToRangeData(YearMonth yearMonth) {
 
-        RangeData rangeData = new RangeData();
-        rangeData.setYear(yearMonth.getYear());
-        rangeData.setMonth(yearMonth.getMonthOfYear());
-        rangeData.setMonthName(yearMonth.monthOfYear().getAsText());
-        return rangeData;
+        return RangeData.of(yearMonth.getYear(),yearMonth.getMonthOfYear(),yearMonth.monthOfYear().getAsText());
     }
 }

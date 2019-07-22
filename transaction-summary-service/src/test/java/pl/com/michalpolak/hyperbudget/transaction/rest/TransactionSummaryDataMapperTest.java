@@ -8,22 +8,28 @@ import pl.com.michalpolak.hyperbudget.transaction.core.api.TransactionInfo;
 import pl.com.michalpolak.hyperbudget.transaction.core.api.TransactionType;
 import pl.com.michalpolak.hyperbudget.transaction.core.spi.Account;
 import pl.com.michalpolak.hyperbudget.transaction.core.spi.Category;
+import pl.com.michalpolak.hyperbudget.transaction.core.spi.Transaction;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 
 public class TransactionSummaryDataMapperTest {
 
     @Test
-    public void mapToTransactonInfoDataWithPositiveAmount() {
+    public void mapToTransactionInfoDataWithPositiveAmount() {
 
         //given
         TransactionSummaryDataMapper mapper = new TransactionSummaryDataMapper();
-        TransactionInfo transctionInfo = new TransactionInfo();
-        transctionInfo.setAmount(Money.parse("USD 99999.99"));
+
+        Transaction transaction = Transaction.builder().
+                withAmount(Money.parse("USD 99999.99"))
+                .build();
+
+        TransactionInfo transactionInfo = TransactionInfo.builder().withTransaction(transaction).build();
 
         //when
-        TransactionInfoData data = mapper.mapToTransactionInfoData(transctionInfo);
+        TransactionInfoData data = mapper.mapToTransactionInfoData(transactionInfo);
 
         //then
         assertEquals(data.getAmount(), "99999.99");
@@ -32,15 +38,18 @@ public class TransactionSummaryDataMapperTest {
     }
 
     @Test
-    public void mapToTransactonInfoDataWithNegativeAmount() {
+    public void mapToTransactionInfoDataWithNegativeAmount() {
 
         //given
         TransactionSummaryDataMapper mapper = new TransactionSummaryDataMapper();
-        TransactionInfo transctionInfo = new TransactionInfo();
-        transctionInfo.setAmount(Money.parse("USD -99999.99"));
+        TransactionInfo.Builder builder = TransactionInfo.builder();
+        Transaction transaction = Transaction.builder().
+                withAmount(Money.parse("USD -99999.99"))
+                .build();
 
+        TransactionInfo transactionInfo = TransactionInfo.builder().withTransaction(transaction).build();
         //when
-        TransactionInfoData data = mapper.mapToTransactionInfoData(transctionInfo);
+        TransactionInfoData data = mapper.mapToTransactionInfoData(transactionInfo);
 
         //then
         assertEquals(data.getAmount(), "-99999.99");
@@ -49,15 +58,17 @@ public class TransactionSummaryDataMapperTest {
     }
 
     @Test
-    public void mapToTransactonInfoDataWithoutAmount() {
+    public void mapToTransactionInfoDataWithoutAmount() {
 
         //given
         TransactionSummaryDataMapper mapper = new TransactionSummaryDataMapper();
-        TransactionInfo transctionInfo = new TransactionInfo();
-        transctionInfo.setAmount(null);
-
+        TransactionInfo.Builder builder = TransactionInfo.builder();
+        Transaction transaction = Transaction.builder().
+                withAmount(null)
+                .build();
+        TransactionInfo transactionInfo = TransactionInfo.builder().withTransaction(transaction).build();
         //when
-        TransactionInfoData data = mapper.mapToTransactionInfoData(transctionInfo);
+        TransactionInfoData data = mapper.mapToTransactionInfoData(transactionInfo);
 
         //then
         assertNull(data.getAmount());
@@ -66,15 +77,18 @@ public class TransactionSummaryDataMapperTest {
     }
 
     @Test
-    public void mapToTransactonInfoDataWithExecutionDateUTC() {
+    public void mapToTransactionInfoDataWithExecutionDateUTC() {
 
         //given
         TransactionSummaryDataMapper mapper = new TransactionSummaryDataMapper();
-        TransactionInfo transctionInfo = new TransactionInfo();
-        transctionInfo.setExecutionDate(DateTime.parse("2019-03-18").withZoneRetainFields(DateTimeZone.UTC));
+        TransactionInfo.Builder builder = TransactionInfo.builder();
+        Transaction transaction = Transaction.builder().
+                onExecutionDate(DateTime.parse("2019-03-18").withZoneRetainFields(DateTimeZone.UTC))
+                .build();
+        TransactionInfo transactionInfo = TransactionInfo.builder().withTransaction(transaction).build();
 
         //when
-        TransactionInfoData data = mapper.mapToTransactionInfoData(transctionInfo);
+        TransactionInfoData data = mapper.mapToTransactionInfoData(transactionInfo);
 
         //then
         assertEquals(data.getExecutionDate(), "2019-03-18T00:00:00.000Z");
@@ -82,15 +96,18 @@ public class TransactionSummaryDataMapperTest {
     }
 
     @Test
-    public void mapToTransactonInfoDataWithExecutionDateWithTimeZone() {
+    public void mapToTransactionInfoDataWithExecutionDateWithTimeZone() {
 
         //given
         TransactionSummaryDataMapper mapper = new TransactionSummaryDataMapper();
-        TransactionInfo transctionInfo = new TransactionInfo();
-        transctionInfo.setExecutionDate(DateTime.parse("2019-03-18T18:00:00.000Z").withZoneRetainFields(DateTimeZone.forID("Asia/Tokyo")));
+        TransactionInfo.Builder builder = TransactionInfo.builder();
+        Transaction transaction = Transaction.builder().
+                onExecutionDate(DateTime.parse("2019-03-18T18:00:00.000Z").withZoneRetainFields(DateTimeZone.forID("Asia/Tokyo")))
+                .build();
 
+        TransactionInfo transactionInfo = TransactionInfo.builder().withTransaction(transaction).build();
         //when
-        TransactionInfoData data = mapper.mapToTransactionInfoData(transctionInfo);
+        TransactionInfoData data = mapper.mapToTransactionInfoData(transactionInfo);
 
         //then
         assertEquals(data.getExecutionDate(), "2019-03-18T09:00:00.000Z");
@@ -98,14 +115,14 @@ public class TransactionSummaryDataMapperTest {
     }
 
     @Test
-    public void mapToTransactonInfoDataWithoutExecutionDate() {
+    public void mapToTransactionInfoDataWithoutExecutionDate() {
 
         //given
         TransactionSummaryDataMapper mapper = new TransactionSummaryDataMapper();
-        TransactionInfo transctionInfo = new TransactionInfo();
+        TransactionInfo.Builder builder = TransactionInfo.builder();
 
         //when
-        TransactionInfoData data = mapper.mapToTransactionInfoData(transctionInfo);
+        TransactionInfoData data = mapper.mapToTransactionInfoData(builder.build());
 
         //then
         assertNull(data.getExecutionDate());
@@ -113,15 +130,15 @@ public class TransactionSummaryDataMapperTest {
     }
 
     @Test
-    public void mapToTransactonInfoDataWithAccount() {
+    public void mapToTransactionInfoDataWithAccount() {
 
         //given
         TransactionSummaryDataMapper mapper = new TransactionSummaryDataMapper();
-        TransactionInfo transctionInfo = new TransactionInfo();
-        transctionInfo.setAccount(new Account("TEST-ID", "TEST-NAME"));
+        TransactionInfo.Builder builder = TransactionInfo.builder();
+        builder.withAccount(Account.of("TEST-ID", "TEST-NAME"));
 
         //when
-        TransactionInfoData data = mapper.mapToTransactionInfoData(transctionInfo);
+        TransactionInfoData data = mapper.mapToTransactionInfoData(builder.build());
 
         //then
         assertEquals(data.getAccountId(), "TEST-ID");
@@ -130,15 +147,15 @@ public class TransactionSummaryDataMapperTest {
     }
 
     @Test
-    public void mapToTransactonInfoDataWithoutAccount() {
+    public void mapToTransactionInfoDataWithoutAccount() {
 
         //given
         TransactionSummaryDataMapper mapper = new TransactionSummaryDataMapper();
-        TransactionInfo transctionInfo = new TransactionInfo();
-        transctionInfo.setAccount(null);
+        TransactionInfo.Builder builder = TransactionInfo.builder();
+        builder.withAccount(null);
 
         //when
-        TransactionInfoData data = mapper.mapToTransactionInfoData(transctionInfo);
+        TransactionInfoData data = mapper.mapToTransactionInfoData(builder.build());
 
         //then
         assertNull(data.getAccountId());
@@ -146,15 +163,15 @@ public class TransactionSummaryDataMapperTest {
     }
 
     @Test
-    public void mapToTransactonInfoDataWithCategory() {
+    public void mapToTransactionInfoDataWithCategory() {
 
         //given
         TransactionSummaryDataMapper mapper = new TransactionSummaryDataMapper();
-        TransactionInfo transctionInfo = new TransactionInfo();
-        transctionInfo.setCategory(new Category("TEST-ID", "TEST-NAME"));
+        TransactionInfo.Builder builder = TransactionInfo.builder();
+        builder.withCategory(Category.of("TEST-ID", "TEST-NAME"));
 
         //when
-        TransactionInfoData data = mapper.mapToTransactionInfoData(transctionInfo);
+        TransactionInfoData data = mapper.mapToTransactionInfoData(builder.build());
 
         //then
         assertEquals(data.getCategoryId(), "TEST-ID");
@@ -162,15 +179,15 @@ public class TransactionSummaryDataMapperTest {
     }
 
     @Test
-    public void mapToTransactonInfoDataWithoutCategory() {
+    public void mapToTransactionInfoDataWithoutCategory() {
 
         //given
         TransactionSummaryDataMapper mapper = new TransactionSummaryDataMapper();
-        TransactionInfo transctionInfo = new TransactionInfo();
-        transctionInfo.setCategory(null);
+        TransactionInfo.Builder builder = TransactionInfo.builder();
+        builder.withCategory(null);
 
         //when
-        TransactionInfoData data = mapper.mapToTransactionInfoData(transctionInfo);
+        TransactionInfoData data = mapper.mapToTransactionInfoData(builder.build());
 
         //then
         assertNull(data.getCategoryId());
