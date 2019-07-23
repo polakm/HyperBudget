@@ -17,7 +17,7 @@ public class BasicAccountServiceTest {
 
         //given
 
-        AccountService accountService = AccountServiceConfiguration.createAccountService(new InMemoryAccountRepository());
+        AccountService accountService = AccountServiceConfiguration.createAccountService(InMemoryAccountRepository.empty());
         Account account = getExampleAccount("example-account-name");
 
         //when
@@ -33,7 +33,7 @@ public class BasicAccountServiceTest {
     public void accountNotFoundException() {
 
         //given
-        AccountService accountService = AccountServiceConfiguration.createAccountService(new InMemoryAccountRepository());
+        AccountService accountService = AccountServiceConfiguration.createAccountService(InMemoryAccountRepository.empty());
 
         //when
         try {
@@ -74,7 +74,7 @@ public class BasicAccountServiceTest {
         Account account = getExampleAccount("example-account-name");
         accountService.addAccount(account);
 
-        Account updatedAccount =  new Account(account.getId(),"updated-title");
+        Account updatedAccount =  Account.of(account.getId(),"updated-title");
 
         //when
         accountService.updateAccount(updatedAccount);
@@ -131,7 +131,7 @@ public class BasicAccountServiceTest {
 
 
     private Account getExampleAccount(String name) {
-        Account account = new Account(name);
+        Account account = Account.of(name);
         return account;
     }
 

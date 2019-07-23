@@ -76,7 +76,7 @@ public class NameIsRequiredTest {
     }
 
     private Account getAccountWithName(String name) {
-        return new Account(name);
+        return Account.of(name);
     }
 
 }

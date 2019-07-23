@@ -10,7 +10,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 class InMemoryAccountRepository implements AccountRepository {
 
-    private Map<String, Account> storage;
+    private final Map<String, Account> storage;
 
     private InMemoryAccountRepository(Map<String, Account> initialData) {
         this.storage = new ConcurrentHashMap<>(initialData);
