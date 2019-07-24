@@ -32,6 +32,6 @@ final class AccountJsonFileLoader implements InitialDataLoader {
     }
 
     public Map<String, Account> loadAsMap() throws IOException {
-        return loadAsList().stream().collect(Collectors.toMap(Account::getId, item -> item));
+        return loadAsList().stream().collect(Collectors.toMap(item->item.getId().toString(), item -> item));
     }
 }

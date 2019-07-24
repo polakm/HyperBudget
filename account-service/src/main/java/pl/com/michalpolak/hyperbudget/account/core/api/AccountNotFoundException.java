@@ -4,7 +4,7 @@ import java.text.MessageFormat;
 
 public class AccountNotFoundException extends Exception {
 
-    public AccountNotFoundException(String id) {
+    public AccountNotFoundException(AccountId id) {
         super(MessageFormat.format("Account with id \"{0}\" not found", id));
     }
 

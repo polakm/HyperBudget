@@ -16,7 +16,7 @@ class AccountDataMapper {
     }
 
     final AccountData mapEntityToData(Account account) {
-        return AccountData.of(account.getId(), account.getName());
+        return AccountData.of(account.getId().toString(), account.getName().toString());
     }
 
     Account mapToEntity(AccountData account) {

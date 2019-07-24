@@ -2,11 +2,8 @@ package pl.com.michalpolak.hyperbudget.account.core;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import pl.com.michalpolak.hyperbudget.account.core.api.Account;
-import pl.com.michalpolak.hyperbudget.account.core.api.AccountNotFoundException;
-import pl.com.michalpolak.hyperbudget.account.core.api.InvalidAccountException;
+import pl.com.michalpolak.hyperbudget.account.core.api.*;
 import pl.com.michalpolak.hyperbudget.account.core.spi.AccountRepository;
-import pl.com.michalpolak.hyperbudget.account.core.api.AccountService;
 
 import java.util.Collections;
 import java.util.Set;
@@ -35,18 +32,18 @@ class BasicAccountService implements AccountService {
     }
 
     @Override
-    public void removeAccount(String id) throws AccountNotFoundException {
+    public void removeAccount(AccountId id) throws AccountNotFoundException {
 
         LOGGER.info("Remove account - Account ID: {}", id);
         this.getAccount(id);
-        this.accountRepository.remove(id);
+        this.accountRepository.remove(id.toString());
         LOGGER.info("Account has removed - Account ID: {}", id);
     }
 
     @Override
-    public Account getAccount(String id) throws AccountNotFoundException {
+    public Account getAccount(AccountId id) throws AccountNotFoundException {
 
-        Account result = this.accountRepository.findById(id);
+        Account result = this.accountRepository.findById(id.toString());
         if (result == null) {
             throw new AccountNotFoundException(id);
         }

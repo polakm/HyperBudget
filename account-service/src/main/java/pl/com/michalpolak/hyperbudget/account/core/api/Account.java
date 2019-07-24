@@ -7,40 +7,44 @@ import java.util.UUID;
 
 public class Account {
 
-    private final String id;
-    private final String name;
+    private final AccountId id;
+    private final AccountName name;
 
-    private Account(String name){
-        this.id= UUID.randomUUID().toString();
+    private Account(AccountName name){
+        this.id= AccountId.generate();
         this.name= name;
     }
 
-    private Account(String id, String name){
-        this.id =id;
+    private Account(AccountId id, AccountName name){
+        this.id = id;
         this.name=name;
     }
 
     public static Account of(String id, String name) {
-       return new Account(id, name);
+       return new Account(AccountId.fromString(id), AccountName.fromString(name));
+    }
+
+    public static Account of(AccountId id, AccountName name) {
+        return new Account(id, name);
     }
 
     public static Account of( String name) {
-        return new Account(name);
+        return new Account(AccountName.fromString(name));
     }
 
-    public String getId() {
+    public AccountId getId() {
         return id;
     }
 
-    public String getName() {
+    public AccountName getName() {
         return name;
     }
 
     @Override
     public String toString() {
       return new ToStringCreator(this)
-              .append("id",id)
-              .append("name",name).toString();
+              .append("id", id)
+              .append("name", name).toString();
     }
 
     @Override

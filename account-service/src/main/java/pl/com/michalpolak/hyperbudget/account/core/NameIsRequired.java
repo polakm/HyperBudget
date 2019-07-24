@@ -20,7 +20,7 @@ class NameIsRequired implements ValidationRule {
             throw new InvalidAccountException(MessageFormat.format(MESSAGE_PATTERN, account.getId()));
         }
 
-        if (account.getName().isEmpty()) {
+        if (account.getName().isBlank()) {
             throw new InvalidAccountException(MessageFormat.format(MESSAGE_PATTERN, account.getId()));
         }
 

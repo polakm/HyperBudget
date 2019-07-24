@@ -1,10 +1,7 @@
 package pl.com.michalpolak.hyperbudget.account.core;
 
 import org.junit.Test;
-import pl.com.michalpolak.hyperbudget.account.core.api.Account;
-import pl.com.michalpolak.hyperbudget.account.core.api.AccountNotFoundException;
-import pl.com.michalpolak.hyperbudget.account.core.api.AccountService;
-import pl.com.michalpolak.hyperbudget.account.core.api.InvalidAccountException;
+import pl.com.michalpolak.hyperbudget.account.core.api.*;
 
 import java.util.Set;
 
@@ -37,7 +34,7 @@ public class BasicAccountServiceTest {
 
         //when
         try {
-            accountService.getAccount("non-exist-account-id");
+            accountService.getAccount(AccountId.generate());
         } catch (AccountNotFoundException e) {
             return;
         }
@@ -50,7 +47,7 @@ public class BasicAccountServiceTest {
     public void invalidAccountException() {
 
         //given
-        AccountService accountService = AccountServiceConfiguration.createAccountService(new InMemoryAccountRepository());
+        AccountService accountService = AccountServiceConfiguration.createAccountService(InMemoryAccountRepository.empty());
         Account account = getExampleAccount(null);
 
         //when
@@ -69,19 +66,19 @@ public class BasicAccountServiceTest {
     public void updateAccount() throws AccountNotFoundException, InvalidAccountException {
 
         //given
-        AccountService accountService = AccountServiceConfiguration.createAccountService(new InMemoryAccountRepository());
+        AccountService accountService = AccountServiceConfiguration.createAccountService(InMemoryAccountRepository.empty());
 
         Account account = getExampleAccount("example-account-name");
         accountService.addAccount(account);
 
-        Account updatedAccount =  Account.of(account.getId(),"updated-title");
+        Account updatedAccount =  Account.of(account.getId(), AccountName.fromString("updated-title"));
 
         //when
         accountService.updateAccount(updatedAccount);
         Account resultAccount = accountService.getAccount(account.getId());
 
         //then
-        assertEquals("updated-title", resultAccount.getName());
+        assertEquals( "updated-title", resultAccount.getName().toString());
 
     }
 
@@ -89,7 +86,7 @@ public class BasicAccountServiceTest {
     public void removeAccount() throws AccountNotFoundException, InvalidAccountException {
 
         //given
-        AccountService accountService = AccountServiceConfiguration.createAccountService(new InMemoryAccountRepository());
+        AccountService accountService = AccountServiceConfiguration.createAccountService(InMemoryAccountRepository.empty());
         Account account = getExampleAccount("example-account-name");
 
         //when
@@ -113,7 +110,7 @@ public class BasicAccountServiceTest {
     public void allAccounts() throws InvalidAccountException {
 
         //given
-        AccountService accountService = AccountServiceConfiguration.createAccountService(new InMemoryAccountRepository());
+        AccountService accountService = AccountServiceConfiguration.createAccountService(InMemoryAccountRepository.empty());
         Account account1 = getExampleAccount("example-account-name-1");
         Account account2 = getExampleAccount("example-account-name-2");
         Account account3 = getExampleAccount("example-account-name-3");

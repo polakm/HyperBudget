@@ -8,10 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.WebRequest;
-import pl.com.michalpolak.hyperbudget.account.core.api.Account;
-import pl.com.michalpolak.hyperbudget.account.core.api.AccountNotFoundException;
-import pl.com.michalpolak.hyperbudget.account.core.api.AccountService;
-import pl.com.michalpolak.hyperbudget.account.core.api.InvalidAccountException;
+import pl.com.michalpolak.hyperbudget.account.core.api.*;
 
 import java.util.List;
 import java.util.Set;
@@ -50,14 +47,14 @@ class AccountRestController {
     @RequestMapping(path = "/{id}", method = RequestMethod.GET)
     AccountData getAccount(@PathVariable("id") String id) throws AccountNotFoundException {
 
-        Account account = service.getAccount(id);
+        Account account = service.getAccount(AccountId.fromString(id));
         return mapper.mapToData(account);
     }
 
     @RequestMapping(path = "/{id}", method = RequestMethod.DELETE)
     void removeAccount(@PathVariable("id") String id) throws AccountNotFoundException {
 
-        service.removeAccount(id);
+        service.removeAccount(AccountId.fromString(id));
     }
 
     @RequestMapping(path = "/{id}", method = RequestMethod.PUT)

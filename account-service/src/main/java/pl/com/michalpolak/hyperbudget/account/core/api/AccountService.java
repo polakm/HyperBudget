@@ -7,9 +7,9 @@ public interface AccountService {
 
     Account addAccount(Account account) throws InvalidAccountException;
 
-    void removeAccount(String id) throws AccountNotFoundException;
+    void removeAccount(AccountId id) throws AccountNotFoundException;
 
-    Account getAccount(String id) throws AccountNotFoundException;
+    Account getAccount(AccountId id) throws AccountNotFoundException;
 
     Set<Account> allAccounts();
 

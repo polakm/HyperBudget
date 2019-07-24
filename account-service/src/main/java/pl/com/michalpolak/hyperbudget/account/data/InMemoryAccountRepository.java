@@ -23,7 +23,7 @@ class InMemoryAccountRepository implements AccountRepository {
     @Override
     public Account save(Account account) {
 
-        this.storage.put(account.getId(), account);
+        this.storage.put(account.getId().toString(), account);
         return account;
     }
 
@@ -48,7 +48,7 @@ class InMemoryAccountRepository implements AccountRepository {
     @Override
     public Account update(Account account) {
 
-        this.storage.put(account.getId(), account);
+        this.storage.put(account.getId().toString(), account);
         return account;
     }
 }
