@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 class CategoryJsonFileLoader implements InitialDataLoader {
@@ -31,7 +32,7 @@ class CategoryJsonFileLoader implements InitialDataLoader {
 
     }
 
-    public Map<String, Category> loadAsMap() throws IOException {
-        return loadAsList().stream().collect(Collectors.toMap(Category::getId, item -> item));
+    public Map<UUID, Category> loadAsMap() throws IOException {
+        return loadAsList().stream().collect(Collectors.toMap(item->item.getId().toUUID(), item -> item));
     }
 }

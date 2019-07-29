@@ -24,7 +24,7 @@ class CategoryData {
         return new CategoryData(name, type);
     }
 
-    static CategoryData  of(String id, String name, String type) {
+    static CategoryData of(String id, String name, String type) {
         return new CategoryData(id, name, type);
     }
 

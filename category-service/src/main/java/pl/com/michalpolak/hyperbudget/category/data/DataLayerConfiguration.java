@@ -10,6 +10,7 @@ import pl.com.michalpolak.hyperbudget.category.core.spi.CategoryRepository;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 @Configuration
 class DataLayerConfiguration {
@@ -19,15 +20,15 @@ class DataLayerConfiguration {
     @Bean
     public static CategoryRepository categoryRepositoryBean() {
 
-        Map<String, Category> initialData = loadInitialData();
+        Map<UUID, Category> initialData = loadInitialData();
         return InMemoryCategoryRepository.of(initialData);
     }
 
-    private static Map<String, Category> loadInitialData() {
+    private static Map<UUID, Category> loadInitialData() {
 
         try {
             InitialDataLoader initialDataLoader = initialDataLoader();
-            return  initialDataLoader.loadAsMap();
+            return initialDataLoader.loadAsMap();
         } catch (IOException e) {
             LOGGER.error("Error during load initial data.", e);
             return new HashMap<>();

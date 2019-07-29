@@ -6,22 +6,23 @@ import pl.com.michalpolak.hyperbudget.category.core.spi.CategoryRepository;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
 class InMemoryCategoryRepository implements CategoryRepository {
 
-    private final Map<String, Category> storage;
+    private final Map<UUID, Category> storage;
 
     private InMemoryCategoryRepository() {
         this.storage = new ConcurrentHashMap<>();
     }
 
 
-    private InMemoryCategoryRepository(Map<String, Category> initialData) {
+    private InMemoryCategoryRepository(Map<UUID, Category> initialData) {
         this.storage = new ConcurrentHashMap<>(initialData);
     }
 
-    static InMemoryCategoryRepository of(Map<String, Category> data) {
+    static InMemoryCategoryRepository of(Map<UUID, Category> data) {
         return new InMemoryCategoryRepository(data);
     }
 
@@ -32,7 +33,7 @@ class InMemoryCategoryRepository implements CategoryRepository {
     @Override
     public Category save(Category category) {
 
-        this.storage.put(category.getId(), category);
+        this.storage.put(category.getId().toUUID(), category);
         return category;
     }
 
@@ -43,13 +44,13 @@ class InMemoryCategoryRepository implements CategoryRepository {
     }
 
     @Override
-    public void remove(String id) {
+    public void remove(UUID id) {
 
         this.storage.remove(id);
     }
 
     @Override
-    public Category findById(String id) {
+    public Category findById(UUID id) {
 
         return this.storage.get(id);
     }
@@ -57,7 +58,7 @@ class InMemoryCategoryRepository implements CategoryRepository {
     @Override
     public Category update(Category category) {
 
-        this.storage.put(category.getId(), category);
+        this.storage.put(category.getId().toUUID(), category);
         return category;
     }
 }

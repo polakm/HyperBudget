@@ -3,48 +3,50 @@ package pl.com.michalpolak.hyperbudget.category.core.api;
 import org.springframework.core.style.ToStringCreator;
 
 import java.util.Objects;
-import java.util.UUID;
 
 public class Category {
 
-    public interface Types {
-        String INCOME = "income";
-        String EXPENSE = "expense";
-    }
+    private final CategoryId id;
+    private final CategoryName name;
+    private final CategoryType type;
 
-    private final String id;
-    private final String name;
-    private final String type;
-
-    private Category(String id, String name, String type) {
+    private Category(CategoryId id, CategoryName name, CategoryType type) {
         this.id = id;
         this.name = name;
         this.type = type;
     }
 
-    private Category(String name, String type) {
-        this.id = UUID.randomUUID().toString();
+    private Category(CategoryName name, CategoryType type) {
+        this.id = CategoryId.generate();
         this.name = name;
         this.type = type;
     }
 
-    public static Category of(String name, String type) {
+    public static Category of(CategoryName name, CategoryType type) {
         return new Category(name, type);
     }
 
-    public static Category of(String id, String name, String type) {
+    public static Category of(CategoryId id, CategoryName name, CategoryType type) {
         return new Category(id, name, type);
     }
 
-    public String getName() {
+    public static Category of(String name, String type) {
+        return new Category(CategoryName.fromString(name), CategoryType.fromString(type));
+    }
+
+    public static Category of(String id, String name, String type) {
+        return new Category(CategoryId.fromString(id), CategoryName.fromString(name), CategoryType.fromString(type));
+    }
+
+    public CategoryName getName() {
         return name;
     }
 
-    public String getId() {
+    public CategoryId getId() {
         return id;
     }
 
-    public String getType() {
+    public CategoryType getType() {
         return type;
     }
 

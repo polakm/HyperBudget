@@ -4,6 +4,7 @@ import org.springframework.stereotype.Repository;
 import pl.com.michalpolak.hyperbudget.category.core.api.Category;
 
 import java.util.Set;
+import java.util.UUID;
 
 @Repository
 public interface CategoryRepository {
@@ -12,9 +13,9 @@ public interface CategoryRepository {
 
     Set<Category> getAll();
 
-    void remove(String id);
+    void remove(UUID id);
 
-    Category findById(String id);
+    Category findById(UUID id);
 
     Category update(Category category);
 }

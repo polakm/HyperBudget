@@ -8,10 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.WebRequest;
-import pl.com.michalpolak.hyperbudget.category.core.api.Category;
-import pl.com.michalpolak.hyperbudget.category.core.api.CategoryNotFoundException;
-import pl.com.michalpolak.hyperbudget.category.core.api.CategoryService;
-import pl.com.michalpolak.hyperbudget.category.core.api.InvalidCategoryException;
+import pl.com.michalpolak.hyperbudget.category.core.api.*;
 
 import javax.ws.rs.QueryParam;
 import java.util.List;
@@ -49,21 +46,21 @@ class CategoryRestController {
     @RequestMapping(method = RequestMethod.GET, params = "type")
     List<CategoryData> categoriesByType(@QueryParam("type") String type) {
 
-        Set<Category> categories = service.getCategoriesByType(type);
+        Set<Category> categories = service.getCategoriesByType(CategoryType.fromString(type));
         return mapper.mapToDataList(categories);
     }
 
     @RequestMapping(path = "/{id}", method = RequestMethod.GET)
     CategoryData getCategory(@PathVariable("id") String id) throws CategoryNotFoundException {
 
-        Category category = service.getCategory(id);
+        Category category = service.getCategory(CategoryId.fromString(id));
         return mapper.mapToData(category);
     }
 
     @RequestMapping(path = "/{id}", method = RequestMethod.DELETE)
     void removeCategory(@PathVariable("id") String id) throws CategoryNotFoundException {
 
-        service.removeCategory(id);
+        service.removeCategory(CategoryId.fromString(id));
     }
 
     @RequestMapping(path = "/{id}", method = RequestMethod.PUT)

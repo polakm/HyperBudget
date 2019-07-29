@@ -7,13 +7,13 @@ public interface CategoryService {
 
     Category addCategory(Category category) throws InvalidCategoryException;
 
-    void removeCategory(String id) throws CategoryNotFoundException;
+    void removeCategory(CategoryId id) throws CategoryNotFoundException;
 
-    Category getCategory(String id) throws CategoryNotFoundException;
+    Category getCategory(CategoryId id) throws CategoryNotFoundException;
 
     Set<Category> allCategories();
 
     Category updateCategory(Category category) throws CategoryNotFoundException;
 
-    Set<Category> getCategoriesByType(String type);
+    Set<Category> getCategoriesByType(CategoryType type);
 }

@@ -2,11 +2,8 @@ package pl.com.michalpolak.hyperbudget.category.core;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import pl.com.michalpolak.hyperbudget.category.core.api.Category;
-import pl.com.michalpolak.hyperbudget.category.core.api.CategoryNotFoundException;
-import pl.com.michalpolak.hyperbudget.category.core.api.InvalidCategoryException;
+import pl.com.michalpolak.hyperbudget.category.core.api.*;
 import pl.com.michalpolak.hyperbudget.category.core.spi.CategoryRepository;
-import pl.com.michalpolak.hyperbudget.category.core.api.CategoryService;
 
 import java.util.Collections;
 import java.util.Set;
@@ -36,18 +33,18 @@ class BasicCategoryService implements CategoryService {
     }
 
     @Override
-    public void removeCategory(String id) throws CategoryNotFoundException {
+    public void removeCategory(CategoryId id) throws CategoryNotFoundException {
 
         LOGGER.info("Remove category - Category ID: {}", id);
         this.getCategory(id);
-        this.categoryRepository.remove(id);
+        this.categoryRepository.remove(id.toUUID());
         LOGGER.info("Category has removed - Category ID: {}", id);
     }
 
     @Override
-    public Category getCategory(String id) throws CategoryNotFoundException {
+    public Category getCategory(CategoryId id) throws CategoryNotFoundException {
 
-        Category result = this.categoryRepository.findById(id);
+        Category result = this.categoryRepository.findById(id.toUUID());
         if (result == null) {
             throw new CategoryNotFoundException(id);
         }
@@ -70,7 +67,7 @@ class BasicCategoryService implements CategoryService {
     }
 
     @Override
-    public Set<Category> getCategoriesByType(String type) {
+    public Set<Category> getCategoriesByType(CategoryType type) {
 
         Set<Category> result = this.categoryRepository.getAll().stream().filter(c-> c.getType().equals(type)).collect(Collectors.toSet());
     return Collections.unmodifiableSet(result);

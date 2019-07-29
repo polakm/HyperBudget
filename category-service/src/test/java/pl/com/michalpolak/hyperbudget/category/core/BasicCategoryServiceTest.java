@@ -1,10 +1,7 @@
 package pl.com.michalpolak.hyperbudget.category.core;
 
 import org.junit.Test;
-import pl.com.michalpolak.hyperbudget.category.core.api.Category;
-import pl.com.michalpolak.hyperbudget.category.core.api.CategoryNotFoundException;
-import pl.com.michalpolak.hyperbudget.category.core.api.CategoryService;
-import pl.com.michalpolak.hyperbudget.category.core.api.InvalidCategoryException;
+import pl.com.michalpolak.hyperbudget.category.core.api.*;
 
 import java.util.Set;
 
@@ -36,7 +33,7 @@ public class BasicCategoryServiceTest {
 
         //when
         try {
-            categoryService.getCategory("non-exist-category-id");
+            categoryService.getCategory(CategoryId.generate());
         } catch (CategoryNotFoundException e) {
             return;
         }
@@ -73,14 +70,14 @@ public class BasicCategoryServiceTest {
         Category category = createCategory("test-name");
         categoryService.addCategory(category);
 
-        Category updatedCategory = Category.of(category.getId(),"updated",Category.Types.INCOME);
+        Category updatedCategory = Category.of(category.getId(),CategoryName.fromString("updated"),CategoryType.INCOME);
 
         //when
         categoryService.updateCategory(updatedCategory);
         Category resultCategory = categoryService.getCategory(category.getId());
 
         //then
-        assertEquals("updated", resultCategory.getName());
+        assertEquals("updated", resultCategory.getName().toString());
 
     }
 
@@ -131,7 +128,7 @@ public class BasicCategoryServiceTest {
 
     private Category createCategory(String name) {
 
-        Category category = Category.of(name,Category.Types.INCOME);
+        Category category = Category.of(CategoryName.fromString(name), CategoryType.INCOME);
         return category;
     }
 

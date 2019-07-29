@@ -20,7 +20,7 @@ class NameIsRequired implements ValidationRule {
             throw new InvalidCategoryException(MessageFormat.format(MESSAGE_PATTERN, category.getId()));
         }
 
-        if (category.getName().isEmpty()) {
+        if (category.getName().isBlank()) {
             throw new InvalidCategoryException(MessageFormat.format(MESSAGE_PATTERN, category.getId()));
         }
 
