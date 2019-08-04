@@ -4,19 +4,16 @@ import org.joda.money.Money;
 import org.joda.time.DateTime;
 import org.springframework.core.style.ToStringCreator;
 
-import java.util.Objects;
-import java.util.UUID;
-
 public class Transaction {
 
-    private final String id;
-    private final String title;
+    private final TransactionId id;
+    private final TransactionTitle title;
     private final DateTime executionDate;
     private final Money amount;
-    private final String accountId;
-    private final String categoryId;
+    private final AccountId accountId;
+    private final CategoryId categoryId;
 
-    private Transaction(String id, String title, DateTime executionDate, Money amount, String accountId, String categoryId) {
+    private Transaction(TransactionId id, TransactionTitle title, DateTime executionDate, Money amount, AccountId accountId, CategoryId categoryId) {
         this.id = id;
         this.title = title;
         this.executionDate = executionDate;
@@ -26,8 +23,8 @@ public class Transaction {
 
     }
 
-    private Transaction(String title, DateTime executionDate, Money amount, String accountId, String categoryId) {
-        this.id = UUID.randomUUID().toString();
+    private Transaction(TransactionTitle title, DateTime executionDate, Money amount, AccountId accountId, CategoryId categoryId) {
+        this.id = TransactionId.generate();
         this.title = title;
         this.executionDate = executionDate;
         this.amount = amount;
@@ -40,11 +37,11 @@ public class Transaction {
         return new Builder();
     }
 
-    public String getId() {
+    public TransactionId getId() {
         return id;
     }
 
-    public String getTitle() {
+    public TransactionTitle getTitle() {
         return title;
     }
 
@@ -56,22 +53,22 @@ public class Transaction {
         return amount;
     }
 
-    public String getAccountId() {
+    public AccountId getAccountId() {
         return accountId;
     }
 
-    public String getCategoryId() {
+    public CategoryId getCategoryId() {
         return categoryId;
     }
 
     public static class Builder {
 
-        private String id;
-        private String title;
+        private TransactionId id;
+        private TransactionTitle title;
         private DateTime executionDate;
         private Money amount;
-        private String accountId;
-        private String categoryId;
+        private AccountId accountId;
+        private CategoryId categoryId;
 
         public Builder from(Transaction transaction) {
             this.id = transaction.id;
@@ -83,12 +80,12 @@ public class Transaction {
             return this;
         }
 
-        public Builder withId(String id) {
+        public Builder withId(TransactionId id) {
             this.id = id;
             return this;
         }
 
-        public Builder withTitle(String title) {
+        public Builder withTitle(TransactionTitle title) {
             this.title = title;
             return this;
         }
@@ -103,12 +100,12 @@ public class Transaction {
             return this;
         }
 
-        public Builder inCategory(String categoryId) {
+        public Builder inCategory(CategoryId categoryId) {
             this.categoryId = categoryId;
             return this;
         }
 
-        public Builder forAccount(String accountId) {
+        public Builder forAccount(AccountId accountId) {
             this.accountId = accountId;
             return this;
         }
@@ -136,6 +133,6 @@ public class Transaction {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id);
+        return id.hashCode();
     }
 }

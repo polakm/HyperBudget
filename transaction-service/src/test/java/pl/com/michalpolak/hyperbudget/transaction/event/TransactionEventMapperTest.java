@@ -3,7 +3,9 @@ package pl.com.michalpolak.hyperbudget.transaction.event;
 import org.joda.money.Money;
 import org.joda.time.DateTime;
 import org.junit.Test;
+import pl.com.michalpolak.hyperbudget.transaction.core.api.AccountId;
 import pl.com.michalpolak.hyperbudget.transaction.core.api.Transaction;
+import pl.com.michalpolak.hyperbudget.transaction.core.api.TransactionTitle;
 import pl.com.michalpolak.hyperbudget.transaction.core.spi.TransactionEvent;
 
 import java.util.UUID;
@@ -91,9 +93,9 @@ public class TransactionEventMapperTest {
     private Transaction createTransaction(String title, String amount) {
 
         Transaction.Builder builder = new Transaction.Builder();
-        builder.withTitle(title);
+        builder.withTitle(TransactionTitle.fromString(title));
         builder.onExecutionDate(new DateTime());
-        builder.forAccount(UUID.randomUUID().toString());
+        builder.forAccount(AccountId.generate());
         builder.withAmount(Money.parse(amount));
         return builder.build();
     }

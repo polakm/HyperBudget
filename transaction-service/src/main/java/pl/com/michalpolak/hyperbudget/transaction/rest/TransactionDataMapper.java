@@ -5,7 +5,7 @@ import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
-import pl.com.michalpolak.hyperbudget.transaction.core.api.Transaction;
+import pl.com.michalpolak.hyperbudget.transaction.core.api.*;
 
 import java.util.List;
 import java.util.Set;
@@ -23,10 +23,10 @@ class TransactionDataMapper {
 
     final TransactionData mapEntityToData(Transaction transaction) {
         TransactionData.Builder builder = new TransactionData.Builder();
-        builder.withId(transaction.getId());
-        builder.withTitle(transaction.getTitle());
-        builder.withAccountId(transaction.getAccountId());
-        builder.withCategoryId(transaction.getCategoryId());
+        builder.withId(transaction.getId().toString());
+        builder.withTitle(transaction.getTitle().toString());
+        builder.withAccountId(transaction.getAccountId().toString());
+        builder.withCategoryId(transaction.getCategoryId().toString());
 
         if (transaction.getAmount() != null) {
             builder.withAmount(transaction.getAmount().getAmount().toPlainString());
@@ -55,9 +55,9 @@ class TransactionDataMapper {
     final Transaction mapDataToEntity(TransactionData transactionData) {
 
         Transaction.Builder builder = new Transaction.Builder();
-        builder.withTitle(transactionData.getTitle());
-        builder.forAccount(transactionData.getAccountId());
-        builder.inCategory(transactionData.getCategoryId());
+        builder.withTitle(TransactionTitle.fromString(transactionData.getTitle()));
+        builder.forAccount(AccountId.fromString(transactionData.getAccountId()));
+        builder.inCategory(CategoryId.fromString(transactionData.getCategoryId()));
 
         if (transactionData.getCurrencyCode() != null && transactionData.getAmount() != null) {
             LOGGER.debug("Parse currency code and decimal value to Money - Transaction ID: {} ", transactionData.getId());
@@ -82,7 +82,7 @@ class TransactionDataMapper {
     Transaction mapToEntity(String id, TransactionData transactionData) {
 
         Transaction transaction = this.mapDataToEntity(transactionData);
-        return Transaction.builder().from(transaction).withId(id).build();
+        return Transaction.builder().from(transaction).withId(TransactionId.fromString(id)).build();
     }
 
 

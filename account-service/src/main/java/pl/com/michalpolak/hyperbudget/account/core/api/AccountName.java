@@ -10,8 +10,8 @@ public class AccountName {
         this.value = value;
     }
 
-    public static AccountName fromString(String value){
-       return new AccountName(value);
+    public static AccountName fromString(String value) {
+        return new AccountName(value);
     }
 
     @Override
@@ -22,5 +22,18 @@ public class AccountName {
     public boolean isBlank() {
 
         return StringUtils.isBlank(value);
+    }
+
+    @Override
+    public int hashCode() {
+        return value.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj != null && obj instanceof AccountName) {
+            return value.equals(((AccountName) obj).value);
+        }
+        return false;
     }
 }

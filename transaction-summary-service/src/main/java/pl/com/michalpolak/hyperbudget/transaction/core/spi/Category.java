@@ -27,6 +27,24 @@ public class Category {
 
 
     @Override
+    public int hashCode() {
+        return id.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+
+        if (this == obj) {
+            return true;
+        }
+        if (obj != null && obj instanceof Category) {
+            return id.equals(((Category) obj).id)
+                    && (((Category) obj).name).equals(name) || ((((Category) obj).name) == null);
+        }
+        return false;
+    }
+
+    @Override
     public String toString() {
         return new ToStringCreator(this)
                 .append("id", id)

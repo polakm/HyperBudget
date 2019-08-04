@@ -4,7 +4,7 @@ import java.text.MessageFormat;
 
 public class TransactionNotFoundException extends Exception {
 
-    public TransactionNotFoundException(String id) {
+    public TransactionNotFoundException(TransactionId id) {
         super(MessageFormat.format("Transaction with id \"{0}\" not found", id));
     }
 

@@ -7,25 +7,26 @@ import pl.com.michalpolak.hyperbudget.transaction.core.spi.TransactionRepository
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Repository
 class InMemoryTransactionRepository implements TransactionRepository {
 
-    private final Map<String, Transaction> storage;
+    private final Map<UUID, Transaction> storage;
 
     public InMemoryTransactionRepository() {
         this.storage = new ConcurrentHashMap<>();
     }
 
-    public InMemoryTransactionRepository(Map<String, Transaction> initialData) {
+    public InMemoryTransactionRepository(Map<UUID, Transaction> initialData) {
         this.storage = new ConcurrentHashMap<>(initialData);
     }
 
     @Override
     public Transaction save(Transaction transaction) {
 
-        this.storage.put(transaction.getId(), transaction);
+        this.storage.put(transaction.getId().toUUID(), transaction);
         return transaction;
     }
 
@@ -36,13 +37,13 @@ class InMemoryTransactionRepository implements TransactionRepository {
     }
 
     @Override
-    public Transaction remove(String id) {
+    public Transaction remove(UUID id) {
 
         return this.storage.remove(id);
     }
 
     @Override
-    public Transaction findById(String id) {
+    public Transaction findById(UUID id) {
 
         return this.storage.get(id);
     }
@@ -50,7 +51,7 @@ class InMemoryTransactionRepository implements TransactionRepository {
     @Override
     public Transaction update(Transaction transaction) {
 
-        this.storage.put(transaction.getId(), transaction);
+        this.storage.put(transaction.getId().toUUID(), transaction);
         return transaction;
     }
 }

@@ -26,20 +26,20 @@ public class TransactionEvent {
         return action;
     }
 
-    public static TransactionEvent of(String action, Transaction transaction){
-        return  new TransactionEvent(action,transaction);
+    public static TransactionEvent of(String action, Transaction transaction) {
+        return new TransactionEvent(action, transaction);
     }
 
-    public static TransactionEvent added( Transaction transaction){
-        return  new TransactionEvent(Actions.ADDED,transaction);
+    public static TransactionEvent added(Transaction transaction) {
+        return new TransactionEvent(Actions.ADDED, transaction);
     }
 
-    public static TransactionEvent updated(Transaction transaction){
-        return  new TransactionEvent(Actions.UPDATED,transaction);
+    public static TransactionEvent updated(Transaction transaction) {
+        return new TransactionEvent(Actions.UPDATED, transaction);
     }
 
-    public static TransactionEvent removed( Transaction transaction){
-        return  new TransactionEvent(Actions.REMOVED,transaction);
+    public static TransactionEvent removed(Transaction transaction) {
+        return new TransactionEvent(Actions.REMOVED, transaction);
     }
 
 }

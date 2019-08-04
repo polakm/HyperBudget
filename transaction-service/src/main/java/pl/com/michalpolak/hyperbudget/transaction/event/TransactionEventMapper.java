@@ -23,10 +23,10 @@ class TransactionEventMapper {
     final EventContext mapToEventContext(Transaction transaction) {
 
         EventContext.Builder builder = EventContext.builder();
-        builder.withId(transaction.getId());
-        builder.withTitle(transaction.getTitle());
-        builder.withAccountId(transaction.getAccountId());
-        builder.withCategoryId(transaction.getCategoryId());
+        builder.withId(transaction.getId().toString());
+        builder.withTitle(transaction.getTitle().toString());
+        builder.withAccountId(transaction.getAccountId().toString());
+        builder.withCategoryId(transaction.getCategoryId().toString());
 
         if (transaction.getAmount() != null) {
             builder.withAmount(transaction.getAmount().getAmount().toPlainString());

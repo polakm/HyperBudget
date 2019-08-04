@@ -8,10 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.WebRequest;
-import pl.com.michalpolak.hyperbudget.transaction.core.api.InvalidTransactionException;
-import pl.com.michalpolak.hyperbudget.transaction.core.api.Transaction;
-import pl.com.michalpolak.hyperbudget.transaction.core.api.TransactionNotFoundException;
-import pl.com.michalpolak.hyperbudget.transaction.core.api.TransactionService;
+import pl.com.michalpolak.hyperbudget.transaction.core.api.*;
 
 import java.util.List;
 import java.util.Set;
@@ -50,14 +47,14 @@ class TransactionRestController {
     @RequestMapping(path = "/{id}", method = RequestMethod.GET)
     TransactionData getTransaction(@PathVariable("id") String id) throws TransactionNotFoundException {
 
-        return mapper.mapToData(service.getTransaction(id));
+        return mapper.mapToData(service.getTransaction(TransactionId.fromString(id)));
     }
 
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
     @RequestMapping(path = "/{id}", method = RequestMethod.DELETE)
     void removeTransaction(@PathVariable("id") String id) throws TransactionNotFoundException {
 
-        service.removeTransaction(id);
+        service.removeTransaction(TransactionId.fromString(id));
     }
 
     @ResponseStatus(value = HttpStatus.NO_CONTENT)

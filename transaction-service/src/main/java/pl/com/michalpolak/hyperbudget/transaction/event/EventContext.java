@@ -1,6 +1,8 @@
 package pl.com.michalpolak.hyperbudget.transaction.event;
 
 import com.google.gson.Gson;
+import pl.com.michalpolak.hyperbudget.transaction.core.api.TransactionId;
+import pl.com.michalpolak.hyperbudget.transaction.core.api.TransactionTitle;
 
 class EventContext {
 

@@ -1,9 +1,6 @@
 package pl.com.michalpolak.hyperbudget.transaction.core;
 
-import pl.com.michalpolak.hyperbudget.transaction.core.api.InvalidTransactionException;
-import pl.com.michalpolak.hyperbudget.transaction.core.api.Transaction;
-import pl.com.michalpolak.hyperbudget.transaction.core.api.TransactionNotFoundException;
-import pl.com.michalpolak.hyperbudget.transaction.core.api.TransactionService;
+import pl.com.michalpolak.hyperbudget.transaction.core.api.*;
 import pl.com.michalpolak.hyperbudget.transaction.core.spi.EventPublisher;
 import pl.com.michalpolak.hyperbudget.transaction.core.spi.TransactionEvent;
 
@@ -27,14 +24,14 @@ public class EventedTransactionServiceDecorator implements TransactionService {
     }
 
     @Override
-    public Transaction removeTransaction(String id) throws TransactionNotFoundException {
+    public Transaction removeTransaction(TransactionId id) throws TransactionNotFoundException {
         Transaction removedTransaction = service.removeTransaction(id);
         publisher.publish(TransactionEvent.removed(removedTransaction));
         return removedTransaction;
     }
 
     @Override
-    public Transaction getTransaction(String id) throws TransactionNotFoundException {
+    public Transaction getTransaction(TransactionId id) throws TransactionNotFoundException {
         Transaction result = service.getTransaction(id);
         return result;
     }

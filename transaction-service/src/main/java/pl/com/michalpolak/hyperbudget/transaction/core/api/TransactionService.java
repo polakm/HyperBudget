@@ -7,9 +7,9 @@ public interface TransactionService {
 
     Transaction addTransaction(Transaction transaction) throws InvalidTransactionException;
 
-    Transaction removeTransaction(String id) throws TransactionNotFoundException;
+    Transaction removeTransaction(TransactionId id) throws TransactionNotFoundException;
 
-    Transaction getTransaction(String id) throws TransactionNotFoundException;
+    Transaction getTransaction(TransactionId id) throws TransactionNotFoundException;
 
     Set<Transaction> allTrascations();
 

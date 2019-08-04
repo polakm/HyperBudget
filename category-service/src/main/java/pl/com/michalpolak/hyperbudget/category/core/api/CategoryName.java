@@ -14,12 +14,26 @@ public class CategoryName {
         return new CategoryName(value);
     }
 
+    public boolean isBlank() {
+        return StringUtils.isBlank(value);
+    }
+
     @Override
     public String toString() {
         return value;
     }
 
-    public boolean isBlank() {
-       return StringUtils.isBlank(value);
+
+    @Override
+    public int hashCode() {
+        return value.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj != null && obj instanceof CategoryName) {
+            return value.equals(((CategoryName) obj).value);
+        }
+        return false;
     }
 }

@@ -19,10 +19,5 @@ class AccountIsRequired implements ValidationRule {
         if (transaction.getAccountId() == null) {
             throw new InvalidTransactionException(MessageFormat.format(MESSAGE_PATTERN, transaction.getId()));
         }
-
-        if (transaction.getAccountId().isEmpty()) {
-            throw new InvalidTransactionException(MessageFormat.format(MESSAGE_PATTERN, transaction.getId()));
-        }
-
     }
 }

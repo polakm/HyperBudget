@@ -2,10 +2,7 @@ package pl.com.michalpolak.hyperbudget.transaction.core;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import pl.com.michalpolak.hyperbudget.transaction.core.api.InvalidTransactionException;
-import pl.com.michalpolak.hyperbudget.transaction.core.api.Transaction;
-import pl.com.michalpolak.hyperbudget.transaction.core.api.TransactionNotFoundException;
-import pl.com.michalpolak.hyperbudget.transaction.core.api.TransactionService;
+import pl.com.michalpolak.hyperbudget.transaction.core.api.*;
 import pl.com.michalpolak.hyperbudget.transaction.core.spi.TransactionRepository;
 import pl.com.michalpolak.hyperbudget.transaction.core.spi.TransactionValidator;
 
@@ -35,19 +32,19 @@ class BasicTransactionService implements TransactionService {
     }
 
     @Override
-    public Transaction removeTransaction(String id) throws TransactionNotFoundException {
+    public Transaction removeTransaction(TransactionId id) throws TransactionNotFoundException {
 
         LOGGER.info("Remove transaction - Transaction ID: {}", id);
         this.getTransaction(id);
-        Transaction removedTranastion = this.transactionRepository.remove(id);
+        Transaction removedTranastion = this.transactionRepository.remove(id.toUUID());
         LOGGER.info("Transaction has removed - Transaction ID: {}", id);
         return removedTranastion;
     }
 
     @Override
-    public Transaction getTransaction(String id) throws TransactionNotFoundException {
+    public Transaction getTransaction(TransactionId id) throws TransactionNotFoundException {
 
-        Transaction result = this.transactionRepository.findById(id);
+        Transaction result = this.transactionRepository.findById(id.toUUID());
         if (result == null) {
             throw new TransactionNotFoundException(id);
         }

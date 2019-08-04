@@ -1,6 +1,7 @@
 package pl.com.michalpolak.hyperbudget.transaction.core;
 
 import org.junit.Test;
+import pl.com.michalpolak.hyperbudget.transaction.core.api.AccountId;
 import pl.com.michalpolak.hyperbudget.transaction.core.api.InvalidTransactionException;
 import pl.com.michalpolak.hyperbudget.transaction.core.api.Transaction;
 
@@ -18,25 +19,7 @@ public class AccountIsRequiredTest {
 
         //when
         try {
-            rule.validate(getTranasctionWithoutAccountId());
-        } catch (InvalidTransactionException e) {
-            return;
-        }
-
-        //then
-        fail("Method should throw InvalidAccountException.");
-    }
-
-
-    @Test
-    public void validateTransactionWithEmptyAccountId() {
-
-        //given
-        ValidationRule rule = new AccountIsRequired();
-
-        //when
-        try {
-            rule.validate(getTransactionWithAccountId(""));
+            rule.validate(getTransactionWithoutAccountId());
         } catch (InvalidTransactionException e) {
             return;
         }
@@ -64,7 +47,7 @@ public class AccountIsRequiredTest {
     }
 
 
-    private Transaction getTranasctionWithoutAccountId() {
+    private Transaction getTransactionWithoutAccountId() {
 
         return Transaction.builder().forAccount(null).build();
     }
@@ -72,7 +55,7 @@ public class AccountIsRequiredTest {
 
     private Transaction getTransactionWithAccountId(String accountID) {
 
-        return Transaction.builder().forAccount(accountID).build();
+        return Transaction.builder().forAccount(AccountId.fromString(accountID)).build();
 
     }
 

@@ -1,4 +1,4 @@
-package pl.com.michalpolak.hyperbudget.account.core.api;
+package pl.com.michalpolak.hyperbudget.transaction.core.api;
 
 import java.util.UUID;
 
@@ -18,6 +18,11 @@ public class AccountId {
         return new AccountId(UUID.fromString(id));
     }
 
+    public UUID toUUID() {
+        return this.value;
+    }
+
+
     @Override
     public String toString() {
         return value.toString();
@@ -30,7 +35,10 @@ public class AccountId {
 
     @Override
     public boolean equals(Object obj) {
-        if (obj != null && obj instanceof AccountId) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj instanceof AccountId) {
             return value.equals(((AccountId) obj).value);
         }
         return false;

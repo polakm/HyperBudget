@@ -1,4 +1,4 @@
-package pl.com.michalpolak.hyperbudget.category.core.api;
+package pl.com.michalpolak.hyperbudget.transaction.core.api;
 
 import java.util.UUID;
 
@@ -6,7 +6,7 @@ public class CategoryId {
 
     private final UUID value;
 
-    private CategoryId(UUID value) {
+    CategoryId(UUID value) {
         this.value = value;
     }
 
@@ -14,8 +14,8 @@ public class CategoryId {
         return new CategoryId(UUID.randomUUID());
     }
 
-    public static CategoryId fromString(String value) {
-        return new CategoryId(UUID.fromString(value));
+    public static CategoryId fromString(String id) {
+        return new CategoryId(UUID.fromString(id));
     }
 
     public UUID toUUID() {
@@ -27,12 +27,20 @@ public class CategoryId {
         return value.toString();
     }
 
+    @Override
+    public int hashCode() {
+        return value.hashCode();
+    }
 
     @Override
     public boolean equals(Object obj) {
-        if (obj != null && obj instanceof CategoryId) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj instanceof CategoryId) {
             return value.equals(((CategoryId) obj).value);
         }
         return false;
     }
+
 }

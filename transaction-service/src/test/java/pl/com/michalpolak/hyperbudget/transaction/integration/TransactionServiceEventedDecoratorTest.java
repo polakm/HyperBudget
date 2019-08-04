@@ -7,10 +7,7 @@ import org.joda.money.Money;
 import org.joda.time.DateTime;
 import org.junit.Test;
 import pl.com.michalpolak.hyperbudget.transaction.core.TransactionServiceConfiguration;
-import pl.com.michalpolak.hyperbudget.transaction.core.api.InvalidTransactionException;
-import pl.com.michalpolak.hyperbudget.transaction.core.api.Transaction;
-import pl.com.michalpolak.hyperbudget.transaction.core.api.TransactionNotFoundException;
-import pl.com.michalpolak.hyperbudget.transaction.core.api.TransactionService;
+import pl.com.michalpolak.hyperbudget.transaction.core.api.*;
 import pl.com.michalpolak.hyperbudget.transaction.core.spi.EventPublisher;
 import pl.com.michalpolak.hyperbudget.transaction.event.EventConfiguration;
 import pl.com.michalpolak.hyperbudget.transaction.event.spi.ProducerCreator;
@@ -51,7 +48,7 @@ public class TransactionServiceEventedDecoratorTest {
         TransactionService transactionService = getTransactionService();
         //when
         try {
-            transactionService.getTransaction("non-exist-transaction-id");
+            transactionService.getTransaction(TransactionId.generate());
         } catch (TransactionNotFoundException e) {
             return;
         }
@@ -89,14 +86,17 @@ public class TransactionServiceEventedDecoratorTest {
         transactionService.addTransaction(transaction);
 
         Transaction updatedTransaction = getExampleTransaction();
-        updatedTransaction = Transaction.builder().from(updatedTransaction).withId(transaction.getId()).withTitle("updated").build();
+        updatedTransaction = Transaction.builder().from(updatedTransaction)
+                .withId(transaction.getId())
+                .withTitle(TransactionTitle.fromString("updated"))
+                .build();
 
         //when
         transactionService.updateTransaction(updatedTransaction);
         Transaction resultTransaction = transactionService.getTransaction(transaction.getId());
 
         //then
-        assertEquals("updated", resultTransaction.getTitle());
+        assertEquals(TransactionTitle.fromString("updated"), resultTransaction.getTitle());
 
     }
 
@@ -144,9 +144,9 @@ public class TransactionServiceEventedDecoratorTest {
 
     private Transaction getExampleTransaction() {
         Transaction.Builder builder = new Transaction.Builder();
-        builder.withTitle("title");
+        builder.withTitle(TransactionTitle.fromString("title"));
         builder.onExecutionDate(new DateTime());
-        builder.forAccount(UUID.randomUUID().toString());
+        builder.forAccount(AccountId.generate());
         builder.withAmount(Money.parse("USD 299.99"));
         return builder.build();
     }

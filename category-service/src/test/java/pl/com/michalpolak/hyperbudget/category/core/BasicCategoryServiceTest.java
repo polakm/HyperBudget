@@ -70,7 +70,7 @@ public class BasicCategoryServiceTest {
         Category category = createCategory("test-name");
         categoryService.addCategory(category);
 
-        Category updatedCategory = Category.of(category.getId(),CategoryName.fromString("updated"),CategoryType.INCOME);
+        Category updatedCategory = Category.of(category.getId(),CategoryName.fromString("updated"),CategoryType.EXPENSE);
 
         //when
         categoryService.updateCategory(updatedCategory);
