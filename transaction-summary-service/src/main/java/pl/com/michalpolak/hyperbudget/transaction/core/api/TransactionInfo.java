@@ -11,8 +11,8 @@ import java.util.Objects;
 
 public class TransactionInfo {
 
-    private String id;
-    private String title;
+    private TransactionId id;
+    private TransactionTitle title;
     private DateTime executionDate;
     private Money amount;
     private Category category;
@@ -20,8 +20,8 @@ public class TransactionInfo {
 
     private TransactionInfo(Transaction transaction, Category category, Account account) {
         if(transaction!=null){
-            this.id = transaction.getId();
-            this.title = transaction.getTitle();
+            this.id = TransactionId.fromString(transaction.getId());
+            this.title = TransactionTitle.fromString(transaction.getTitle());
             this.executionDate = transaction.getExecutionDate();
             this.amount = transaction.getAmount();
         }
@@ -38,11 +38,11 @@ public class TransactionInfo {
     }
 
 
-    public String getId() {
+    public TransactionId getId() {
         return id;
     }
 
-    public String getTitle() {
+    public TransactionTitle getTitle() {
         return title;
     }
 

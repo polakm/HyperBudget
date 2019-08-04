@@ -22,15 +22,21 @@ class TransactionSummaryDataMapper {
         List<TransactionInfoData> transactions = summary.getTransactionInfos().stream().map(this::mapToTransactionInfoData).collect(Collectors.toList());
         RangeData range = mapToRangeData(yearMonth);
         StatisticsData statistics = mapStatisticsData(summary.getStatistics());
-        return TransactionSummaryData.of(transactions, range,statistics);
+        return TransactionSummaryData.of(transactions, range, statistics);
     }
 
     TransactionInfoData mapToTransactionInfoData(TransactionInfo transactionInfo) {
 
         TransactionInfoData.Builder builder = TransactionInfoData.builder();
-        builder.withId(transactionInfo.getId());
-        builder.withTitle(transactionInfo.getTitle());
 
+        Optional.ofNullable(transactionInfo.getId()).ifPresent(transactionId -> {
+            builder.withId(transactionId.toString());
+
+        });
+        Optional.ofNullable(transactionInfo.getTitle()).ifPresent(transactionTitle -> {
+            builder.withTitle(transactionTitle.toString());
+
+        });
         Optional.ofNullable(transactionInfo.getAccount()).filter(account -> !account.getId().isEmpty()).ifPresent(account -> {
             builder.forAccount(account.getId());
             builder.withAccountName(account.getName());
@@ -59,7 +65,7 @@ class TransactionSummaryDataMapper {
                 map(DateTime::toString).
                 ifPresent(builder::onExecutionDate);
 
-        return  builder.build();
+        return builder.build();
     }
 
     final StatisticsData mapStatisticsData(TransactionStatistics statistics) {
@@ -76,6 +82,6 @@ class TransactionSummaryDataMapper {
 
     final RangeData mapToRangeData(YearMonth yearMonth) {
 
-        return RangeData.of(yearMonth.getYear(),yearMonth.getMonthOfYear(),yearMonth.monthOfYear().getAsText());
+        return RangeData.of(yearMonth.getYear(), yearMonth.getMonthOfYear(), yearMonth.monthOfYear().getAsText());
     }
 }
