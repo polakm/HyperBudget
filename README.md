@@ -1,4 +1,4 @@
-# Michal Polak Token
+# Hyper Budget
 
 Project is a home budget management system. It's also my sandbox for learning and testing technologies, patterns and ideas.
 
@@ -15,7 +15,7 @@ Project is a home budget management system. It's also my sandbox for learning an
 
 ### Technologies
 
-- Sping Framework
+- Spring Framework
 - Spring Boot
 - Spring HATEOAS
 - Spring Cloud
@@ -31,8 +31,8 @@ Project is a home budget management system. It's also my sandbox for learning an
 
 - JRE 8
 - node.js
-- Docker*
-- Linux*
+- Docker
+- Linux
 
 \* Only if you want to run on docker and build docker image. 
 It could be different machine or virtual machine.
