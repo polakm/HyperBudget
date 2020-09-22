@@ -7,12 +7,11 @@ import org.joda.money.Money;
 import org.joda.time.DateTime;
 import org.junit.Test;
 import pl.com.michalpolak.hyperbudget.transaction.core.api.AccountId;
+import pl.com.michalpolak.hyperbudget.transaction.core.api.CategoryId;
 import pl.com.michalpolak.hyperbudget.transaction.core.api.Transaction;
 import pl.com.michalpolak.hyperbudget.transaction.core.api.TransactionTitle;
 import pl.com.michalpolak.hyperbudget.transaction.core.spi.EventPublisher;
 import pl.com.michalpolak.hyperbudget.transaction.core.spi.TransactionEvent;
-
-import java.util.UUID;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNotNull;
@@ -66,6 +65,7 @@ public class EventPublisherTest {
         builder.withTitle(TransactionTitle.fromString(title));
         builder.onExecutionDate(new DateTime());
         builder.forAccount(AccountId.generate());
+        builder.inCategory(CategoryId.generate());
         builder.withAmount(Money.parse(amount));
         return builder.build();
     }
