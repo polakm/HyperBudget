@@ -8,7 +8,6 @@ import pl.com.michalpolak.hyperbudget.account.core.spi.AccountRepository;
 import java.util.Collections;
 import java.util.Set;
 
-
 class BasicAccountService implements AccountService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(BasicAccountService.class);

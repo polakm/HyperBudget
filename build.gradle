@@ -1,0 +1,19 @@
+apply plugin: 'java'
+apply plugin: 'idea'
+apply plugin: 'groovy'
+
+subprojects {
+    apply plugin: 'java'
+    apply plugin: 'idea'
+}
+dependencies {
+    compile project(':account-service')
+    compile project(':category-service')
+    compile project(':transaction-service')
+    compile project(':transaction-summary-service')
+    compile project(':api-gateway')
+    compile project(':message-broker')
+    compile project(':service-discovery')
+    compile project(':ui')
+}
+

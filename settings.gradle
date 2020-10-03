@@ -1,0 +1,13 @@
+rootProject.name = 'HyperBudget'
+
+include ':account-service'
+include ':category-service'
+include ':transaction-service'
+include ':transaction-summary-service'
+include ':api-gateway'
+include ':message-broker'
+include ':service-discovery'
+include ':tracing-service'
+include ':ui'
+
+

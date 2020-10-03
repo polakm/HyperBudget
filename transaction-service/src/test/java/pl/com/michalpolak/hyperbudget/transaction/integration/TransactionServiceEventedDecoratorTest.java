@@ -15,7 +15,6 @@ import pl.com.michalpolak.hyperbudget.transaction.test.InMemoryTransactionReposi
 import pl.com.michalpolak.hyperbudget.transaction.test.IntegrationTest;
 
 import java.util.Set;
-import java.util.UUID;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
@@ -147,6 +146,7 @@ public class TransactionServiceEventedDecoratorTest {
         builder.withTitle(TransactionTitle.fromString("title"));
         builder.onExecutionDate(new DateTime());
         builder.forAccount(AccountId.generate());
+        builder.inCategory(CategoryId.generate());
         builder.withAmount(Money.parse("USD 299.99"));
         return builder.build();
     }
